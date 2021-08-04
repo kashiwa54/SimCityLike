@@ -1,0 +1,52 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+.text-area{
+	-fx-text-fill:black;
+}
+.scroll-pane{
+	-fx-background:lightblue;
+}
+
+.button  {
+	-fx-wrap-text: true;
+	-fx-text-alignment: right;
+	-fx-font-size: 12.0px;
+	-fx-base: #00a7d4;
+	-fx-background: #e5f3f6;
+	-fx-focus-color: #0093FF;
+	-fx-control-inner-background: #FFFFFF;
+	-fx-text-base-color: #00AAFF;
+	-fx-background-color:#FFFFFF;
+	-fx-inner-border: linear-gradient(to bottom, derive(-fx-color,73.6%) 0%, derive(-fx-color,29.200000000000003%) 100%);
+	-fx-body-color: linear-gradient( to bottom, derive(-fx-color, 34.0%) 0%, derive(-fx-color, -18.0%) 100%);
+	-fx-background-insets: 0px;
+	-fx-background-radius: 0px;
+	-fx-padding: 0.166667em 0.833333em 0.25em 0.833333em; /* 2 10 3 10 */
+	-fx-text-fill: -fx-text-base-color;
+	-fx-alignment: BOTTOM_RIGHT;
+	-fx-content-display: LEFT;
+}
+
+.button:focused {
+	-fx-color:#00a7d4;
+	-fx-text-fill:#FFFFFF;
+	-fx-background-color:#ED9C28, #00a7d4;
+	-fx-background-insets: -1.4, 0, 1, 2;
+	-fx-background-radius: 0;
+}
+
+.button:hover {
+	-fx-text-fill:#FFFFFF;
+	-fx-focus-color: #FF0000;
+	-fx-background-color: #ED9C28, #0187ab;
+}
+.button-label 	{
+	-fx-fill:#00a7d4;
+	-fx-effect:dropshadow(gaussian,#FFFFFF,2,0.8,0,0) ;
+/* 	-fx-fill:#FFFFFF;
+	-fx-stroke:#00a7d4;
+	-fx-stroke-width:0.8;
+	-fx-stroke-type:outside;*/
+	-fx-font-size:13.0px;
+	-fx-text-alignment:right ;
+	-fx-text-origin:top ;
+}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.*?>
+<?import java.lang.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="root" onKeyPressed="#keyPressed" onMouseMoved="#mouseMove" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainWindowController">
+   <children>
+      <ScrollPane fx:id="pane" fitToHeight="true" fitToWidth="true" prefHeight="960.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <content>
+            <StackPane fx:id="stackpane">
+               <children>
+                  <Canvas fx:id="canvas" height="960.0" onMouseDragged="#dragging" onMouseReleased="#mouseRelease" onScroll="#zoom" width="1280.0" />
+               </children>
+            </StackPane>
+         </content>
+      </ScrollPane>
+      <HBox fx:id="mainTab" prefHeight="64.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="0.0">
+         <children>
+          <Button fx:id="residentalB" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#buttonArea" prefHeight="64.0" prefWidth="64.0" text="エリア" textAlignment="CENTER" />
+            <Button fx:id="commercialB" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#buttonRoad" prefHeight="64.0" prefWidth="64.0" text="道路" textAlignment="CENTER" />
+            <Button fx:id="industrialB1" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#buttonSpecial" prefHeight="64.0" prefWidth="64.0" text="特殊" textAlignment="CENTER" />
+            <Button fx:id="removeB" alignment="BOTTOM_RIGHT" layoutX="306.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonRemove" prefHeight="64.0" prefWidth="64.0" text="取り壊し" textAlignment="RIGHT" wrapText="true">
+               <HBox.margin>
+                  <Insets left="64.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="cancelB" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#buttonCancel" prefHeight="64.0" prefWidth="64.0" text="中止" textAlignment="CENTER">
+               <HBox.margin>
+                  <Insets left="64.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets left="16.0" right="16.0" />
+         </padding>
+      </HBox>
+   </children>
+</AnchorPane>
