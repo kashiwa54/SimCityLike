@@ -16,7 +16,7 @@ public abstract class Way extends TileObject{
 	}
 	public Way(int x,int y,int maxSpeed)	{
 		super(x,y);
-		type.concat(":Way");
+		type = null;
 		setCanPass(true);
 	}
 	public void setMaxSpeed(int s)	{

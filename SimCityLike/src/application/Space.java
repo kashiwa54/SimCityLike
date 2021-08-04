@@ -7,7 +7,7 @@ public class Space extends TileObject{
 	}
 	public Space(int x,int y)	{
 		super(x,y);
-		type.concat(":Space");
+		type = OtherTileEnum.SPACE;
 		setCanPass(true);
 	}
 	@Override

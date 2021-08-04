@@ -11,7 +11,7 @@ public abstract class Building extends TileObject{
 	}
 	public Building(int x,int y,int width,int height) {
 		super(x,y,width,height);
-		type.concat(":building");
+		type = null;
 		setCanPass(false);
 	}
 

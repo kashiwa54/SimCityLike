@@ -14,7 +14,7 @@ public abstract class ResidentalBuilding extends Building{
 	}
 	public ResidentalBuilding(int x,int y,int width,int height,int capacity)	{
 		super(x,y,width,height);
-		type.concat(":ResidentalBuilding");
+		type = null;
 	}
 
 }

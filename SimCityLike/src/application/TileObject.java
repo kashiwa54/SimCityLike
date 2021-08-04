@@ -7,7 +7,7 @@ public abstract class TileObject {
 	private int height;
 	private boolean isOnMap;
 	private boolean canPass;
-	protected String type = "Tile";
+	public PlacableEnum type = null;
 
 	public TileObject()	{
 		this(0,0,1,1);
@@ -55,13 +55,9 @@ public abstract class TileObject {
 		return this.height;
 	}
 
-	public String getType()	{
+	public PlacableEnum getType()	{
 		return type;
 	}
-	public String getLastType()	{
-		return type.substring(type.lastIndexOf(':'));
-	}
-
 	public boolean isOnMap()	{
 		return this.isOnMap;
 	}

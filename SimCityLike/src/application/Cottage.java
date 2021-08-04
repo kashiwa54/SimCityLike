@@ -4,7 +4,7 @@ package application;
 public class Cottage extends ResidentalBuilding{
 	public Cottage(int x,int y) {
 		super(x,y, ResidentalBuildingEnum.COTTAGE.getWidth(),ResidentalBuildingEnum.COTTAGE.getHeight(),ResidentalBuildingEnum.COTTAGE.getCapacity());
-		type.concat(":cottage");
+		type = ResidentalBuildingEnum.COTTAGE;
 	}
 	@Override
 	public boolean place() {

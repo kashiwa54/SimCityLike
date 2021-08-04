@@ -7,6 +7,7 @@ public class Road60 extends Road{
 	}
 	public Road60(int x,int y)	{
 		super(x,y,MAX_SPEED);
+		type = WayEnum.ROAD60;
 	}
 
 	@Override

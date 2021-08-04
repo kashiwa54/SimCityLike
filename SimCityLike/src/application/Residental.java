@@ -6,7 +6,7 @@ public class Residental extends Site{
 	}
 	public Residental(int x,int y,int capacity)	{
 		super(x,y);
-		type.concat(":residental");
+		type = SiteEnum.RESIDENTAL;
 	}
 	@Override
 	public boolean place() {

@@ -1,6 +1,7 @@
 package application;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.LinkedList;
 
 import javafx.event.ActionEvent;
@@ -67,7 +68,7 @@ public class MainWindowController {
 	private double mouseY = 0;
 	Point2D mouse = new Point2D(mouseX,mouseY);
 	Point2D mouseOnMap = mouse;
-	private String mouseType = "none";
+	private PlacableEnum mouseType = OtherTileEnum.DEFAULT;
 	private SpreadType spreadType;
 
 	private double zoomX = 1.0;
@@ -88,13 +89,17 @@ public class MainWindowController {
 	private Point2D cacheStart = null;
 	private Point2D cacheEnd = null;
 
-	Image cottage;
+	//TODO別スレッドに移動
+	private EnumMap<ResidentalBuildingEnum,Image> residentalMap = new EnumMap<ResidentalBuildingEnum,Image>(ResidentalBuildingEnum.class);
 
 	@FXML
     public void initialize() {
     	graphics = canvas.getGraphicsContext2D();
     	canvas.setFocusTraversable(true);
-    	cottage = new Image("image/cottage_64tile.png");
+    	
+    	for(ResidentalBuildingEnum type : ResidentalBuildingEnum.values())	{
+    		residentalMap.put(type,new Image(type.getImagePath()));
+    	}
 
     	creatTab(areaTab,AreaTabEnum.values());
     	tabList.add(areaTab);
@@ -130,7 +135,7 @@ public class MainWindowController {
     		tabButtons[i].setGraphic(text);
 			tabButtons[i].setStyle("-fx-background-image:url(\"" + tabs[i].getImagePath() + "\");");
 			tab.add(tabButtons[i], i, 0);
-			String mouseType = tabs[i].getType();
+			PlacableEnum mouseType = tabs[i].getType();
 			SpreadType spread = tabs[i].getSpread();
 			tabButtons[i].setOnAction(ActonEvent ->{
 				setMouseType(mouseType,spread);
@@ -172,41 +177,38 @@ public class MainWindowController {
 		}
 		for(int i = 0;i < map.getWidth();i++)	{
 			for(int j = 0;j < map.getHeight();j++)	{
-				if(map.getTileObject(i,j) instanceof Residental)	{
-					gc.setFill(SiteEnum.RESIDENTAL.getColor());
-					gc.setTransform(affine);
+				PlacableEnum type = map.getTileObject(i, j).type;
+				if(type instanceof SiteEnum)	{
+					gc.setFill(((SiteEnum) type).getColor());
 					gc.fillRect(i * Main.TILE_SIZE,j * Main.TILE_SIZE,Main.TILE_SIZE,Main.TILE_SIZE);
-				}
-				if(map.getTileObject(i,j) instanceof Road60)	{
-					gc.setFill(Color.GRAY);
-					gc.setTransform(affine);
+				}else if(type instanceof WayEnum)	{
+					gc.setFill(((WayEnum) type).getColor());
 					gc.fillRect(i * Main.TILE_SIZE,j * Main.TILE_SIZE,Main.TILE_SIZE,Main.TILE_SIZE);
-				}
-				if(map.getTileObject(i,j) instanceof Cottage)	{
+				}else if(type instanceof ResidentalBuildingEnum)	{
 					imgAff.setToTransform(1,0,0,0,1,0);
 					tmpP = affine.transform(i * Main.TILE_SIZE,j * Main.TILE_SIZE);
 					imgAff.appendScale(zoomX,zoomY,tmpP.getX(),tmpP.getY());
 					gc.setTransform(imgAff);
-					gc.drawImage(cottage,tmpP.getX() - (Main.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
+					gc.drawImage(residentalMap.get(type),tmpP.getX() - (Main.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
+					gc.setTransform(affine);
 				}
+				
 			}
 		}
 
-			if(spreadType == SpreadType.DOT)	{
-				if ((mouseOnMap.getX() >= 0)&&(mouseOnMap.getY() >= 0)&&(mouseOnMap.getX() <= Main.TILE_WIDTH * Main.TILE_SIZE)&&(mouseOnMap.getY() <= Main.TILE_HEIGHT * Main.TILE_SIZE))	{
-					imgAff.setToTransform(1,0,0,0,1,0);
-					tmpP = affine.transform(pointingTileF(mouseOnMap.getX()),pointingTileF(mouseOnMap.getY()));
-					imgAff.appendScale(zoomX,zoomY,tmpP.getX(),tmpP.getY());
-					gc.setTransform(imgAff);
+		if(spreadType == SpreadType.DOT)	{
+			if ((mouseOnMap.getX() >= 0)&&(mouseOnMap.getY() >= 0)&&(mouseOnMap.getX() <= Main.TILE_WIDTH * Main.TILE_SIZE)&&(mouseOnMap.getY() <= Main.TILE_HEIGHT * Main.TILE_SIZE))	{
+				imgAff.setToTransform(1,0,0,0,1,0);
+				tmpP = affine.transform(pointingTileF(mouseOnMap.getX()),pointingTileF(mouseOnMap.getY()));
+				imgAff.appendScale(zoomX,zoomY,tmpP.getX(),tmpP.getY());
+				gc.setTransform(imgAff);
 
-					gc.setGlobalAlpha(0.3);
-				switch(mouseType)	{
-				case "cottage":
-					gc.drawImage(cottage,tmpP.getX() - (Main.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
-					break;
-				default:
+				gc.setGlobalAlpha(0.3);
+				
+				if(mouseType instanceof ResidentalBuildingEnum)	{
+					gc.drawImage(residentalMap.get(mouseType),tmpP.getX() - (Main.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
 				}
-				gc.setGlobalAlpha(1.0);
+			gc.setGlobalAlpha(1.0);
 
 			}
 		}else {
@@ -214,24 +216,19 @@ public class MainWindowController {
 				gc.setTransform(affine);
 				gc.setGlobalAlpha(0.3);
 				if(spreadType == SpreadType.AREA)	{
-					switch(mouseType)	{
-					case "residental":
-						gc.setFill(SiteEnum.RESIDENTAL.getColor());
-						break;
-					case "remove":
-						gc.setFill(SiteEnum.REMOVE.getColor());
-						break;
-					default:
+					if(mouseType instanceof SiteEnum)	{
+						gc.setFill(((SiteEnum) mouseType).getColor());
+					}else if(mouseType == OtherTileEnum.REMOVE){
+						gc.setFill(Color.RED);
+					}else {
 						gc.setFill(Color.YELLOW);
 					}
 					Rectangle rect = spreadSite(dragStart,mouseOnMap);
 					gc.fillRect(rect.getX(),rect.getY(),rect.getWidth(),rect.getHeight());
 				}else {
-					switch(mouseType)	{
-					case "road60":
-						gc.setFill(Color.GRAY);
-						break;
-					default:
+					if(mouseType instanceof WayEnum)	{
+						gc.setFill(((WayEnum) mouseType).getColor());
+					}else {
 						gc.setFill(Color.YELLOW);
 					}
 					LinkedList<TileObject> path = getLinePath(dragStart,mouseOnMap);
@@ -251,10 +248,10 @@ public class MainWindowController {
 			gc.strokeRect(pointingTileF(mouseOnMap.getX()), pointingTileF(mouseOnMap.getY()), Main.TILE_SIZE, Main.TILE_SIZE);
 		}
 	}
-	public void setMouseType(String type,SpreadType spread)	{
+	public void setMouseType(PlacableEnum type,SpreadType spread)	{
 		this.mouseType = type;
 		this.spreadType = spread;
-		if((mouseType.equals("default"))||(mouseType == null))	{
+		if((mouseType.equals(OtherTileEnum.DEFAULT))||(mouseType == null))	{
 			canvas.setCursor(Cursor.DEFAULT);
 		}else {
 			canvas.setCursor(Cursor.CROSSHAIR);
@@ -262,29 +259,29 @@ public class MainWindowController {
 	}
 	@FXML
 	public void buttonArea(ActionEvent ae)	{
-		setMouseType("default",SpreadType.DOT);
+		setMouseType(OtherTileEnum.DEFAULT,SpreadType.DOT);
 		switchTabs(tabList,areaTab);
 	}
 	@FXML
 	public void buttonRoad(ActionEvent ae)	{
-		setMouseType("default",SpreadType.DOT);
+		setMouseType(OtherTileEnum.DEFAULT,SpreadType.DOT);
 		switchTabs(tabList,roadTab);
 	}
 	@FXML
 	public void buttonSpecial(ActionEvent ae)	{
-		setMouseType("default",SpreadType.DOT);
+		setMouseType(OtherTileEnum.DEFAULT,SpreadType.DOT);
 		switchTabs(tabList,specialTab);
 	}
 	@FXML
 	public void buttonCancel(ActionEvent ae)	{
-		setMouseType("default",SpreadType.DOT);
+		setMouseType(OtherTileEnum.DEFAULT,SpreadType.DOT);
 		for(GridPane pane : tabList)	{
 			pane.setVisible(false);
 		}
 	}
 	@FXML
 	public void buttonRemove(ActionEvent ae)	{
-		setMouseType("remove",SpreadType.AREA);
+		setMouseType(OtherTileEnum.REMOVE,SpreadType.AREA);
 		for(GridPane pane : tabList)	{
 			pane.setVisible(false);
 		}
@@ -316,13 +313,10 @@ public class MainWindowController {
 			onDrag = false;
 			try {
 				Point2D tilePos = posToTilePos(mouseOnMap);
-				switch(mouseType)	{
-				case "cottage":
-					Cottage c = new Cottage((int)tilePos.getX(),(int)tilePos.getY());
-					map.place(c, c.getX(), c.getY());
-					break;
-				default:
-				}
+				
+				TileObject o = mouseType.getObject((int)tilePos.getX(),(int)tilePos.getY());
+				map.place(o, o.getX(), o.getY());
+				
 			}catch(Exception e)	{
 				e.printStackTrace();
 			}
@@ -337,40 +331,27 @@ public class MainWindowController {
 					int endX = (int)(rect.getX() + rect.getWidth())/Main.TILE_SIZE;
 					int endY = (int)(rect.getY() + rect.getHeight())/Main.TILE_SIZE;
 					try {
-						switch(mouseType)	{
-						case "residental":
-							for(int i = startX;i < endX;i++)	{
-								for(int j = startY;j < endY;j++)	{
-									Residental r = new Residental(i,j);
-									map.place(r, r.getX(), r.getY());
-								}
-							}
-							break;
-						case "remove":
-							for(int i = startX;i < endX;i++)	{
-								for(int j = startY;j < endY;j++)	{
+						for(int i = startX;i < endX;i++)	{
+							for(int j = startY;j < endY;j++)	{
+								if(mouseType == OtherTileEnum.REMOVE)	{
 									map.remove(i, j);
+								}else {
+									TileObject o = mouseType.getObject(i,j);
+									map.place(o, o.getX(), o.getY());
 								}
 							}
-							break;
-						default:
 						}
 					}catch(Exception e)	{
 						e.printStackTrace();
 					}
 				}else {
 					LinkedList<TileObject> path = getLinePath(dragStart,mouseOnMap);
-					switch(mouseType)	{
-					case "road60":
-						for(TileObject tile : path)	{
-							if(tile == null)	{
-								continue;
-							}
-							Road60 r = new Road60(tile.getX(),tile.getY());
-							map.place(r, r.getX(), r.getY());
+					for(TileObject tile : path)	{
+						if(tile == null)	{
+							continue;
 						}
-						break;
-					default:
+						TileObject o = mouseType.getObject(tile.getX(),tile.getY());
+						map.place(o, o.getX(), o.getY());
 					}
 				}
 			}
