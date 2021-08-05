@@ -1,7 +1,6 @@
 package application;
 
 import java.lang.reflect.InvocationTargetException;
-
 public enum ResidentalBuildingEnum implements PlacableEnum{
 	COTTAGE(Cottage.class,"image/cottage_64tile.png","residental",1,1,100,5,1);
 	private Class<? extends TileObject> buildingClass;
