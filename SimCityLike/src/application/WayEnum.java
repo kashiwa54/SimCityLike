@@ -5,28 +5,28 @@ import java.lang.reflect.InvocationTargetException;
 import javafx.scene.paint.Color;
 
 public enum WayEnum implements PlacableEnum{
-	ROAD60(Road60.class,Color.GRAY,50);
+	ROAD60(Road60.class,"src/image/road60set.png",50);
 
 	private Class<? extends TileObject> wayClass;
-	private Color color;
+	private String imageSetPath;
 	private int cost;
 
-	private WayEnum(Class<? extends TileObject> siteClass,Color color,int cost)	{
+	private WayEnum(Class<? extends TileObject> siteClass,String imageSetPath,int cost)	{
 		this.wayClass = siteClass;
-		this.color = color;
+		this.imageSetPath = imageSetPath;
 		this.cost = cost;
 	}
 
-	public Color getColor()	{
-		return color;
+	public String getImageSetPath()	{
+		return this.imageSetPath;
 	}
 	public int getCost()	{
-		return cost;
+		return this.cost;
 	}
 
 	@Override
 	public Class<? extends TileObject> getObjectClass() {
-		return wayClass;
+		return this.wayClass;
 	}
 	@Override
 	public TileObject getObject()	{

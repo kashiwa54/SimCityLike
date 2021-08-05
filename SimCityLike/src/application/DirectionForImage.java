@@ -20,14 +20,14 @@ public enum DirectionForImage {
 	ESW,
 	NESW,
 	NORTHEAST,
+	NORTHWEST,
 	SOUTHEAST,
-	SOUTHWEST,
-	NORTHWEST;
+	SOUTHWEST;
 
 	private DirectionForImage()	{
 	}
 
-	public DirectionForImage setToDirectionForImage(EnumSet<Direction> set)	{
+	public static DirectionForImage setToDirectionForImage(EnumSet<Direction> set)	{
 		if(set.contains(Direction.NORTH))	{
 			if(set.contains(Direction.EAST))	{
 				if(set.contains(Direction.SOUTH))	{

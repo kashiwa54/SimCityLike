@@ -1,9 +1,15 @@
 package application;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.LinkedList;
 
+import javax.imageio.ImageIO;
+
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -91,6 +97,7 @@ public class MainWindowController {
 
 	//TODO別スレッドに移動
 	private EnumMap<ResidentalBuildingEnum,Image> residentalMap = new EnumMap<ResidentalBuildingEnum,Image>(ResidentalBuildingEnum.class);
+	private EnumMap<WayEnum,EnumMap<DirectionForImage,Image>> wayMap = new EnumMap<WayEnum,EnumMap<DirectionForImage,Image>>(WayEnum.class);
 
 	@FXML
     public void initialize() {
@@ -99,6 +106,25 @@ public class MainWindowController {
     	
     	for(ResidentalBuildingEnum type : ResidentalBuildingEnum.values())	{
     		residentalMap.put(type,new Image(type.getImagePath()));
+    	}
+    	for(WayEnum type : WayEnum.values())	{
+    		BufferedImage imageSet = null;
+			try {
+				File file = new File(type.getImageSetPath());
+				imageSet = ImageIO.read(file);
+			} catch (IOException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
+    		EnumMap<DirectionForImage,Image> imageSetMap = new EnumMap<DirectionForImage,Image>(DirectionForImage.class);
+    		
+    		int tileX = imageSet.getWidth()/Main.TILESET_SIZE;
+    		int tileY = imageSet.getHeight()/Main.TILESET_SIZE;
+    		int cnt = 0;
+    		for(DirectionForImage d : DirectionForImage.values())	{
+    			imageSetMap.put(d,SwingFXUtils.toFXImage(imageSet.getSubimage(cnt%tileX * Main.TILESET_SIZE, cnt/tileY * Main.TILESET_SIZE, Main.TILESET_SIZE, Main.TILESET_SIZE), null));
+    		}
+    		wayMap.put(type,imageSetMap);
     	}
 
     	creatTab(areaTab,AreaTabEnum.values());
@@ -182,8 +208,15 @@ public class MainWindowController {
 					gc.setFill(((SiteEnum) type).getColor());
 					gc.fillRect(i * Main.TILE_SIZE,j * Main.TILE_SIZE,Main.TILE_SIZE,Main.TILE_SIZE);
 				}else if(type instanceof WayEnum)	{
-					gc.setFill(((WayEnum) type).getColor());
-					gc.fillRect(i * Main.TILE_SIZE,j * Main.TILE_SIZE,Main.TILE_SIZE,Main.TILE_SIZE);
+					Way way = (Way)map.getTileObject(i, j);
+					DirectionForImage connect = DirectionForImage.setToDirectionForImage(way.getConnect());
+					
+					imgAff.setToTransform(1,0,0,0,1,0);
+					tmpP = affine.transform(i * Main.TILE_SIZE,j * Main.TILE_SIZE);
+					imgAff.appendScale(zoomX,zoomY,tmpP.getX(),tmpP.getY());
+					gc.setTransform(imgAff);
+					gc.drawImage(wayMap.get(type).get(connect),tmpP.getX() - (Main.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
+					gc.setTransform(affine);
 				}else if(type instanceof ResidentalBuildingEnum)	{
 					imgAff.setToTransform(1,0,0,0,1,0);
 					tmpP = affine.transform(i * Main.TILE_SIZE,j * Main.TILE_SIZE);
@@ -227,7 +260,8 @@ public class MainWindowController {
 					gc.fillRect(rect.getX(),rect.getY(),rect.getWidth(),rect.getHeight());
 				}else {
 					if(mouseType instanceof WayEnum)	{
-						gc.setFill(((WayEnum) mouseType).getColor());
+						//TODO 画像にする
+						gc.setFill(Color.GRAY);
 					}else {
 						gc.setFill(Color.YELLOW);
 					}
