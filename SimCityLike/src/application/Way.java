@@ -1,12 +1,13 @@
 package application;
 
+import java.util.EnumMap;
+import java.util.EnumSet;
+
 public abstract class Way extends TileObject{
 	public static final int DEFAULT_SPEED = 60;
 	private int maxSpeed;
-	private boolean isConnectNorth = false;
-	private boolean isConnectEast = false;
-	private boolean isConnectSouth = false;
-	private boolean isConnectWest = false;
+	private EnumMap<Direction,Way> connectMap = new EnumMap<Direction,Way>(Direction.class);
+	private EnumSet<Direction> connectSet = EnumSet.noneOf(Direction.class);
 
 	public Way()	{
 		this(0,0,DEFAULT_SPEED);
@@ -16,7 +17,7 @@ public abstract class Way extends TileObject{
 	}
 	public Way(int x,int y,int maxSpeed)	{
 		super(x,y);
-		type = null;
+		this.type = null;
 		setCanPass(true);
 	}
 	public void setMaxSpeed(int s)	{
@@ -25,49 +26,28 @@ public abstract class Way extends TileObject{
 	public int getMaxSpeed()	{
 		return this.maxSpeed;
 	}
-
-	public boolean getConnectNorth()	{
-		return this.isConnectNorth;
+	public EnumSet<Direction> getConnect()	{
+		return this.connectSet;
 	}
-	public boolean getConnectEast()	{
-		return this.isConnectEast;
+	protected void addWay(Direction d,Way w)	{
+		connectMap.put(d, w);
 	}
-	public boolean getConnectSouth()	{
-		return this.isConnectSouth;
+	protected void romoveWay(Direction d)	{
+		connectMap.remove(d);
 	}
-	public boolean getConnectWest()	{
-		return this.isConnectWest;
+	protected void addConnect(Direction... d)	{
+		for(Direction v : d)	{
+			this.connectSet.add(v);
+		}
 	}
-	public boolean ConnectNorth()	{
-		isConnectNorth = true;
-		return true;
+	protected void removeConnect(Direction... d) {
+		for(Direction v : d)	{
+			this.connectSet.remove(v);
+		}
 	}
-	public boolean ConnectEast()	{
-		isConnectEast = true;
-		return true;
+	public boolean isConnect(Direction d)	{
+		return this.connectSet.contains(d);
 	}
-	public boolean ConnectSouth()	{
-		isConnectSouth = true;
-		return true;
-	}
-	public boolean ConnectWest()	{
-		isConnectWest = true;
-		return true;
-	}
-	public boolean DisconnectNorth()	{
-		isConnectNorth = false;
-		return true;
-	}
-	public boolean DisconnectEast()	{
-		isConnectEast = false;
-		return true;
-	}
-	public boolean DisconnectSouth()	{
-		isConnectSouth = false;
-		return true;
-	}
-	public boolean DisconnectWest()	{
-		isConnectWest = false;
-		return true;
-	}
+	public abstract boolean connect(Direction d,Way w);
+	public abstract void disconnect(Direction d);
 }

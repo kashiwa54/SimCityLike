@@ -29,5 +29,15 @@ public class Road60 extends Road{
 	public TileObject copy(int x, int y) {
 		return new Road60(x,y);
 	}
+	@Override
+	public boolean connect(Direction d,Way w) {
+		// TODO 自動生成されたメソッド・スタブ
+		return false;
+	}
+	@Override
+	public void disconnect(Direction d) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
 
 }
