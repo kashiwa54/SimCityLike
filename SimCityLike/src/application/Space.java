@@ -1,7 +1,7 @@
 package application;
 
 
-public class Space extends TileObject{
+public class Space extends TileObject implements Overwritable{
 	public Space()	{
 		this(0,0);
 	}

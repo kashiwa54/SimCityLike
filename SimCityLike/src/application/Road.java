@@ -1,6 +1,6 @@
 package application;
 
-public abstract class Road extends Way{
+public abstract class Road extends Way implements Upgradable{
 	public Road()	{
 		this(0,0);
 	}
@@ -30,5 +30,16 @@ public abstract class Road extends Way{
 			System.out.println("connect fault.");
 			return false;
 		}
+	}
+	public TileObject upgrade(TileObject o)	{
+		if(o instanceof Road)	{
+			if(WayEnum.classToEnum(o.getClass()).getLevel() > WayEnum.classToEnum(this.getClass()).getLevel())	{
+				Road r = (Road) o;
+				r.setPosition(this.getX(), this.getY());
+				r.setConnectMap(this.getConnectMap());
+				return o;
+			}
+		}
+		return this;
 	}
 }

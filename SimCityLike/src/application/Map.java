@@ -32,7 +32,6 @@ public class Map {
 
 	public boolean isSpace(int x,int y)	{
 		if (isInside(x,y))	{
-			//return tile[pos.x][pos.y].getLastType().equals(":space");
 			return tile[x][y] instanceof Space;
 		}else {
 			return false;
@@ -48,27 +47,36 @@ public class Map {
 		}
 	}
 
-	public boolean place(TileObject obj,int x,int y)	{
+	public TileObject place(TileObject obj,int x,int y)	{
 		if (isInside(x,y))	{
-			if (isSpace(x,y))	{
-				for(int i = 0;i < obj.getHeight();i++)	{
-					for(int j = 0;j < obj.getWidth();j++)	{
-						if(isInside(x + j,y + i)) {
-							tile[x + j][y + i] = obj;
-							obj.setOnMap(true);
-							System.out.println("place in " + (x + j) + "," + (y + i));
-						}else {
-							System.out.println((x + j) + "," + (y + i) + " is out of map");
+			TileObject mapObj = getTileObject(x,y);
+			if (mapObj instanceof Upgradable)	{
+				tile[x][y] = ((Upgradable) mapObj).upgrade(obj);
+				obj.setOnMap(true);
+				return mapObj;
+			}
+			if (mapObj instanceof Overwritable)	{
+				if(isInside(x + obj.getWidth() - 1,y + obj.getHeight() - 1))	{
+					for(int i = 0;i < obj.getHeight();i++)	{
+						for(int j = 0;j < obj.getWidth();j++)	{
+							if(isInside(x + j,y + i)) {
+								tile[x + j][y + i] = obj;
+								obj.setOnMap(true);
+								//System.out.println("place in " + (x + j) + "," + (y + i));
+							}else {
+								System.out.println((x + j) + "," + (y + i) + " is out of map");
+							}
 						}
 					}
+				}else {
+					return null;
 				}
 				obj.setPosition(x,y);
-				return true;
-			}else {
-				return false;
+				return mapObj;
 			}
+			return null;
 		}else {
-			return false;
+			return null;
 		}
 	}
 

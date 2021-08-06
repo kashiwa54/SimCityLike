@@ -45,6 +45,19 @@ public abstract class Way extends TileObject{
 			this.connectSet.remove(v);
 		}
 	}
+	protected EnumMap<Direction,Way> getConnectMap()	{
+		return connectMap;
+	}
+	protected boolean setConnectMap(EnumMap<Direction,Way> map)	{
+		for(Direction d : map.keySet())	{
+			if (d != checkDirection(map.get(d)))	{
+				System.out.println(map.get(d) + " is not " + d);
+				return false;
+			}
+		}
+		this.connectMap = map;
+		return true;
+	}
 	public boolean isConnect(Direction d)	{
 		return this.connectSet.contains(d);
 	}

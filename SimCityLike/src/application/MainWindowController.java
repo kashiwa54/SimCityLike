@@ -137,7 +137,6 @@ public class MainWindowController {
 	    		EnumMap<DirectionForImage,Image> imageSetMap = new EnumMap<DirectionForImage,Image>(DirectionForImage.class);
 
 	    		int tileX = imageSet.getWidth()/Main.TILESET_SIZE;
-	    		int tileY = imageSet.getHeight()/Main.TILESET_SIZE;
 	    		int cnt = 0;
 	    		for(DirectionForImage d : DirectionForImage.values())	{
 	    			imageSetMap.put(d,SwingFXUtils.toFXImage(imageSet.getSubimage(cnt%tileX * Main.TILESET_SIZE, cnt/tileX * Main.TILESET_SIZE, Main.TILESET_SIZE, Main.TILESET_SIZE), null));
