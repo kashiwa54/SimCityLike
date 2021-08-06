@@ -8,7 +8,6 @@ import java.util.EnumMap;
 import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;

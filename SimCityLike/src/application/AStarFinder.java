@@ -3,6 +3,7 @@ package application;
 import java.util.LinkedList;
 
 public class AStarFinder {
+	public static boolean DEFAULT_ALGORITHM = true;
 	private LinkedList<Node> open = new LinkedList<Node>();
 	private LinkedList<Node> close = new LinkedList<Node>();
 	private Map map;
@@ -30,7 +31,7 @@ public class AStarFinder {
 
 		moveNearPassableNode(start,end);
 		moveNearPassableNode(end,start);
-		start.realCost = 0;
+		start.setRealCost(0);
 		start.calcHeuristicCost(end);
 		open.add(start);
 
@@ -57,7 +58,7 @@ public class AStarFinder {
 					if(node.score < minNode.score)	{
 						minNode = node;
 					}else if(node.score == minNode.score)	{
-						if(node.realCost < minNode.realCost)	{
+						if(node.getRealCost() < minNode.getRealCost())	{
 							minNode = node;
 						}
 					}
@@ -228,7 +229,7 @@ public class AStarFinder {
 class Node	{
 	public int x;
 	public int y;
-	public int realCost;
+	private double realCost;
 	public double heuristicCost;
 	public double score;
 	public Node parent;
@@ -241,13 +242,39 @@ class Node	{
 		this.y = y;
 		this.realCost = -1;
 	}
+	public double getRealCost()	{
+		if(this.realCost <= -1)	{
+			calcRealCost();
+			return this.realCost;
+		}else {
+			return this.realCost;
+		}
+	}
+	public void setRealCost(int realCost)	{
+		this.realCost = realCost;
+	}
 
 	public boolean isHere(int x,int y)		{
 		return ((this.x == x)&&(this.y == y));
 	}
 	public void calcRealCost()	{
-		if(this.realCost <= -1)	{
-			this.realCost = this.parent.realCost + 1;
+		if(this.parent == null)	{
+			this.realCost = 0;
+		}else {
+			if(AStarFinder.DEFAULT_ALGORITHM) {
+				this.realCost = this.parent.realCost + 1;
+			}else {
+				if((this.parent.parent == null)||(this.equals(this.parent.parent)))	{
+					this.realCost = this.parent.getRealCost() + 1;
+				}else{
+					double ppx = this.parent.parent.x;
+					double ppy = this.parent.parent.y;
+					this.realCost = Math.sqrt((this.x - ppx) * (this.x - ppx) + (this.y - ppy) * (this.y - ppy))
+							+ this.parent.parent.getRealCost();
+					System.out.println(this.parent.parent + "+" + this);
+				}
+			}
+
 		}
 	}
 	public void calcHeuristicCost(Node end)	{
@@ -262,6 +289,7 @@ class Node	{
 		}
 		calcHeuristicCost(end);
 		this.score = this.realCost + this.heuristicCost;
+		System.out.println("[" + this.score + "],[" + this.realCost + "],[" + this.heuristicCost + "]");
 		return true;
 	}
 	public boolean equals(Object obj)	{
