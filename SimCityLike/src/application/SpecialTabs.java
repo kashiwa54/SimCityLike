@@ -1,7 +1,7 @@
 package application;
 
 public enum SpecialTabs implements TabableEnum{
-	COTTAGE(ResidentalBuildingEnum.COTTAGE,SpreadType.DOT,"小屋",ResidentalBuildingEnum.COTTAGE.getImagePath(),ResidentalBuildingEnum.COTTAGE.getCost());
+	COTTAGE(ResidentalBuildingEnum.COTTAGE,SpreadType.DOT,"小屋","image/cottage_64tile.png",ResidentalBuildingEnum.COTTAGE.getCost());
 
 	private PlacableEnum type;
 	private SpreadType spread;
