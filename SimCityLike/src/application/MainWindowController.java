@@ -103,28 +103,63 @@ public class MainWindowController {
     public void initialize() {
     	graphics = canvas.getGraphicsContext2D();
     	canvas.setFocusTraversable(true);
-    	
+
     	for(ResidentalBuildingEnum type : ResidentalBuildingEnum.values())	{
-    		residentalMap.put(type,new Image(type.getImagePath()));
+			File imageFile = null;
+			try {
+				imageFile = new File(type.getImagePath());
+				residentalMap.put(type,new Image(imageFile.toURI().toString()));
+			} catch (IllegalArgumentException e) {
+				// TODO 自動生成された catch ブロック
+				if(imageFile.exists())	{
+					if(imageFile.isFile())	{
+						if(imageFile.canRead())	{
+							System.out.println(imageFile.getAbsolutePath() + " is not image file or other reason.");
+						}else {
+							System.out.println(imageFile.getAbsolutePath() + " can't read.");
+						}
+					}else {
+						System.out.println(imageFile.getAbsolutePath() + " is not a file.");
+					}
+				}else {
+					System.out.println(imageFile.getAbsolutePath() + " is not found.");
+				}
+				e.printStackTrace();
+			}
     	}
     	for(WayEnum type : WayEnum.values())	{
     		BufferedImage imageSet = null;
+			File imageSetFile = null;
 			try {
-				File file = new File(type.getImageSetPath());
-				imageSet = ImageIO.read(file);
+				imageSetFile = new File(type.getImageSetPath());
+				imageSet = ImageIO.read(imageSetFile);
+
+	    		EnumMap<DirectionForImage,Image> imageSetMap = new EnumMap<DirectionForImage,Image>(DirectionForImage.class);
+
+	    		int tileX = imageSet.getWidth()/Main.TILESET_SIZE;
+	    		int tileY = imageSet.getHeight()/Main.TILESET_SIZE;
+	    		int cnt = 0;
+	    		for(DirectionForImage d : DirectionForImage.values())	{
+	    			imageSetMap.put(d,SwingFXUtils.toFXImage(imageSet.getSubimage(cnt%tileX * Main.TILESET_SIZE, cnt/tileY * Main.TILESET_SIZE, Main.TILESET_SIZE, Main.TILESET_SIZE), null));
+	    		}
+	    		wayMap.put(type,imageSetMap);
 			} catch (IOException e) {
 				// TODO 自動生成された catch ブロック
+				if(imageSetFile.exists())	{
+					if(imageSetFile.isFile())	{
+						if(imageSetFile.canRead())	{
+							System.out.println(imageSetFile.getAbsolutePath() + " is not image file or other reason.");
+						}else {
+							System.out.println(imageSetFile.getAbsolutePath() + " can't read.");
+						}
+					}else {
+						System.out.println(imageSetFile.getAbsolutePath() + " is not a file.");
+					}
+				}else {
+					System.out.println(imageSetFile.getAbsolutePath() + " is not found.");
+				}
 				e.printStackTrace();
 			}
-    		EnumMap<DirectionForImage,Image> imageSetMap = new EnumMap<DirectionForImage,Image>(DirectionForImage.class);
-    		
-    		int tileX = imageSet.getWidth()/Main.TILESET_SIZE;
-    		int tileY = imageSet.getHeight()/Main.TILESET_SIZE;
-    		int cnt = 0;
-    		for(DirectionForImage d : DirectionForImage.values())	{
-    			imageSetMap.put(d,SwingFXUtils.toFXImage(imageSet.getSubimage(cnt%tileX * Main.TILESET_SIZE, cnt/tileY * Main.TILESET_SIZE, Main.TILESET_SIZE, Main.TILESET_SIZE), null));
-    		}
-    		wayMap.put(type,imageSetMap);
     	}
 
     	creatTab(areaTab,AreaTabEnum.values());
@@ -210,7 +245,7 @@ public class MainWindowController {
 				}else if(type instanceof WayEnum)	{
 					Way way = (Way)map.getTileObject(i, j);
 					DirectionForImage connect = DirectionForImage.setToDirectionForImage(way.getConnect());
-					
+
 					imgAff.setToTransform(1,0,0,0,1,0);
 					tmpP = affine.transform(i * Main.TILE_SIZE,j * Main.TILE_SIZE);
 					imgAff.appendScale(zoomX,zoomY,tmpP.getX(),tmpP.getY());
@@ -225,7 +260,7 @@ public class MainWindowController {
 					gc.drawImage(residentalMap.get(type),tmpP.getX() - (Main.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
 					gc.setTransform(affine);
 				}
-				
+
 			}
 		}
 
@@ -237,7 +272,7 @@ public class MainWindowController {
 				gc.setTransform(imgAff);
 
 				gc.setGlobalAlpha(0.3);
-				
+
 				if(mouseType instanceof ResidentalBuildingEnum)	{
 					gc.drawImage(residentalMap.get(mouseType),tmpP.getX() - (Main.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
 				}
@@ -347,10 +382,10 @@ public class MainWindowController {
 			onDrag = false;
 			try {
 				Point2D tilePos = posToTilePos(mouseOnMap);
-				
+
 				TileObject o = mouseType.getObject((int)tilePos.getX(),(int)tilePos.getY());
 				map.place(o, o.getX(), o.getY());
-				
+
 			}catch(Exception e)	{
 				e.printStackTrace();
 			}

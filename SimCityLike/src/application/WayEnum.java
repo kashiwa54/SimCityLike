@@ -2,8 +2,6 @@ package application;
 
 import java.lang.reflect.InvocationTargetException;
 
-import javafx.scene.paint.Color;
-
 public enum WayEnum implements PlacableEnum{
 	ROAD60(Road60.class,"src/image/road60set.png",50);
 
