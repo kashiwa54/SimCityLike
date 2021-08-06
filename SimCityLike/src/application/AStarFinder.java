@@ -271,7 +271,7 @@ class Node	{
 					double ppy = this.parent.parent.y;
 					this.realCost = Math.sqrt((this.x - ppx) * (this.x - ppx) + (this.y - ppy) * (this.y - ppy))
 							+ this.parent.parent.getRealCost();
-					System.out.println(this.parent.parent + "+" + this);
+					//System.out.println(this.parent.parent + "+" + this);
 				}
 			}
 
@@ -289,7 +289,7 @@ class Node	{
 		}
 		calcHeuristicCost(end);
 		this.score = this.realCost + this.heuristicCost;
-		System.out.println("[" + this.score + "],[" + this.realCost + "],[" + this.heuristicCost + "]");
+		//System.out.println("[" + this.score + "],[" + this.realCost + "],[" + this.heuristicCost + "]");
 		return true;
 	}
 	public boolean equals(Object obj)	{

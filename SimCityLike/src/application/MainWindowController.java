@@ -140,7 +140,8 @@ public class MainWindowController {
 	    		int tileY = imageSet.getHeight()/Main.TILESET_SIZE;
 	    		int cnt = 0;
 	    		for(DirectionForImage d : DirectionForImage.values())	{
-	    			imageSetMap.put(d,SwingFXUtils.toFXImage(imageSet.getSubimage(cnt%tileX * Main.TILESET_SIZE, cnt/tileY * Main.TILESET_SIZE, Main.TILESET_SIZE, Main.TILESET_SIZE), null));
+	    			imageSetMap.put(d,SwingFXUtils.toFXImage(imageSet.getSubimage(cnt%tileX * Main.TILESET_SIZE, cnt/tileX * Main.TILESET_SIZE, Main.TILESET_SIZE, Main.TILESET_SIZE), null));
+	    			cnt++;
 	    		}
 	    		wayMap.put(type,imageSetMap);
 			} catch (IOException e) {
@@ -252,6 +253,7 @@ public class MainWindowController {
 					gc.setTransform(imgAff);
 					gc.drawImage(wayMap.get(type).get(connect),tmpP.getX() - (Main.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
 					gc.setTransform(affine);
+					
 				}else if(type instanceof ResidentalBuildingEnum)	{
 					imgAff.setToTransform(1,0,0,0,1,0);
 					tmpP = affine.transform(i * Main.TILE_SIZE,j * Main.TILE_SIZE);
@@ -415,12 +417,20 @@ public class MainWindowController {
 					}
 				}else {
 					LinkedList<TileObject> path = getLinePath(dragStart,mouseOnMap);
+						Way previousWay = null;
 					for(TileObject tile : path)	{
 						if(tile == null)	{
 							continue;
 						}
 						TileObject o = mouseType.getObject(tile.getX(),tile.getY());
 						map.place(o, o.getX(), o.getY());
+						if(o instanceof Way)	{
+							Way w = (Way)o;
+							if(!(previousWay == null))	{
+								System.out.println(w.connect(previousWay));
+							}
+							previousWay = w;
+						}
 					}
 				}
 			}

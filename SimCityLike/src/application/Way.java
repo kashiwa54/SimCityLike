@@ -32,7 +32,7 @@ public abstract class Way extends TileObject{
 	protected void addWay(Direction d,Way w)	{
 		connectMap.put(d, w);
 	}
-	protected void romoveWay(Direction d)	{
+	protected void removeWay(Direction d)	{
 		connectMap.remove(d);
 	}
 	protected void addConnect(Direction... d)	{
@@ -48,6 +48,35 @@ public abstract class Way extends TileObject{
 	public boolean isConnect(Direction d)	{
 		return this.connectSet.contains(d);
 	}
-	public abstract boolean connect(Direction d,Way w);
-	public abstract void disconnect(Direction d);
+	public Direction checkDirection(Way w)	{
+		System.out.println(w.getX() + "," + this.getX());
+		if(w.getY() == this.getY() - 1)	{
+			if(w.getX() == this.getX())		{
+				return Direction.NORTH;
+			}
+		}else if(w.getY() == this.getY() + 1)	{
+			if(w.getX() == this.getX())		{
+				return Direction.SOUTH;
+			}
+		}
+		if(w.getX() == this.getX() + 1)	{
+			if(w.getY() == this.getY())		{
+				return Direction.EAST;
+			}
+		}else if(w.getX() == this.getX() - 1)	{
+			if(w.getY() == this.getY())		{
+				return Direction.WEST;
+			}
+		}
+		return null;
+	}
+	public void disconnect(Direction d) {
+		Way w = connectMap.get(d);
+		Direction rd = Direction.reverse(d);
+		w.removeWay(rd);
+		w.removeConnect(rd);
+		removeWay(d);
+		removeConnect(d);
+	}
+	public abstract boolean connect(Way w);
 }
