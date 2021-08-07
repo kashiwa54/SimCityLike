@@ -50,10 +50,20 @@ public class Map {
 	public TileObject place(TileObject obj,int x,int y)	{
 		if (isInside(x,y))	{
 			TileObject mapObj = getTileObject(x,y);
+			if ((obj instanceof Way)&&(mapObj instanceof Way))	{
+				Way w = (Way) obj;
+				for(Direction d : w.getConnect())	{
+					((Way) mapObj).connect(w.getConnectMap().get(d));
+				}
+			}
 			if (mapObj instanceof Upgradable)	{
 				tile[x][y] = ((Upgradable) mapObj).upgrade(obj);
-				obj.setOnMap(true);
-				return mapObj;
+				if(tile[x][y].equals(obj))	{
+					obj.setOnMap(true);
+					return obj;
+				}else {
+					return mapObj;
+				}
 			}
 			if (mapObj instanceof Overwritable)	{
 				if(isInside(x + obj.getWidth() - 1,y + obj.getHeight() - 1))	{
@@ -69,12 +79,12 @@ public class Map {
 						}
 					}
 				}else {
-					return null;
+					return mapObj;
 				}
 				obj.setPosition(x,y);
-				return mapObj;
+				return obj;
 			}
-			return null;
+			return mapObj;
 		}else {
 			return null;
 		}

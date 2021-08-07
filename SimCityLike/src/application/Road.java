@@ -24,7 +24,6 @@ public abstract class Road extends Way implements Upgradable{
 			Direction rd = Direction.reverse(d);
 			w.addConnect(rd);
 			w.addWay(rd, this);
-			System.out.println(w.toString() + " and " + this.toString() + " connected.");
 			return true;
 		}else {
 			System.out.println("connect fault.");

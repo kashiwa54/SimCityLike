@@ -422,13 +422,21 @@ public class MainWindowController {
 							continue;
 						}
 						TileObject o = mouseType.getObject(tile.getX(),tile.getY());
-						map.place(o, o.getX(), o.getY());
 						if(o instanceof Way)	{
 							Way w = (Way)o;
-							if(!(previousWay == null))	{
-								System.out.println(w.connect(previousWay));
+							if(previousWay != null)	{
+								w.connect(previousWay);
 							}
-							previousWay = w;
+							if((map.place(w, w.getX(), w.getY()) == null)&&(previousWay != null))	{
+								System.out.println("w : " + w);
+								System.out.println("previous : " + previousWay);
+								System.out.println("onMap : " + previousWay.getConnectWay(previousWay.checkDirection(w)));
+								previousWay = previousWay.getConnectWay(previousWay.checkDirection(w));
+							}else {
+								previousWay = w;
+							}
+						}else {
+							map.place(o, o.getX(), o.getY());	
 						}
 					}
 				}

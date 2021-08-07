@@ -61,8 +61,10 @@ public abstract class Way extends TileObject{
 	public boolean isConnect(Direction d)	{
 		return this.connectSet.contains(d);
 	}
+	public Way getConnectWay(Direction d)	{
+		return connectMap.get(d);
+	}
 	public Direction checkDirection(Way w)	{
-		System.out.println(w.getX() + "," + this.getX());
 		if(w.getY() == this.getY() - 1)	{
 			if(w.getX() == this.getX())		{
 				return Direction.NORTH;
