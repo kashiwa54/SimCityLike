@@ -427,13 +427,11 @@ public class MainWindowController {
 							if(previousWay != null)	{
 								w.connect(previousWay);
 							}
-							if((map.place(w, w.getX(), w.getY()) == null)&&(previousWay != null))	{
-								System.out.println("w : " + w);
-								System.out.println("previous : " + previousWay);
-								System.out.println("onMap : " + previousWay.getConnectWay(previousWay.checkDirection(w)));
-								previousWay = previousWay.getConnectWay(previousWay.checkDirection(w));
-							}else {
-								previousWay = w;
+							TileObject onMap = map.place(w, w.getX(), w.getY());
+							if(onMap instanceof Way)	{
+								previousWay = (Way) onMap;
+							}else	{
+								previousWay = null;
 							}
 						}else {
 							map.place(o, o.getX(), o.getY());	
