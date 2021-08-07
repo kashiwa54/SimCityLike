@@ -8,6 +8,7 @@ public abstract class Way extends TileObject{
 	private int maxSpeed;
 	private EnumMap<Direction,Way> connectMap = new EnumMap<Direction,Way>(Direction.class);
 	private EnumSet<Direction> connectSet = EnumSet.noneOf(Direction.class);
+	private DirectionForImage connectState = DirectionForImage.NONE;
 
 	public Way()	{
 		this(0,0,DEFAULT_SPEED);
@@ -29,6 +30,31 @@ public abstract class Way extends TileObject{
 	}
 	public EnumSet<Direction> getConnect()	{
 		return this.connectSet;
+	}
+	public DirectionForImage getConnectState()	{
+		connectState = DirectionForImage.setToDirectionForImage(connectSet);
+		if(connectState == DirectionForImage.NE)	{
+			if((connectMap.get(Direction.NORTH).connectSet.contains(Direction.WEST))||
+					(connectMap.get(Direction.EAST).connectSet.contains(Direction.SOUTH)))	{
+				connectState = DirectionForImage.NORTHEAST;
+			}
+		}else if(connectState == DirectionForImage.NW)	{
+			if((connectMap.get(Direction.NORTH).connectSet.contains(Direction.EAST))||
+					(connectMap.get(Direction.WEST).connectSet.contains(Direction.SOUTH)))	{
+				connectState = DirectionForImage.NORTHWEST;
+			}
+		}else if(connectState == DirectionForImage.ES)	{
+			if((connectMap.get(Direction.EAST).connectSet.contains(Direction.NORTH))||
+					(connectMap.get(Direction.SOUTH).connectSet.contains(Direction.WEST)))	{
+				connectState = DirectionForImage.SOUTHEAST;
+			}
+		}else if(connectState == DirectionForImage.SW)	{
+			if((connectMap.get(Direction.SOUTH).connectSet.contains(Direction.EAST))||
+					(connectMap.get(Direction.WEST).connectSet.contains(Direction.NORTH)))	{
+				connectState = DirectionForImage.SOUTHWEST;
+			}
+		}
+		return this.connectState;
 	}
 	protected void addWay(Direction d,Way w)	{
 		connectMap.put(d, w);

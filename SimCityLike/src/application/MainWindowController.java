@@ -244,13 +244,12 @@ public class MainWindowController {
 					gc.fillRect(i * Main.TILE_SIZE,j * Main.TILE_SIZE,Main.TILE_SIZE,Main.TILE_SIZE);
 				}else if(type instanceof WayEnum)	{
 					Way way = (Way)map.getTileObject(i, j);
-					DirectionForImage connect = DirectionForImage.setToDirectionForImage(way.getConnect());
 
 					imgAff.setToTransform(1,0,0,0,1,0);
 					tmpP = affine.transform(i * Main.TILE_SIZE,j * Main.TILE_SIZE);
 					imgAff.appendScale(zoomX,zoomY,tmpP.getX(),tmpP.getY());
 					gc.setTransform(imgAff);
-					gc.drawImage(wayMap.get(type).get(connect),tmpP.getX() - (Main.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
+					gc.drawImage(wayMap.get(type).get(way.getConnectState()),tmpP.getX() - (Main.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
 					gc.setTransform(affine);
 					
 				}else if(type instanceof ResidentalBuildingEnum)	{
