@@ -1,7 +1,7 @@
 package application;
 
 public enum RoadTabEnum implements TabableEnum{
-	ROAD60(WayEnum.ROAD60,SpreadType.LINE,"道路(60km)","",60),
+	ROAD60(WayEnum.ROAD60,SpreadType.LINE,"道路(60km)","image/road_icon.png",60),
 	ROAD80(WayEnum.ROAD60,SpreadType.LINE,"道路(80km)","",80),
 	HIGHWAY100(WayEnum.ROAD60,SpreadType.LINE,"高速道路(100km)","",100),
 	HIGHWAY120(WayEnum.ROAD60,SpreadType.LINE,"高速道路(120km)","",120);
@@ -9,14 +9,14 @@ public enum RoadTabEnum implements TabableEnum{
 	private PlacableEnum type;
 	private SpreadType spread;
 	private String display;
-	private String imagePass;
+	private String imagePath;
 	private int cost;
 
-	private RoadTabEnum(PlacableEnum type,SpreadType spread,String display,String imagePass,int cost)	{
+	private RoadTabEnum(PlacableEnum type,SpreadType spread,String display,String imagePath,int cost)	{
 		this.type = type;
 		this.spread = spread;
 		this.display = display;
-		this.imagePass = imagePass;
+		this.imagePath = imagePath;
 		this.cost = cost;
 	}
 
@@ -30,7 +30,7 @@ public enum RoadTabEnum implements TabableEnum{
 		return display;
 	}
 	public String getImagePath() {
-		return imagePass;
+		return imagePath;
 	}
 	public int getCost()	{
 		return cost;

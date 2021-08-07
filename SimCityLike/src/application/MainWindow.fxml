@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.*?>
-<?import java.lang.*?>
-<?import javafx.scene.canvas.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 
-<AnchorPane fx:id="root" onKeyPressed="#keyPressed" onMouseMoved="#mouseMove" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainWindowController">
+<AnchorPane fx:id="root" onKeyPressed="#keyPressed" onMouseMoved="#mouseMove" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainWindowController">
    <children>
       <ScrollPane fx:id="pane" fitToHeight="true" fitToWidth="true" prefHeight="960.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
@@ -22,8 +21,8 @@
       </ScrollPane>
       <HBox fx:id="mainTab" prefHeight="64.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="0.0">
          <children>
-          <Button fx:id="residentalB" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#buttonArea" prefHeight="64.0" prefWidth="64.0" text="エリア" textAlignment="CENTER" />
-            <Button fx:id="commercialB" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#buttonRoad" prefHeight="64.0" prefWidth="64.0" text="道路" textAlignment="CENTER" />
+          <Button fx:id="residentalB" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#buttonArea" prefHeight="64.0" prefWidth="64.0" style="-fx-background-image: url(&quot;image/area_icon.png&quot;);" text="エリア" textAlignment="CENTER" />
+            <Button fx:id="commercialB" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#buttonRoad" prefHeight="64.0" prefWidth="64.0" style="-fx-background-image: url(&quot;image/road_icon.png&quot;);" text="道路" textAlignment="CENTER" />
             <Button fx:id="industrialB1" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#buttonSpecial" prefHeight="64.0" prefWidth="64.0" text="特殊" textAlignment="CENTER" />
             <Button fx:id="removeB" alignment="BOTTOM_RIGHT" layoutX="306.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonRemove" prefHeight="64.0" prefWidth="64.0" text="取り壊し" textAlignment="RIGHT" wrapText="true">
                <HBox.margin>
