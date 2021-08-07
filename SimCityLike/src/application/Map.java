@@ -95,15 +95,16 @@ public class Map {
 		int opY = tile[x][y].getY();
 		int w = tile[x][y].getWidth();
 		int h = tile[x][y].getHeight();
-		for(int i = 0;i < h;i++)	{
-			for(int j = 0;j < w;j++)	{
-				clear(opX + j,opY + i);
-				System.out.println("remove " + (opX + j) + "," + (opY + i));
+		for(int i = 0;i < w;i++)	{
+			for(int j = 0;j < h;j++)	{
+				clear(opX + i,opY + j);
+				System.out.println("remove " + (opX + i) + "," + (opY + j));
 			}
 		}
 	}
 
 	private void clear(int x,int y)	{
+		tile[x][y].remove();
 		tile[x][y].setOnMap(false);
 		tile[x][y] = new Space(x,y);
 		tile[x][y].setOnMap(true);

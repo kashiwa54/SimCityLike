@@ -15,12 +15,6 @@ public class Road60 extends Road{
 		// TODO 自動生成されたメソッド・スタブ
 		return false;
 	}
-
-	@Override
-	public void remove() {
-		// TODO 自動生成されたメソッド・スタブ
-
-	}
 	@Override
 	public TileObject copy() {
 		return new Road60(this.getX(),this.getY());

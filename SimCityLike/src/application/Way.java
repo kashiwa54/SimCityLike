@@ -20,6 +20,7 @@ public abstract class Way extends TileObject{
 		this.type = null;
 		setCanPass(true);
 	}
+	public abstract boolean connect(Way w);
 	public void setMaxSpeed(int s)	{
 		this.maxSpeed = s;
 	}
@@ -93,5 +94,9 @@ public abstract class Way extends TileObject{
 		removeWay(d);
 		removeConnect(d);
 	}
-	public abstract boolean connect(Way w);
+	public void remove()	{
+		for(Direction d : this.connectSet)	{
+			disconnect(d);
+		}
+	}
 }
