@@ -7,6 +7,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
+<?import application.Main?>
+
 
 <AnchorPane fx:id="root" onKeyPressed="#keyPressed" onMouseMoved="#mouseMove" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainWindowController">
    <children>
@@ -14,14 +16,17 @@
          <content>
             <StackPane fx:id="stackpane">
                <children>
-                  <Canvas fx:id="canvas" height="960.0" onMouseDragged="#dragging" onMouseReleased="#mouseRelease" onScroll="#zoom" width="1280.0" />
+					<Canvas fx:id="canvas" onMouseDragged="#dragging" onMouseReleased="#mouseRelease" onScroll="#zoom">
+						<width><Main fx:constant="WINDOW_MAX_WIDTH"/></width>
+						<height><Main fx:constant="WINDOW_MAX_HEIGHT"/></height>
+					</Canvas>
                </children>
             </StackPane>
          </content>
       </ScrollPane>
       <HBox fx:id="mainTab" prefHeight="64.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="0.0">
          <children>
-          <Button fx:id="residentalB" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#buttonArea" prefHeight="64.0" prefWidth="64.0" style="-fx-background-image: url(&quot;image/area_icon.png&quot;);" styleClass="button-label" text="エリア" textAlignment="CENTER" />
+          <Button fx:id="residentalB" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#buttonArea" prefHeight="64.0" prefWidth="64.0" style="-fx-background-image: url(&quot;image/area_icon.png&quot;);" text="エリア" textAlignment="CENTER" />
             <Button fx:id="commercialB" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#buttonRoad" prefHeight="64.0" prefWidth="64.0" style="-fx-background-image: url(&quot;image/road_icon.png&quot;);" text="道路" textAlignment="CENTER" />
             <Button fx:id="industrialB1" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#buttonSpecial" prefHeight="64.0" prefWidth="64.0" text="特殊" textAlignment="CENTER" />
             <Button fx:id="removeB" alignment="BOTTOM_RIGHT" layoutX="306.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonRemove" prefHeight="64.0" prefWidth="64.0" text="取り壊し" textAlignment="RIGHT" wrapText="true">

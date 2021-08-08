@@ -52,13 +52,17 @@ public class MainWindowController {
 	private static final double BUTTON_SIZE = 64.0;
 
 	@FXML
+	private Double width = (double) Main.WINDOW_MAX_WIDTH;
+	@FXML
+	private static Double getWidth()	{return (double) Main.WINDOW_MAX_WIDTH;};
+	@FXML
 	AnchorPane root;
 	@FXML
 	ScrollPane pane;
 	@FXML
 	StackPane stackpane;
 	@FXML
-	Canvas canvas;
+	Canvas canvas = new Canvas(Main.WINDOW_MAX_WIDTH,Main.WINDOW_MAX_HEIGHT);
 	@FXML
 	HBox maintab;
 	GridPane areaTab = new GridPane();
@@ -182,7 +186,7 @@ public class MainWindowController {
     	AnchorPane.setTopAnchor(tab, BUTTON_SIZE);
     	AnchorPane.setLeftAnchor(tab, 0.0);
     	AnchorPane.setRightAnchor(tab, BUTTON_SIZE);
-    	tab.setPrefSize(Main.WINDOW_WIDTH, BUTTON_SIZE);
+    	tab.setPrefSize(Main.WINDOW_MAX_WIDTH, BUTTON_SIZE);
     	tab.setPadding(new Insets(0, 16, 0, 16));
     	Button[] tabButtons = new Button[tabs.length];
     	for(int i = 0;i < tabs.length;i++)	{

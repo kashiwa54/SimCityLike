@@ -9,27 +9,33 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 
 public class Main extends Application {
-	static final int TILE_WIDTH = 32;
-	static final int TILE_HEIGHT = 32;
-	static final int TILESET_SIZE = 64;
-	static final int SHEAR_ANGLE = 45;
-	static final int TILE_SIZE = 64;
-	static final int WINDOW_WIDTH = 1280;
-	static final int WINDOW_HEIGHT = 960;
+	public static final int TILE_WIDTH = 32;
+	public static final int TILE_HEIGHT = 32;
+	public static final int TILESET_SIZE = 64;
+	public static final int SHEAR_ANGLE = 45;
+	public static final int TILE_SIZE = 64;
 
-	static final int CONSOLE_WIDTH = 640;
-	static final int CONSOLE_HEIGHT = 480;
+	public static final int CONSOLE_WIDTH = 640;
+	public static final int CONSOLE_HEIGHT = 480;
 
-	final Canvas canvas = new Canvas(WINDOW_WIDTH,WINDOW_HEIGHT);
+	private static final Rectangle2D SYSTEM_WINDOW = Screen.getPrimary().getVisualBounds();
+	
+	public static final int WINDOW_MAX_WIDTH = (int) SYSTEM_WINDOW.getMaxX();;
+	public static final int WINDOW_MAX_HEIGHT = (int) SYSTEM_WINDOW.getMaxY();
+	public static final int WINDOW_PREF_WIDTH = 1280;
+	public static final int WINDOW_PREF_HEIGHT = 960;
+	final Canvas canvas = new Canvas(WINDOW_MAX_WIDTH,WINDOW_MAX_HEIGHT);
 	final Timeline timeline = new Timeline();
 
 
@@ -64,10 +70,14 @@ public class Main extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
 			AnchorPane root =(AnchorPane)loader.load();
-			Scene mScene = new Scene(root,WINDOW_WIDTH,WINDOW_HEIGHT);
+			Scene mScene = new Scene(root,WINDOW_MAX_WIDTH,WINDOW_MAX_HEIGHT);
 			mScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
 			stage.setScene(mScene);
+			stage.setMaxWidth(WINDOW_MAX_WIDTH);
+			stage.setMaxHeight(WINDOW_MAX_HEIGHT);
+//			stage.setWidth(WINDOW_PREF_HEIGHT);
+//			stage.setHeight(WINDOW_PREF_HEIGHT);
 
 	    	mScene.widthProperty().addListener(new ChangeListener<Number>() {
 				@Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
