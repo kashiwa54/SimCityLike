@@ -14,4 +14,8 @@ public class CommonConst {
 	public static final int WINDOW_MAX_HEIGHT = (int) Main.SYSTEM_WINDOW.getMaxY();
 	public static final int WINDOW_PREF_WIDTH = 1280;
 	public static final int WINDOW_PREF_HEIGHT = 960;
+	public static final double MOVE_RATE = 32;
+	public static final double MAX_SIZE_RATE = 300;
+	public static final double MIN_SIZE_RATE = 30;
+	public static final double BUTTON_SIZE = 64.0;
 }

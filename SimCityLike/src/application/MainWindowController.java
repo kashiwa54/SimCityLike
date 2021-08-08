@@ -35,9 +35,6 @@ import javafx.scene.transform.NonInvertibleTransformException;
 
 public class MainWindowController {
 	private static final double SIZE_RATE = 0.5;
-	private static final double MOVE_RATE = 32;
-	private static final double MAX_SIZE_RATE = 300;
-	private static final double MIN_SIZE_RATE = 30;
 	private static final double SHEAR_ANGLE = CommonConst.SHEAR_ANGLE;
 	private static final double TILE_ADJUST_FACTOR_X = ((CommonConst.TILESET_SIZE / 2) / Math.cos(Math.PI * SHEAR_ANGLE / (180 * 2))) / CommonConst.TILE_SIZE;
 	private static final double TILE_ADJUST_FACTOR_Y = TILE_ADJUST_FACTOR_X / Math.sqrt(2);
@@ -49,12 +46,6 @@ public class MainWindowController {
 	private static final double SHEAR_X = Math.tan(-1 * Math.PI * SHEAR_ANGLE / 180);
 	private static final double ANGLE = SHEAR_ANGLE / 2;
 
-	private static final double BUTTON_SIZE = 64.0;
-
-	@FXML
-	private Double width = (double) CommonConst.WINDOW_MAX_WIDTH;
-	@FXML
-	private static Double getWidth()	{return (double) CommonConst.WINDOW_MAX_WIDTH;};
 	@FXML
 	AnchorPane root;
 	@FXML
@@ -114,7 +105,6 @@ public class MainWindowController {
 				imageFile = new File(type.getImagePath());
 				residentalMap.put(type,new Image(imageFile.toURI().toString()));
 			} catch (IllegalArgumentException e) {
-				// TODO 自動生成された catch ブロック
 				if(imageFile.exists())	{
 					if(imageFile.isFile())	{
 						if(imageFile.canRead())	{
@@ -148,7 +138,6 @@ public class MainWindowController {
 	    		}
 	    		wayMap.put(type,imageSetMap);
 			} catch (IOException e) {
-				// TODO 自動生成された catch ブロック
 				if(imageSetFile.exists())	{
 					if(imageSetFile.isFile())	{
 						if(imageSetFile.canRead())	{
@@ -183,20 +172,20 @@ public class MainWindowController {
 
 	public <T extends TabableEnum> void creatTab(GridPane tab, T[] tabs)	{
     	tab.setVisible(false);
-    	AnchorPane.setTopAnchor(tab, BUTTON_SIZE);
+    	AnchorPane.setTopAnchor(tab, CommonConst.BUTTON_SIZE);
     	AnchorPane.setLeftAnchor(tab, 0.0);
-    	AnchorPane.setRightAnchor(tab, BUTTON_SIZE);
-    	tab.setPrefSize(CommonConst.WINDOW_MAX_WIDTH, BUTTON_SIZE);
+    	AnchorPane.setRightAnchor(tab, CommonConst.BUTTON_SIZE);
+    	tab.setPrefSize(CommonConst.WINDOW_MAX_WIDTH, CommonConst.BUTTON_SIZE);
     	tab.setPadding(new Insets(0, 16, 0, 16));
     	Button[] tabButtons = new Button[tabs.length];
     	for(int i = 0;i < tabs.length;i++)	{
     		tabButtons[i] = new Button();
-    		tabButtons[i].setMaxSize(BUTTON_SIZE,BUTTON_SIZE);
-    		tabButtons[i].setMinSize(BUTTON_SIZE, BUTTON_SIZE);
-    		tabButtons[i].setPrefSize(BUTTON_SIZE, BUTTON_SIZE);
+    		tabButtons[i].setMaxSize(CommonConst.BUTTON_SIZE,CommonConst.BUTTON_SIZE);
+    		tabButtons[i].setMinSize(CommonConst.BUTTON_SIZE, CommonConst.BUTTON_SIZE);
+    		tabButtons[i].setPrefSize(CommonConst.BUTTON_SIZE, CommonConst.BUTTON_SIZE);
     		Text text = new Text((tabs[i]).getDisplay());
     		text.getStyleClass().add("button-label");
-    		text.setWrappingWidth(BUTTON_SIZE);
+    		text.setWrappingWidth(CommonConst.BUTTON_SIZE);
     		tabButtons[i].setGraphic(text);
 			tabButtons[i].setStyle("-fx-background-image:url(\"" + tabs[i].getImagePath() + "\");");
 			tab.add(tabButtons[i], i, 0);
@@ -226,7 +215,6 @@ public class MainWindowController {
 		affine.appendShear(SHEAR_X,0,1,1);
 		affine.appendScale(zoomX * TILE_ADJUST_FACTOR_X,zoomY * TILE_ADJUST_FACTOR_Y,pivotX,pivotY);
 		affine.appendTranslation(moveX, moveY);
-		//System.out.println(affine);
 		gc.setTransform(affine);
 
 		gc.setFill(Color.KHAKI);
@@ -448,16 +436,16 @@ public class MainWindowController {
 	public void keyPressed(KeyEvent ke)		{
 		switch(ke.getCode())	{
 		case W:
-			moveY += MOVE_RATE;
+			moveY += CommonConst.MOVE_RATE;
 			break;
 		case A:
-			moveX += MOVE_RATE;
+			moveX += CommonConst.MOVE_RATE;
 			break;
 		case S:
-			moveY -= MOVE_RATE;
+			moveY -= CommonConst.MOVE_RATE;
 			break;
 		case D:
-			moveX -= MOVE_RATE;
+			moveX -= CommonConst.MOVE_RATE;
 			break;
 		default:
 			break;
@@ -467,10 +455,10 @@ public class MainWindowController {
 	@FXML
 	public void zoom(ScrollEvent se)	{
 		canvasSizeRate += se.getDeltaY() * SIZE_RATE;
-		if(canvasSizeRate < MIN_SIZE_RATE)	{
-			canvasSizeRate = MIN_SIZE_RATE;
-		}else if(canvasSizeRate > MAX_SIZE_RATE){
-			canvasSizeRate = MAX_SIZE_RATE;
+		if(canvasSizeRate < CommonConst.MIN_SIZE_RATE)	{
+			canvasSizeRate = CommonConst.MIN_SIZE_RATE;
+		}else if(canvasSizeRate > CommonConst.MAX_SIZE_RATE){
+			canvasSizeRate = CommonConst.MAX_SIZE_RATE;
 		}else {
 			this.zoomX = canvasSizeRate/100;
 			this.zoomY = canvasSizeRate/100;
