@@ -20,22 +20,9 @@ import javafx.util.Duration;
 
 
 public class Main extends Application {
-	public static final int TILE_WIDTH = 32;
-	public static final int TILE_HEIGHT = 32;
-	public static final int TILESET_SIZE = 64;
-	public static final int SHEAR_ANGLE = 45;
-	public static final int TILE_SIZE = 64;
-
-	public static final int CONSOLE_WIDTH = 640;
-	public static final int CONSOLE_HEIGHT = 480;
-
-	private static final Rectangle2D SYSTEM_WINDOW = Screen.getPrimary().getVisualBounds();
+	static final Rectangle2D SYSTEM_WINDOW = Screen.getPrimary().getVisualBounds();
 	
-	public static final int WINDOW_MAX_WIDTH = (int) SYSTEM_WINDOW.getMaxX();;
-	public static final int WINDOW_MAX_HEIGHT = (int) SYSTEM_WINDOW.getMaxY();
-	public static final int WINDOW_PREF_WIDTH = 1280;
-	public static final int WINDOW_PREF_HEIGHT = 960;
-	final Canvas canvas = new Canvas(WINDOW_MAX_WIDTH,WINDOW_MAX_HEIGHT);
+	final Canvas canvas = new Canvas(CommonConst.WINDOW_MAX_WIDTH,CommonConst.WINDOW_MAX_HEIGHT);
 	final Timeline timeline = new Timeline();
 
 
@@ -43,7 +30,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Map map = new Map(TILE_WIDTH,TILE_HEIGHT);
+			Map map = new Map(CommonConst.TILE_WIDTH,CommonConst.TILE_HEIGHT);
 
 			MainWindowController window = mainWindowSetup(primaryStage,map);
 			GraphicsContext gc = window.getGraphicsContext();
@@ -70,12 +57,12 @@ public class Main extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
 			AnchorPane root =(AnchorPane)loader.load();
-			Scene mScene = new Scene(root,WINDOW_MAX_WIDTH,WINDOW_MAX_HEIGHT);
+			Scene mScene = new Scene(root,CommonConst.WINDOW_MAX_WIDTH,CommonConst.WINDOW_MAX_HEIGHT);
 			mScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
 			stage.setScene(mScene);
-			stage.setMaxWidth(WINDOW_MAX_WIDTH);
-			stage.setMaxHeight(WINDOW_MAX_HEIGHT);
+			stage.setMaxWidth(CommonConst.WINDOW_MAX_WIDTH);
+			stage.setMaxHeight(CommonConst.WINDOW_MAX_HEIGHT);
 //			stage.setWidth(WINDOW_PREF_HEIGHT);
 //			stage.setHeight(WINDOW_PREF_HEIGHT);
 
@@ -107,7 +94,7 @@ public class Main extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("ConsoleWindow.fxml"));
 			AnchorPane root =(AnchorPane)loader.load();
-			Scene cScene = new Scene(root,CONSOLE_WIDTH,CONSOLE_HEIGHT);
+			Scene cScene = new Scene(root,CommonConst.CONSOLE_WIDTH,CommonConst.CONSOLE_HEIGHT);
 			cScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
 			Stage cStage = new Stage();

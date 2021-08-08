@@ -38,13 +38,13 @@ public class MainWindowController {
 	private static final double MOVE_RATE = 32;
 	private static final double MAX_SIZE_RATE = 300;
 	private static final double MIN_SIZE_RATE = 30;
-	private static final double SHEAR_ANGLE = Main.SHEAR_ANGLE;
-	private static final double TILE_ADJUST_FACTOR_X = ((Main.TILESET_SIZE / 2) / Math.cos(Math.PI * SHEAR_ANGLE / (180 * 2))) / Main.TILE_SIZE;
+	private static final double SHEAR_ANGLE = CommonConst.SHEAR_ANGLE;
+	private static final double TILE_ADJUST_FACTOR_X = ((CommonConst.TILESET_SIZE / 2) / Math.cos(Math.PI * SHEAR_ANGLE / (180 * 2))) / CommonConst.TILE_SIZE;
 	private static final double TILE_ADJUST_FACTOR_Y = TILE_ADJUST_FACTOR_X / Math.sqrt(2);
 	private static final int TILE_BORDER_WIDTH = 1;
 	private static final int CURSOR_WIDTH = 2;
 
-	private static final double IMAGE_OFFSET_Y = -Main.TILESET_SIZE + (Main.TILESET_SIZE * Math.tan(Math.PI * SHEAR_ANGLE / (180 * 2)));
+	private static final double IMAGE_OFFSET_Y = -CommonConst.TILESET_SIZE + (CommonConst.TILESET_SIZE * Math.tan(Math.PI * SHEAR_ANGLE / (180 * 2)));
 
 	private static final double SHEAR_X = Math.tan(-1 * Math.PI * SHEAR_ANGLE / 180);
 	private static final double ANGLE = SHEAR_ANGLE / 2;
@@ -52,9 +52,9 @@ public class MainWindowController {
 	private static final double BUTTON_SIZE = 64.0;
 
 	@FXML
-	private Double width = (double) Main.WINDOW_MAX_WIDTH;
+	private Double width = (double) CommonConst.WINDOW_MAX_WIDTH;
 	@FXML
-	private static Double getWidth()	{return (double) Main.WINDOW_MAX_WIDTH;};
+	private static Double getWidth()	{return (double) CommonConst.WINDOW_MAX_WIDTH;};
 	@FXML
 	AnchorPane root;
 	@FXML
@@ -62,7 +62,7 @@ public class MainWindowController {
 	@FXML
 	StackPane stackpane;
 	@FXML
-	Canvas canvas = new Canvas(Main.WINDOW_MAX_WIDTH,Main.WINDOW_MAX_HEIGHT);
+	Canvas canvas = new Canvas(CommonConst.WINDOW_MAX_WIDTH,CommonConst.WINDOW_MAX_HEIGHT);
 	@FXML
 	HBox maintab;
 	GridPane areaTab = new GridPane();
@@ -140,10 +140,10 @@ public class MainWindowController {
 
 	    		EnumMap<DirectionForImage,Image> imageSetMap = new EnumMap<DirectionForImage,Image>(DirectionForImage.class);
 
-	    		int tileX = imageSet.getWidth()/Main.TILESET_SIZE;
+	    		int tileX = imageSet.getWidth()/CommonConst.TILESET_SIZE;
 	    		int cnt = 0;
 	    		for(DirectionForImage d : DirectionForImage.values())	{
-	    			imageSetMap.put(d,SwingFXUtils.toFXImage(imageSet.getSubimage(cnt%tileX * Main.TILESET_SIZE, cnt/tileX * Main.TILESET_SIZE, Main.TILESET_SIZE, Main.TILESET_SIZE), null));
+	    			imageSetMap.put(d,SwingFXUtils.toFXImage(imageSet.getSubimage(cnt%tileX * CommonConst.TILESET_SIZE, cnt/tileX * CommonConst.TILESET_SIZE, CommonConst.TILESET_SIZE, CommonConst.TILESET_SIZE), null));
 	    			cnt++;
 	    		}
 	    		wayMap.put(type,imageSetMap);
@@ -186,7 +186,7 @@ public class MainWindowController {
     	AnchorPane.setTopAnchor(tab, BUTTON_SIZE);
     	AnchorPane.setLeftAnchor(tab, 0.0);
     	AnchorPane.setRightAnchor(tab, BUTTON_SIZE);
-    	tab.setPrefSize(Main.WINDOW_MAX_WIDTH, BUTTON_SIZE);
+    	tab.setPrefSize(CommonConst.WINDOW_MAX_WIDTH, BUTTON_SIZE);
     	tab.setPadding(new Insets(0, 16, 0, 16));
     	Button[] tabButtons = new Button[tabs.length];
     	for(int i = 0;i < tabs.length;i++)	{
@@ -230,38 +230,38 @@ public class MainWindowController {
 		gc.setTransform(affine);
 
 		gc.setFill(Color.KHAKI);
-		gc.fillRect(0, 0, map.getWidth() * Main.TILE_SIZE, map.getHeight() * Main.TILE_SIZE);
+		gc.fillRect(0, 0, map.getWidth() * CommonConst.TILE_SIZE, map.getHeight() * CommonConst.TILE_SIZE);
 
 		gc.setStroke(Color.BLACK);
 		gc.setLineWidth(TILE_BORDER_WIDTH);
 		for(int i = 0;i <= map.getWidth();i++)	{
-			gc.strokeLine(i * Main.TILE_SIZE, 0, i * Main.TILE_SIZE, map.getHeight() * Main.TILE_SIZE);
+			gc.strokeLine(i * CommonConst.TILE_SIZE, 0, i * CommonConst.TILE_SIZE, map.getHeight() * CommonConst.TILE_SIZE);
 		}
 		for(int i = 0;i <= map.getHeight();i++)	{
-			gc.strokeLine(0, i * Main.TILE_SIZE, map.getWidth() * Main.TILE_SIZE, i * Main.TILE_SIZE);
+			gc.strokeLine(0, i * CommonConst.TILE_SIZE, map.getWidth() * CommonConst.TILE_SIZE, i * CommonConst.TILE_SIZE);
 		}
 		for(int i = 0;i < map.getWidth();i++)	{
 			for(int j = 0;j < map.getHeight();j++)	{
 				PlacableEnum type = map.getTileObject(i, j).type;
 				if(type instanceof SiteEnum)	{
 					gc.setFill(((SiteEnum) type).getColor());
-					gc.fillRect(i * Main.TILE_SIZE,j * Main.TILE_SIZE,Main.TILE_SIZE,Main.TILE_SIZE);
+					gc.fillRect(i * CommonConst.TILE_SIZE,j * CommonConst.TILE_SIZE,CommonConst.TILE_SIZE,CommonConst.TILE_SIZE);
 				}else if(type instanceof WayEnum)	{
 					Way way = (Way)map.getTileObject(i, j);
 
 					imgAff.setToTransform(1,0,0,0,1,0);
-					tmpP = affine.transform(i * Main.TILE_SIZE,j * Main.TILE_SIZE);
+					tmpP = affine.transform(i * CommonConst.TILE_SIZE,j * CommonConst.TILE_SIZE);
 					imgAff.appendScale(zoomX,zoomY,tmpP.getX(),tmpP.getY());
 					gc.setTransform(imgAff);
-					gc.drawImage(wayMap.get(type).get(way.getConnectState()),tmpP.getX() - (Main.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
+					gc.drawImage(wayMap.get(type).get(way.getConnectState()),tmpP.getX() - (CommonConst.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
 					gc.setTransform(affine);
 					
 				}else if(type instanceof ResidentalBuildingEnum)	{
 					imgAff.setToTransform(1,0,0,0,1,0);
-					tmpP = affine.transform(i * Main.TILE_SIZE,j * Main.TILE_SIZE);
+					tmpP = affine.transform(i * CommonConst.TILE_SIZE,j * CommonConst.TILE_SIZE);
 					imgAff.appendScale(zoomX,zoomY,tmpP.getX(),tmpP.getY());
 					gc.setTransform(imgAff);
-					gc.drawImage(residentalMap.get(type),tmpP.getX() - (Main.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
+					gc.drawImage(residentalMap.get(type),tmpP.getX() - (CommonConst.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
 					gc.setTransform(affine);
 				}
 
@@ -269,7 +269,7 @@ public class MainWindowController {
 		}
 
 		if(spreadType == SpreadType.DOT)	{
-			if ((mouseOnMap.getX() >= 0)&&(mouseOnMap.getY() >= 0)&&(mouseOnMap.getX() <= Main.TILE_WIDTH * Main.TILE_SIZE)&&(mouseOnMap.getY() <= Main.TILE_HEIGHT * Main.TILE_SIZE))	{
+			if ((mouseOnMap.getX() >= 0)&&(mouseOnMap.getY() >= 0)&&(mouseOnMap.getX() <= CommonConst.TILE_WIDTH * CommonConst.TILE_SIZE)&&(mouseOnMap.getY() <= CommonConst.TILE_HEIGHT * CommonConst.TILE_SIZE))	{
 				imgAff.setToTransform(1,0,0,0,1,0);
 				tmpP = affine.transform(pointingTileF(mouseOnMap.getX()),pointingTileF(mouseOnMap.getY()));
 				imgAff.appendScale(zoomX,zoomY,tmpP.getX(),tmpP.getY());
@@ -278,7 +278,7 @@ public class MainWindowController {
 				gc.setGlobalAlpha(0.3);
 
 				if(mouseType instanceof ResidentalBuildingEnum)	{
-					gc.drawImage(residentalMap.get(mouseType),tmpP.getX() - (Main.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
+					gc.drawImage(residentalMap.get(mouseType),tmpP.getX() - (CommonConst.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
 				}
 			gc.setGlobalAlpha(1.0);
 
@@ -309,7 +309,7 @@ public class MainWindowController {
 						if(object == null)	{
 							continue;
 						}else {
-							gc.fillRect(object.getX() * Main.TILESET_SIZE, object.getY() * Main.TILESET_SIZE, Main.TILESET_SIZE, Main.TILESET_SIZE);
+							gc.fillRect(object.getX() * CommonConst.TILESET_SIZE, object.getY() * CommonConst.TILESET_SIZE, CommonConst.TILESET_SIZE, CommonConst.TILESET_SIZE);
 						}
 					}
 				}
@@ -318,7 +318,7 @@ public class MainWindowController {
 			gc.setTransform(affine);
 			gc.setStroke(Color.YELLOW);
 			gc.setLineWidth(CURSOR_WIDTH);
-			gc.strokeRect(pointingTileF(mouseOnMap.getX()), pointingTileF(mouseOnMap.getY()), Main.TILE_SIZE, Main.TILE_SIZE);
+			gc.strokeRect(pointingTileF(mouseOnMap.getX()), pointingTileF(mouseOnMap.getY()), CommonConst.TILE_SIZE, CommonConst.TILE_SIZE);
 		}
 	}
 	public void setMouseType(PlacableEnum type,SpreadType spread)	{
@@ -398,11 +398,11 @@ public class MainWindowController {
 				onDrag = false;
 				if(spreadType == SpreadType.AREA)	{
 					Rectangle rect = spreadSite(dragStart,mouseOnMap);
-					int startX = (int)rect.getX()/Main.TILE_SIZE;
-					int startY = (int)rect.getY()/Main.TILE_SIZE;
+					int startX = (int)rect.getX()/CommonConst.TILE_SIZE;
+					int startY = (int)rect.getY()/CommonConst.TILE_SIZE;
 
-					int endX = (int)(rect.getX() + rect.getWidth())/Main.TILE_SIZE;
-					int endY = (int)(rect.getY() + rect.getHeight())/Main.TILE_SIZE;
+					int endX = (int)(rect.getX() + rect.getWidth())/CommonConst.TILE_SIZE;
+					int endY = (int)(rect.getY() + rect.getHeight())/CommonConst.TILE_SIZE;
 					try {
 						for(int i = startX;i < endX;i++)	{
 							for(int j = startY;j < endY;j++)	{
@@ -484,10 +484,10 @@ public class MainWindowController {
 	}
 
 	public double pointingTileF(double x)	{
-		return Math.floor(x / Main.TILE_SIZE) * Main.TILE_SIZE;
+		return Math.floor(x / CommonConst.TILE_SIZE) * CommonConst.TILE_SIZE;
 	}
 	public double pointingTileC(double x)	{
-		return Math.ceil(x / Main.TILE_SIZE) * Main.TILE_SIZE;
+		return Math.ceil(x / CommonConst.TILE_SIZE) * CommonConst.TILE_SIZE;
 	}
 	public Rectangle spreadSite(Point2D start,Point2D end)	{
 		double topleftX;
@@ -541,7 +541,7 @@ public class MainWindowController {
 		}
 	}
 	public Point2D posToTilePos(Point2D pos)	{
-		return new Point2D(Math.floor(pos.getX()/Main.TILESET_SIZE),Math.floor(pos.getY()/Main.TILESET_SIZE));
+		return new Point2D(Math.floor(pos.getX()/CommonConst.TILESET_SIZE),Math.floor(pos.getY()/CommonConst.TILESET_SIZE));
 	}
 	public boolean comparePos(Point2D first,Point2D second)	{
 		return (first.getX() == second.getX())&&(first.getY() == second.getY());
