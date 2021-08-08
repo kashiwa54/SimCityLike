@@ -218,15 +218,19 @@ public class MainWindowController {
 		gc.setTransform(affine);
 
 		gc.setFill(Color.KHAKI);
-		gc.fillRect(0, 0, map.getWidth() * CommonConst.TILE_SIZE, map.getHeight() * CommonConst.TILE_SIZE);
+		gc.fillRect(CommonConst.MAP_OFFSET_X, CommonConst.MAP_OFFSET_Y, map.getWidth() * CommonConst.TILE_SIZE, map.getHeight() * CommonConst.TILE_SIZE);
 
 		gc.setStroke(Color.BLACK);
 		gc.setLineWidth(TILE_BORDER_WIDTH);
 		for(int i = 0;i <= map.getWidth();i++)	{
-			gc.strokeLine(i * CommonConst.TILE_SIZE, 0, i * CommonConst.TILE_SIZE, map.getHeight() * CommonConst.TILE_SIZE);
+			gc.strokeLine((i * CommonConst.TILE_SIZE) + CommonConst.MAP_OFFSET_X, CommonConst.MAP_OFFSET_Y
+					, (i * CommonConst.TILE_SIZE) + CommonConst.MAP_OFFSET_X
+					, (map.getHeight() * CommonConst.TILE_SIZE) + CommonConst.MAP_OFFSET_Y);
 		}
 		for(int i = 0;i <= map.getHeight();i++)	{
-			gc.strokeLine(0, i * CommonConst.TILE_SIZE, map.getWidth() * CommonConst.TILE_SIZE, i * CommonConst.TILE_SIZE);
+			gc.strokeLine(CommonConst.MAP_OFFSET_X, i * CommonConst.TILE_SIZE + CommonConst.MAP_OFFSET_Y
+					, (map.getWidth() * CommonConst.TILE_SIZE) + CommonConst.MAP_OFFSET_X
+					, (i * CommonConst.TILE_SIZE) + CommonConst.MAP_OFFSET_Y);
 		}
 		for(int i = 0;i < map.getWidth();i++)	{
 			for(int j = 0;j < map.getHeight();j++)	{
