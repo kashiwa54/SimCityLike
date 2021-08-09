@@ -4,16 +4,23 @@ import java.lang.reflect.InvocationTargetException;
 
 
 public enum OtherTileEnum implements PlacableEnum{
-	DEFAULT(Space.class),
-	REMOVE(Space.class),
-	SPACE(Space.class);
+	DEFAULT("",Space.class),
+	REMOVE("",Space.class),
+	INFO("",Space.class),
+	SPACE("空き地",Space.class);
 
+	private String displayName;
 	private Class<? extends TileObject> otherClass;
 
-	private OtherTileEnum(Class<? extends TileObject> otherClass)	{
+	private OtherTileEnum(String displayName, Class<? extends TileObject> otherClass)	{
+		this.displayName = displayName;
 		this.otherClass = otherClass;
 	}
 
+	@Override
+	public String getDisplayName()	{
+		return this.displayName;
+	}
 	@Override
 	public Class<? extends TileObject> getObjectClass() {
 		return otherClass;

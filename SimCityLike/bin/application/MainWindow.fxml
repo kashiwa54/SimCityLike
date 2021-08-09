@@ -38,7 +38,7 @@
                   <Insets left="64.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="infoB" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#buttonCancel" prefHeight="64.0" prefWidth="64.0" text="情報" textAlignment="CENTER" />
+            <Button fx:id="infoB" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#buttonInfo" prefHeight="64.0" prefWidth="64.0" text="情報" textAlignment="CENTER" />
          </children>
          <opaqueInsets>
             <Insets />

@@ -5,10 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum WayEnum implements PlacableEnum{
-	ROAD60(Road60.class,"src/image/road60set.png",50,2);
+	ROAD60(Road60.class,"src/image/road60set.png","道路(60km制限)",50,2);
 
 	private Class<? extends TileObject> wayClass;
 	private String imageSetPath;
+	private String displayName;
 	private int cost;
 	private int level;
 	
@@ -23,15 +24,20 @@ public enum WayEnum implements PlacableEnum{
 		for(WayEnum e : WayEnum.values()) put(e.getObjectClass(),e);
 	}};
 
-	private WayEnum(Class<? extends TileObject> siteClass,String imageSetPath,int cost,int level)	{
+	private WayEnum(Class<? extends TileObject> siteClass,String imageSetPath,String displayName,int cost,int level)	{
 		this.wayClass = siteClass;
 		this.imageSetPath = imageSetPath;
+		this.displayName = displayName;
 		this.cost = cost;
 		this.level = level;
 	}
 
 	public String getImageSetPath()	{
 		return this.imageSetPath;
+	}
+	@Override
+	public String getDisplayName()	{
+		return this.displayName;
 	}
 	public int getCost()	{
 		return this.cost;

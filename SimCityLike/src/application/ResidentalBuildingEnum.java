@@ -2,20 +2,20 @@ package application;
 
 import java.lang.reflect.InvocationTargetException;
 public enum ResidentalBuildingEnum implements PlacableEnum{
-	COTTAGE(Cottage.class,"src/image/cottage_64tile.png","residental",1,1,100,5,1);
+	COTTAGE(Cottage.class,"src/image/cottage_64tile.png","小さな小屋",1,1,100,5,1);
 	private Class<? extends TileObject> buildingClass;
 	private String imagePath;
-	private String attribute;
+	private String displayName;
 	private int width;
 	private int height;
 	private int cost;
 	private int capacity;
 	private int level;
 
-	private ResidentalBuildingEnum(Class<? extends TileObject> buildingClass,String imagePath,String attribute,int width,int height,int cost,int capacity,int level)	{
+	private ResidentalBuildingEnum(Class<? extends TileObject> buildingClass,String imagePath,String displayName,int width,int height,int cost,int capacity,int level)	{
 		this.buildingClass = buildingClass;
 		this.imagePath = imagePath;
-		this.attribute = attribute;
+		this.displayName = displayName;
 		this.width = width;
 		this.height = height;
 		this.cost = cost;
@@ -29,8 +29,9 @@ public enum ResidentalBuildingEnum implements PlacableEnum{
 	public String getImagePath()	{
 		return imagePath;
 	}
-	public String getAttribute()	{
-		return attribute;
+	@Override
+	public String getDisplayName()	{
+		return this.displayName;
 	}
 	public int getWidth()	{
 		return width;

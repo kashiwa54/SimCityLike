@@ -18,7 +18,9 @@ import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -352,6 +354,14 @@ public class MainWindowController {
 		}
 	}
 	@FXML
+	public void buttonInfo(ActionEvent ae)	{
+		setMouseType(OtherTileEnum.INFO,SpreadType.DOT);
+		for(GridPane pane : tabList)	{
+			pane.setVisible(false);
+		}
+		
+	}
+	@FXML
 	public void mouseMove(MouseEvent me)	{
 		mouseX = me.getSceneX();
 		mouseY = me.getSceneY();
@@ -378,10 +388,13 @@ public class MainWindowController {
 			onDrag = false;
 			try {
 				Point2D tilePos = posToTilePos(mouseOnMap);
-
-				TileObject o = mouseType.getObject((int)tilePos.getX(),(int)tilePos.getY());
-				map.place(o, o.getX(), o.getY());
-
+				if(mouseType == OtherTileEnum.INFO)	{
+					TileObject cursorTile = map.getTileObject((int)tilePos.getX(),(int)tilePos.getY());
+					root.getChildren().add(makeInfoWindow(mouse,cursorTile.type.getDisplayName(),cursorTile.getInfo()));
+				}else {
+					TileObject o = mouseType.getObject((int)tilePos.getX(),(int)tilePos.getY());
+					map.place(o, o.getX(), o.getY());
+				}
 			}catch(Exception e)	{
 				e.printStackTrace();
 			}
@@ -481,6 +494,16 @@ public class MainWindowController {
 	public double pointingTileC(double x)	{
 		return Math.ceil(x / CommonConst.TILE_SIZE) * CommonConst.TILE_SIZE;
 	}
+	
+	public TitledPane makeInfoWindow(Point2D pos,String title,String content)	{
+		Label infoContent = new Label(content);
+		TitledPane infoPane = new TitledPane(title,infoContent);
+		infoPane.setVisible(true);
+		infoPane.setLayoutX(pos.getX());
+		infoPane.setLayoutY(pos.getY());
+		return infoPane;
+	}
+	
 	public Rectangle spreadSite(Point2D start,Point2D end)	{
 		double topleftX;
 		double topleftY;

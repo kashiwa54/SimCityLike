@@ -68,4 +68,5 @@ public abstract class TileObject {
 	abstract public void remove();
 	abstract public TileObject copy();
 	abstract public TileObject copy(int x,int y);
+	abstract public String getInfo();
 }

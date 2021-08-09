@@ -5,18 +5,20 @@ import java.lang.reflect.InvocationTargetException;
 import javafx.scene.paint.Color;
 
 public enum SiteEnum implements PlacableEnum{
-	RESIDENTAL(Residental.class,Color.LIME,50),
-	COMMERCIAL(Commercial.class,Color.AQUA,50),
-	INDUSTRIAL(Industrial.class,Color.GOLD,50);
+	RESIDENTAL(Residental.class,Color.LIME,50,"住宅区"),
+	COMMERCIAL(Commercial.class,Color.AQUA,50,"商業区"),
+	INDUSTRIAL(Industrial.class,Color.GOLD,50,"工業区");
 
 	private Class<? extends TileObject> siteClass;
 	private Color color;
 	private int cost;
+	private String displayName;
 
-	private SiteEnum(Class<? extends TileObject> siteClass,Color color,int cost)	{
+	private SiteEnum(Class<? extends TileObject> siteClass,Color color,int cost,String displayName)	{
 		this.siteClass = siteClass;
 		this.color = color;
 		this.cost = cost;
+		this.displayName = displayName;
 	}
 
 	public Color getColor()	{
@@ -24,6 +26,10 @@ public enum SiteEnum implements PlacableEnum{
 	}
 	public int getCost()	{
 		return cost;
+	}
+	@Override
+	public String getDisplayName()	{
+		return this.displayName;
 	}
 
 	@Override

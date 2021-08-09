@@ -28,5 +28,9 @@ public class Space extends TileObject implements Overwritable{
 	public TileObject copy(int x, int y) {
 		return new Space(x,y);
 	}
+	@Override
+	public String getInfo()	{
+		return "";
+	}
 
 }

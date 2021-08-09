@@ -6,4 +6,7 @@ public abstract class Site extends TileObject implements Overwritable{
 		type = null;
 		setCanPass(true);
 	}
+	public String getInfo()	{
+		return "";
+	}
 }

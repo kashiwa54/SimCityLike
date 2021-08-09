@@ -18,6 +18,7 @@ public abstract class Way extends TileObject{
 	}
 	public Way(int x,int y,int maxSpeed)	{
 		super(x,y);
+		this.maxSpeed = maxSpeed;
 		this.type = null;
 		setCanPass(true);
 	}
@@ -124,5 +125,26 @@ public abstract class Way extends TileObject{
 		for(Direction d : this.connectSet)	{
 			disconnect(d);
 		}
+	}
+	public String getInfo()	{
+		String info = "最高速度:" + this.maxSpeed + "\n";
+		info = info.concat("接続方向:");
+		for(Direction d: connectMap.keySet())	{
+			switch(d)	{
+			case NORTH :
+				info = info.concat(" 北");
+				break;
+			case EAST :
+				info = info.concat(" 東");
+				break;
+			case SOUTH :
+				info = info.concat(" 南");
+				break;
+			case WEST :
+				info = info.concat(" 西");
+			}
+		}
+		info = info.concat("\n");
+		return info;
 	}
 }
