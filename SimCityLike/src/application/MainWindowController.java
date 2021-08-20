@@ -20,7 +20,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -249,7 +248,7 @@ public class MainWindowController {
 					gc.setTransform(imgAff);
 					gc.drawImage(wayMap.get(type).get(way.getConnectState()),tmpP.getX() - (CommonConst.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
 					gc.setTransform(affine);
-					
+
 				}else if(type instanceof ResidentalBuildingEnum)	{
 					imgAff.setToTransform(1,0,0,0,1,0);
 					tmpP = affine.transform(i * CommonConst.TILE_SIZE,j * CommonConst.TILE_SIZE);
@@ -359,7 +358,7 @@ public class MainWindowController {
 		for(GridPane pane : tabList)	{
 			pane.setVisible(false);
 		}
-		
+
 	}
 	@FXML
 	public void mouseMove(MouseEvent me)	{
@@ -442,7 +441,7 @@ public class MainWindowController {
 								previousWay = null;
 							}
 						}else {
-							map.place(o, o.getX(), o.getY());	
+							map.place(o, o.getX(), o.getY());
 						}
 					}
 				}
@@ -494,16 +493,16 @@ public class MainWindowController {
 	public double pointingTileC(double x)	{
 		return Math.ceil(x / CommonConst.TILE_SIZE) * CommonConst.TILE_SIZE;
 	}
-	
-	public TitledPane makeInfoWindow(Point2D pos,String title,String content)	{
+
+	public TitledPaneWithButton makeInfoWindow(Point2D pos,String title,String content)	{
 		Label infoContent = new Label(content);
-		TitledPane infoPane = new TitledPane(title,infoContent);
+		TitledPaneWithButton infoPane = new TitledPaneWithButton(title,infoContent);
 		infoPane.setVisible(true);
 		infoPane.setLayoutX(pos.getX());
 		infoPane.setLayoutY(pos.getY());
 		return infoPane;
 	}
-	
+
 	public Rectangle spreadSite(Point2D start,Point2D end)	{
 		double topleftX;
 		double topleftY;

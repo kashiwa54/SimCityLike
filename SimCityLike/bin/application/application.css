@@ -25,6 +25,11 @@
 	-fx-alignment: BOTTOM_RIGHT;
 	-fx-content-display: LEFT;
 }
+.button .delete {
+	-fx-padding : 0 0 0 0;
+	-fx-background-color:#00a7d4;
+	-fx-text-fill:#FFFFFF;
+}
 
 .button:focused {
 	-fx-color:#00a7d4;
@@ -33,12 +38,24 @@
 	-fx-background-insets: -1.4, 0, 1, 2;
 	-fx-background-radius: 0;
 }
+.button:focused .delete	{
+	-fx-color:#FFFFFF;
+	-fx-text-fill:#00a7d4;
+	-fx-background-color:#ED9C28, #FFFFFF;
+}
 
 .button:hover {
 	-fx-text-fill:#FFFFFF;
 	-fx-focus-color: #FF0000;
 	-fx-background-color: #ED9C28, #0187ab;
 }
+
+.button:hover .delete	{
+	-fx-color:#FFFFFF;
+	-fx-text-fill:#00a7d4;
+	-fx-background-color:#ED9C28, #FFFFFF;
+}
+
 
 .button .text	{
 	-fx-effect:dropshadow(gaussian,#FFFFFF,2,0.8,0,0) ;
