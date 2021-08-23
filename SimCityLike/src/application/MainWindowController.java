@@ -25,7 +25,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -57,11 +57,11 @@ public class MainWindowController {
 	Canvas canvas = new Canvas(CommonConst.WINDOW_MAX_WIDTH,CommonConst.WINDOW_MAX_HEIGHT);
 	@FXML
 	HBox maintab;
-	GridPane areaTab = new GridPane();
-	GridPane roadTab = new GridPane();
-	GridPane specialTab = new GridPane();
+	FlowPane areaTab = new FlowPane();
+	FlowPane roadTab = new FlowPane();
+	FlowPane specialTab = new FlowPane();
 
-	ArrayList<GridPane> tabList = new ArrayList<GridPane>(5);
+	ArrayList<FlowPane> tabList = new ArrayList<FlowPane>(5);
 	private Map map;
 	private GraphicsContext graphics;
 	private double canvasSizeRate = 100;
@@ -171,7 +171,7 @@ public class MainWindowController {
     	System.out.println("Main window initialized.");
     }
 
-	public <T extends TabableEnum> void creatTab(GridPane tab, T[] tabs)	{
+	public <T extends TabableEnum> void creatTab(FlowPane tab, T[] tabs)	{
     	tab.setVisible(false);
     	AnchorPane.setTopAnchor(tab, CommonConst.BUTTON_SIZE);
     	AnchorPane.setLeftAnchor(tab, 0.0);
@@ -189,7 +189,7 @@ public class MainWindowController {
     		text.setWrappingWidth(CommonConst.BUTTON_SIZE);
     		tabButtons[i].setGraphic(text);
 			tabButtons[i].setStyle("-fx-background-image:url(\"" + tabs[i].getImagePath() + "\");");
-			tab.add(tabButtons[i], i, 0);
+			tab.getChildren().add(tabButtons[i]);
 			PlacableEnum mouseType = tabs[i].getType();
 			SpreadType spread = tabs[i].getSpread();
 			tabButtons[i].setOnAction(ActonEvent ->{
@@ -339,21 +339,21 @@ public class MainWindowController {
 	@FXML
 	public void buttonCancel(ActionEvent ae)	{
 		setMouseType(OtherTileEnum.DEFAULT,SpreadType.DOT);
-		for(GridPane pane : tabList)	{
+		for(FlowPane pane : tabList)	{
 			pane.setVisible(false);
 		}
 	}
 	@FXML
 	public void buttonRemove(ActionEvent ae)	{
 		setMouseType(OtherTileEnum.REMOVE,SpreadType.AREA);
-		for(GridPane pane : tabList)	{
+		for(FlowPane pane : tabList)	{
 			pane.setVisible(false);
 		}
 	}
 	@FXML
 	public void buttonInfo(ActionEvent ae)	{
 		setMouseType(OtherTileEnum.INFO,SpreadType.DOT);
-		for(GridPane pane : tabList)	{
+		for(FlowPane pane : tabList)	{
 			pane.setVisible(false);
 		}
 
@@ -543,8 +543,8 @@ public class MainWindowController {
 		return cachePath;
 
 	}
-	public void switchTabs(ArrayList<GridPane> tabs,GridPane tab)	{
-		for(GridPane pane :tabs )	{
+	public void switchTabs(ArrayList<FlowPane> tabs,FlowPane tab)	{
+		for(FlowPane pane :tabs )	{
 			pane.setVisible(false);
 			if (pane.equals(tab))	{
 				pane.setVisible(true);
