@@ -25,23 +25,12 @@
 	-fx-alignment: BOTTOM_RIGHT;
 	-fx-content-display: LEFT;
 }
-.button .delete {
-	-fx-padding : 0 0 0 0;
-	-fx-background-color:#00a7d4;
-	-fx-text-fill:#FFFFFF;
-}
-
 .button:focused {
 	-fx-color:#00a7d4;
 	-fx-text-fill:#FFFFFF;
 	-fx-background-color:#ED9C28, #00a7d4;
 	-fx-background-insets: -1.4, 0, 1, 2;
 	-fx-background-radius: 0;
-}
-.button:focused .delete	{
-	-fx-color:#FFFFFF;
-	-fx-text-fill:#00a7d4;
-	-fx-background-color:#ED9C28, #FFFFFF;
 }
 
 .button:hover {
@@ -76,4 +65,29 @@
 }
 .button:hover .text	{
 	-fx-effect:dropshadow(gaussian,#00AAFF,2,0.8,0,0) ;
+}
+
+.delete {
+	-fx-padding : 0.166667em 0.5em 0.25em 0.5em;
+	-fx-background-color:#FF7050;
+	-fx-text-fill:#FFFFFF;
+}
+.delete .text	{
+	-fx-effect:null;
+}
+.delete:focusd	{
+	-fx-color:#FFDDDD;
+	-fx-text-fill:#FF4433;
+	-fx-background-color:#ED9C28, #FFFFFF;
+}
+.delete:focusd .text	{
+	-fx-effect:null;
+}
+.delete:hover	{
+	-fx-color:#FFFFFF;
+	-fx-text-fill:#FF4433;
+	-fx-background-color:#ED9C28, #FFFFFF;
+}
+.delete:hover .text	{
+	-fx-effect:null;
 }

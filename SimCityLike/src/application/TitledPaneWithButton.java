@@ -8,7 +8,7 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.layout.Pane;
 
 public class TitledPaneWithButton extends TitledPane{
-	Button button = new Button("[×]");
+	Button button = new Button("×");
 	TitledPaneWithButton()	{
 		this("", null);
 	}
