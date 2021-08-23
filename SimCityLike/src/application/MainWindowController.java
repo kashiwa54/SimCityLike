@@ -60,6 +60,8 @@ public class MainWindowController {
 	FlowPane areaTab = new FlowPane();
 	FlowPane roadTab = new FlowPane();
 	FlowPane specialTab = new FlowPane();
+	@FXML
+	HBox statusBar;
 
 	ArrayList<FlowPane> tabList = new ArrayList<FlowPane>(5);
 	private Map map;
