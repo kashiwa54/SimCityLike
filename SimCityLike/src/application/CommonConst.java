@@ -14,8 +14,8 @@ public class CommonConst {
 	public static final int WINDOW_MAX_HEIGHT = (int) Main.SYSTEM_WINDOW.getMaxY();
 	public static final int WINDOW_PREF_WIDTH = 1280;
 	public static final int WINDOW_PREF_HEIGHT = 960;
-	public static final int MAP_OFFSET_X = WINDOW_MAX_WIDTH/2;
-	public static final int MAP_OFFSET_Y = WINDOW_MAX_HEIGHT/2 - (TILE_HEIGHT * TILE_SIZE)/2;
+	public static final int MOVE_X_DEFAULT = WINDOW_MAX_WIDTH/2;
+	public static final int MOVE_Y_DEFAULT = WINDOW_MAX_HEIGHT/2 - (TILE_HEIGHT * TILE_SIZE)/2;
 	public static final double MOVE_RATE = 32;
 	public static final double MAX_SIZE_RATE = 300;
 	public static final double MIN_SIZE_RATE = 30;
