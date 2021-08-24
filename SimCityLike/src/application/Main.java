@@ -24,6 +24,7 @@ public class Main extends Application {
 	
 	final Canvas canvas = new Canvas(CommonConst.WINDOW_MAX_WIDTH,CommonConst.WINDOW_MAX_HEIGHT);
 	final Timeline timeline = new Timeline();
+	final TimelineProcessingService mainProcess = new TimelineProcessingService();
 
 
 
@@ -38,7 +39,7 @@ public class Main extends Application {
 			ConsoleWindowController console = consoleWindowSetup(window,map);
 			window.paintMainCanvas(gc,map);
 
-			timeline.getKeyFrames().add(new KeyFrame(Duration.millis(100),new EventHandler<ActionEvent>()	{
+			timeline.getKeyFrames().add(new KeyFrame(Duration.millis(CommonConst.DEFAULT_DURATION),new EventHandler<ActionEvent>()	{
 		    @Override
 		    public void handle(ActionEvent event) {
 		        window.repaint();
@@ -46,6 +47,9 @@ public class Main extends Application {
 			}));
 			timeline.setCycleCount(Timeline.INDEFINITE);
 			timeline.play();
+			
+			mainProcess.setDelay(Duration.millis(CommonConst.DEFAULT_DURATION));
+			mainProcess.start();
 
 			console.write("Start method complete.");
 		} catch(Exception e) {
