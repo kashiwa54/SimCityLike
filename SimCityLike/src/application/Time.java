@@ -12,14 +12,14 @@ public class Time {
 	public Time(int time)	{
 		this.time = time;
 	}
-	public Time(int hour,int second)	{
-		this(2000,Season.SPRING,Week.SUNDAY,hour,second);
+	public Time(int hour,int minute)	{
+		this(2000,Season.SPRING,Week.SUNDAY,hour,minute);
 	}
-	public Time(int year,Season season,Week week,int hour ,int second)	{
+	public Time(int year,Season season,Week week,int hour ,int minute)	{
 		this.year = year;
 		this.season = season;
 		this.week = week;
-		this.time = (hour * 60) + second;
+		this.time = (hour * 60) + minute;
 	}
 	synchronized public static void fomatTime(Time time)	{
 		int elapsedDay = 0;
@@ -39,16 +39,16 @@ public class Time {
 	private void setTime(int time)	{
 		this.time = time;
 	}
-	public void setTime(int hour,int second)	{
-		this.time = hour * 60 + second;
+	public void setTime(int hour,int minute)	{
+		this.time = hour * 60 + minute;
 		fomatTime(this);
 	}
 	public void setHour(int hour)	{
 		this.time = (hour * 60) + this.time % 60;
 		fomatTime(this);
 	}
-	public void setSecond(int second)	{
-		this.time = (this.time / 60) * 60 + second;
+	public void setminute(int minute)	{
+		this.time = (this.time / 60) * 60 + minute;
 		fomatTime(this);
 	}
 	public void setYear(int year)	{
@@ -67,7 +67,7 @@ public class Time {
 	public int getHour()	{
 		return this.time / 60;
 	}
-	public int getSecond()	{
+	public int getminute()	{
 		return this.time % 60;
 	}
 	public int getYear()	{
@@ -79,20 +79,20 @@ public class Time {
 	public Week getWeek()	{
 		return this.week;
 	}
-	public void add(int second)	{
-		this.time += second;
+	public void add(int minute)	{
+		this.time += minute;
 		fomatTime(this);
 	}
-	public void add(int hour,int second)	{
-		this.time += (hour * 60) + second;
+	public void add(int hour,int minute)	{
+		this.time += (hour * 60) + minute;
 		fomatTime(this);
 	}
-	public void back(int second)	{
-		this.time -= second;
+	public void back(int minute)	{
+		this.time -= minute;
 		fomatTime(this);
 	}
-	public void back(int hour,int second)	{
-		this.time -= (hour * 60) + second;
+	public void back(int hour,int minute)	{
+		this.time -= (hour * 60) + minute;
 		fomatTime(this);
 	}
 	synchronized public int addWeek(int add)	{
