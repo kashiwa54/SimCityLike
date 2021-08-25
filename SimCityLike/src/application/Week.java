@@ -1,6 +1,7 @@
 package application;
 
-import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.Map;
 
 import javafx.scene.paint.Color;
 
@@ -17,10 +18,8 @@ public enum Week {
 	private String japanese;
 	private String jp;
 	private Color color;
-	private EnumMap<Week,Integer> weekMap = new EnumMap<Week,Integer>(Week.class){{
-		for(Week w : Week.values())	{
-			weekMap.put(w, w.index);
-		}
+	private static Map<Integer,Week> weekMap = new HashMap<Integer,Week>(){{
+		for(Week w : Week.values())	 put(w.index,w);
 	}};
 	
 	private Week(int index,String japanese,String jp,Color color)	{
@@ -28,10 +27,11 @@ public enum Week {
 		this.japanese = japanese;
 		this.jp = jp;
 		this.color = color;
+		
 	}
 
-	public int weekToIndex()	{
-		return weekMap.get(this);
+	public static Week indexToWeek(int index)	{
+		return weekMap.get(index);
 	}
 	public int getIndex()	{
 		return this.index;
