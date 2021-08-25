@@ -16,6 +16,7 @@ public class TimelineProcessingService extends ScheduledService<Boolean>{
 			@Override
 			protected Boolean call() throws Exception {
 				time.add(1);
+				System.out.println(year + "年" + season.getJp() + week.getJp() + time.getHour() + ":" + time.getSecond());
 				return true;
 			}
 

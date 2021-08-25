@@ -15,7 +15,7 @@ public enum Season {
 		this.color = color;
 	}
 
-	public String getJP()	{
+	public String getJp()	{
 		return jp;
 	}
 	public Color getColor()	{
