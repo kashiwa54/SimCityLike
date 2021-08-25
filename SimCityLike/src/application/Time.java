@@ -2,6 +2,7 @@ package application;
 
 public class Time {
 	//0時0分からの経過時間
+	private int second;
 	private int time;
 	private Week week;
 	private Season season;
@@ -21,35 +22,42 @@ public class Time {
 		this.week = week;
 		this.time = (hour * 60) + minute;
 	}
-	synchronized public static void fomatTime(Time time)	{
-		int elapsedDay = 0;
-		int elapsedSeason = 0;
-		int elapsedYear = 0;
-		if((time.getTime() / 60) > 24)	{
-			elapsedDay = time.getTime() / (60 * 24);
+	synchronized public static void formatTime(Time time)	{
+		int increaseDay = 0;
+		int increaseSeason = 0;
+		int increaseYear = 0;
+		if((time.getSecond() / 60) > 0)	{
+
+		}
+		if((time.getTime() / 60) >= 24)	{
+			increaseDay = time.getTime() / (60 * 24);
 			time.setTime(time.getTime() % 60 * 24);
 		}else if(time.getTime() < 0)	{
-			elapsedDay = time.getTime() / (60 * 24) - 1;
+			increaseDay = time.getTime() / (60 * 24) - 1;
 			time.setTime((time.getTime() % 60 * 24) + (60 * 24));
 		}
-		elapsedSeason = time.addWeek(elapsedDay);
-		elapsedYear = time.addSeason(elapsedSeason);
-		time.addYear(elapsedYear);
+		increaseSeason = time.addWeek(increaseDay);
+		increaseYear = time.addSeason(increaseSeason);
+		time.addYear(increaseYear);
 	}
 	private void setTime(int time)	{
 		this.time = time;
 	}
 	public void setTime(int hour,int minute)	{
 		this.time = hour * 60 + minute;
-		fomatTime(this);
+		formatTime(this);
 	}
 	public void setHour(int hour)	{
 		this.time = (hour * 60) + this.time % 60;
-		fomatTime(this);
+		formatTime(this);
 	}
-	public void setminute(int minute)	{
+	public void setMinute(int minute)	{
 		this.time = (this.time / 60) * 60 + minute;
-		fomatTime(this);
+		formatTime(this);
+	}
+	public void setSecond(int second)	{
+		this.second = second;
+		formatTime(this);
 	}
 	public void setYear(int year)	{
 		this.year = year;
@@ -67,7 +75,7 @@ public class Time {
 	public int getHour()	{
 		return this.time / 60;
 	}
-	public int getminute()	{
+	public int getMinute()	{
 		return this.time % 60;
 	}
 	public int getYear()	{
@@ -79,21 +87,32 @@ public class Time {
 	public Week getWeek()	{
 		return this.week;
 	}
+	public int getSecond()	{
+		return this.second;
+	}
 	public void add(int minute)	{
 		this.time += minute;
-		fomatTime(this);
+		formatTime(this);
 	}
 	public void add(int hour,int minute)	{
 		this.time += (hour * 60) + minute;
-		fomatTime(this);
+		formatTime(this);
 	}
 	public void back(int minute)	{
 		this.time -= minute;
-		fomatTime(this);
+		formatTime(this);
 	}
 	public void back(int hour,int minute)	{
 		this.time -= (hour * 60) + minute;
-		fomatTime(this);
+		formatTime(this);
+	}
+	public void addSecond(int add)	{
+		this.second += add;
+		formatTime(this);
+	}
+	public void backSecond(int back)	{
+		this.second -= back;
+		formatTime(this);
 	}
 	synchronized public int addWeek(int add)	{
 		if(add < 0)	{
