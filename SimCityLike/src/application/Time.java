@@ -122,7 +122,7 @@ public class Time {
 			backSeason(Math.abs(add));
 		}
 		int addYear = 0;
-		for(int i = 0;i <= add;i++)	{
+		for(int i = 0;i < add;i++)	{
 			this.season = this.season.nextSeason();
 			if(this.season == Season.SPRING)	{
 				addYear++;
@@ -135,7 +135,7 @@ public class Time {
 			backSeason(Math.abs(back));
 		}
 		int backYear = 0;
-		for(int i = 0;i <= back;i++)	{
+		for(int i = 0;i < back;i++)	{
 			this.season = this.season.previousSeason();
 			if(this.season == Season.WINTER)	{
 				backYear--;
