@@ -7,10 +7,11 @@ public class People {
 	private int money;
 	private Time birthday;
 
-	private static Time worldClock;
+	private static Time worldClock = null;
 
-	public People(Time birthday)	{
-		age = calcAge(birthday,worldClock);
+	public People(Time birthday) throws NullPointerException {
+		this.birthday = birthday.clone();
+		age = calcAge(worldClock);
 	}
 
 	public static void setWorldClock(Time w)	{
@@ -25,11 +26,12 @@ public class People {
 	public void setMoney(int money)	{
 		this.money = money;
 	}
-	private int calcAge(Time birthday,Time now) throws NullPointerException {
-		return 0;
+	private int calcAge(Time now) throws NullPointerException {
+		
+		return Time.calcSpan(now, this.birthday).getYear();
 	}
 	public int getAge()	 throws NullPointerException{
-		age = calcAge(this.birthday,worldClock);
+		age = calcAge(worldClock);
 		return age;
 	}
 	public int getMoney()	{

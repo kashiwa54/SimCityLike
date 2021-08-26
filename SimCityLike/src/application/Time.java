@@ -45,7 +45,7 @@ public class Time implements Comparable<Time> , Cloneable{
 		increaseYear = time.addSeason(increaseSeason);
 		time.addYear(increaseYear);
 	}
-	synchronized public static Time calcDistance(Time first,Time second)	{
+	synchronized public static Time calcSpan(Time first,Time second)	{
 		if(first.compareTo(second) < 0)	{
 			Time tmp = second;
 			second = first;
