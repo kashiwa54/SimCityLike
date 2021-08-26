@@ -48,4 +48,10 @@ public enum Week {
 	public Color getColor()	{
 		return this.color;
 	}
+	public Week nextWeek()	{
+		return indexToWeek(this.getIndex() + 1);
+	}
+	public Week previousWeek()	{
+		return indexToWeek(this.getIndex() - 1);
+	}
 }
