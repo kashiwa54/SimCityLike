@@ -8,10 +8,10 @@ public class Time {
 	private Season season;
 	private int year;
 	public Time()	{
-		this.time = 0;
+		this(0);
 	}
 	public Time(int time)	{
-		this.time = time;
+		this(0,time);
 	}
 	public Time(int hour,int minute)	{
 		this(2000,Season.SPRING,Week.SUNDAY,hour,minute);
@@ -21,6 +21,7 @@ public class Time {
 		this.season = season;
 		this.week = week;
 		this.time = (hour * 60) + minute;
+		formatTime(this);
 	}
 	synchronized public static void formatTime(Time time)	{
 		int increaseDay = 0;

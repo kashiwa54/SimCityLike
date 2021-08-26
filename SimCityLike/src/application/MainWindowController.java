@@ -62,7 +62,9 @@ public class MainWindowController {
 	FlowPane specialTab = new FlowPane();
 	@FXML
 	HBox statusBar;
+	@FXML
 	Label timeLabel;
+	@FXML
 	Label textLabel;
 
 	ArrayList<FlowPane> tabList = new ArrayList<FlowPane>(5);
@@ -99,7 +101,7 @@ public class MainWindowController {
 	private EnumMap<ResidentalBuildingEnum,Image> residentalMap = new EnumMap<ResidentalBuildingEnum,Image>(ResidentalBuildingEnum.class);
 	private EnumMap<WayEnum,EnumMap<DirectionForImage,Image>> wayMap = new EnumMap<WayEnum,EnumMap<DirectionForImage,Image>>(WayEnum.class);
 
-	private Time time;
+	private Time time = null;
 
 	@FXML
     public void initialize() {
@@ -148,8 +150,6 @@ public class MainWindowController {
     	tabList.add(specialTab);
     	root.getChildren().add(specialTab);
 
-
-    	//timeLabel.setText(time.getYear() + "年" + time.getSeason().getJp() + time.getWeek().getJp() + time.getHour() + ":" + time.getMinute());
 
     	System.out.println("Main window initialized.");
     }
@@ -293,6 +293,13 @@ public class MainWindowController {
 			gc.setStroke(Color.YELLOW);
 			gc.setLineWidth(CURSOR_WIDTH);
 			gc.strokeRect(pointingTileF(mouseOnMap.getX()), pointingTileF(mouseOnMap.getY()), CommonConst.TILE_SIZE, CommonConst.TILE_SIZE);
+		}
+	}
+	public void updateLabels()	{
+		if(time == null)	{
+			timeLabel.setText("null");
+		}else {
+	    	timeLabel.setText(time.getYear() + "年" + time.getSeason().getJp() + time.getWeek().getJp() + time.getHour() + ":" + time.getMinute());
 		}
 	}
 	public void setMouseType(PlacableEnum type,SpreadType spread)	{
@@ -458,8 +465,8 @@ public class MainWindowController {
 		}else {
 			this.zoomX = canvasSizeRate/100;
 			this.zoomY = canvasSizeRate/100;
-			this.pivotX = mouseX;
-			this.pivotY = mouseY;
+			this.pivotX = mouse.getX();
+			this.pivotY = mouse.getY();
 			System.out.println(canvasSizeRate);
 			System.out.println(pivotX);
 		}
@@ -547,6 +554,7 @@ public class MainWindowController {
 
 	public void repaint()	{
 		paintMainCanvas(graphics,map);
+		updateLabels();
 	}
 
 	public void checkFileError(Exception e,File file)	{
