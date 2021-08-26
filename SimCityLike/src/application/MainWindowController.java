@@ -97,6 +97,8 @@ public class MainWindowController {
 	private EnumMap<ResidentalBuildingEnum,Image> residentalMap = new EnumMap<ResidentalBuildingEnum,Image>(ResidentalBuildingEnum.class);
 	private EnumMap<WayEnum,EnumMap<DirectionForImage,Image>> wayMap = new EnumMap<WayEnum,EnumMap<DirectionForImage,Image>>(WayEnum.class);
 
+	private Time time;
+
 	@FXML
     public void initialize() {
     	graphics = canvas.getGraphicsContext2D();
@@ -108,20 +110,7 @@ public class MainWindowController {
 				imageFile = new File(type.getImagePath());
 				residentalMap.put(type,new Image(imageFile.toURI().toString()));
 			} catch (IllegalArgumentException e) {
-				if(imageFile.exists())	{
-					if(imageFile.isFile())	{
-						if(imageFile.canRead())	{
-							System.out.println(imageFile.getAbsolutePath() + " is not image file or other reason.");
-						}else {
-							System.out.println(imageFile.getAbsolutePath() + " can't read.");
-						}
-					}else {
-						System.out.println(imageFile.getAbsolutePath() + " is not a file.");
-					}
-				}else {
-					System.out.println(imageFile.getAbsolutePath() + " is not found.");
-				}
-				e.printStackTrace();
+				checkFileError(e,imageFile);
 			}
     	}
     	for(WayEnum type : WayEnum.values())	{
@@ -141,20 +130,7 @@ public class MainWindowController {
 	    		}
 	    		wayMap.put(type,imageSetMap);
 			} catch (IOException e) {
-				if(imageSetFile.exists())	{
-					if(imageSetFile.isFile())	{
-						if(imageSetFile.canRead())	{
-							System.out.println(imageSetFile.getAbsolutePath() + " is not image file or other reason.");
-						}else {
-							System.out.println(imageSetFile.getAbsolutePath() + " can't read.");
-						}
-					}else {
-						System.out.println(imageSetFile.getAbsolutePath() + " is not a file.");
-					}
-				}else {
-					System.out.println(imageSetFile.getAbsolutePath() + " is not found.");
-				}
-				e.printStackTrace();
+				checkFileError(e,imageSetFile);
 			}
     	}
 
@@ -560,8 +536,29 @@ public class MainWindowController {
 		return (first.getX() == second.getX())&&(first.getY() == second.getY());
 	}
 
+	public void setTime(Time time)	{
+		this.time = time;
+	}
+
 	public void repaint()	{
 		paintMainCanvas(graphics,map);
+	}
+
+	public void checkFileError(Exception e,File file)	{
+		if(file.exists())	{
+			if(file.isFile())	{
+				if(file.canRead())	{
+					System.out.println(file.getAbsolutePath() + " is not image file or other reason.");
+				}else {
+					System.out.println(file.getAbsolutePath() + " can't read.");
+				}
+			}else {
+				System.out.println(file.getAbsolutePath() + " is not a file.");
+			}
+		}else {
+			System.out.println(file.getAbsolutePath() + " is not found.");
+		}
+		e.printStackTrace();
 	}
 
 
