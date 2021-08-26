@@ -62,6 +62,8 @@ public class MainWindowController {
 	FlowPane specialTab = new FlowPane();
 	@FXML
 	HBox statusBar;
+	Label timeLabel;
+	Label textLabel;
 
 	ArrayList<FlowPane> tabList = new ArrayList<FlowPane>(5);
 	private Map map;
@@ -145,6 +147,9 @@ public class MainWindowController {
     	creatTab(specialTab,SpecialTabs.values());
     	tabList.add(specialTab);
     	root.getChildren().add(specialTab);
+
+
+    	//timeLabel.setText(time.getYear() + "年" + time.getSeason().getJp() + time.getWeek().getJp() + time.getHour() + ":" + time.getMinute());
 
     	System.out.println("Main window initialized.");
     }

@@ -50,6 +50,7 @@ public class Main extends Application {
 			
 			mainProcess.setDelay(Duration.millis(CommonConst.DEFAULT_DURATION));
 			mainProcess.start();
+			window.setTime(mainProcess.getTime());
 
 			console.write("Start method complete.");
 		} catch(Exception e) {
