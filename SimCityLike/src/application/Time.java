@@ -93,7 +93,11 @@ public class Time implements Comparable<Time> , Cloneable{
 	@Override
 	public Time clone()	{
 		Time clone = null;
-
+		try {
+			clone = (Time) super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
 		return clone;
 	}
 	private void setTime(int time)	{
