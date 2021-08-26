@@ -2,7 +2,7 @@ package application;
 
 public class Time {
 	//0時0分からの経過時間
-	private int second;
+	private double second;
 	private int time;
 	private Week week;
 	private Season season;
@@ -26,8 +26,9 @@ public class Time {
 		int increaseDay = 0;
 		int increaseSeason = 0;
 		int increaseYear = 0;
-		if((time.getSecond() / 60) > 0)	{
-
+		if((int)(time.getSecond() / 60) > 0)	{
+			time.setTime(time.getTime() + (int)(time.getSecond() / 60));
+			time.setSecond(time.getSecond() % 60);
 		}
 		if((time.getTime() / 60) >= 24)	{
 			increaseDay = time.getTime() / (60 * 24);
@@ -55,7 +56,7 @@ public class Time {
 		this.time = (this.time / 60) * 60 + minute;
 		formatTime(this);
 	}
-	public void setSecond(int second)	{
+	public void setSecond(double second)	{
 		this.second = second;
 		formatTime(this);
 	}
@@ -87,7 +88,7 @@ public class Time {
 	public Week getWeek()	{
 		return this.week;
 	}
-	public int getSecond()	{
+	public double getSecond()	{
 		return this.second;
 	}
 	public void add(int minute)	{
