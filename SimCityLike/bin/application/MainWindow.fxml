@@ -56,15 +56,44 @@
       </HBox>
       <HBox fx:id="statusBar" prefHeight="32.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Label fx:id="timeLabel" maxHeight="32.0" maxWidth="256.0" minHeight="32.0" minWidth="256.0" prefHeight="32.0" prefWidth="256.0" text="Time" HBox.hgrow="NEVER">
+            <Label fx:id="timeLabel" maxHeight="32.0" maxWidth="256.0" minHeight="32.0" minWidth="256.0" prefHeight="32.0" prefWidth="256.0">
                <font>
                   <Font size="20.0" />
                </font>
+               <graphic>
+                  <TextFlow fx:id="timeFlow" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Text fx:id="yearText" strokeType="OUTSIDE" strokeWidth="0.0" text="Year">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="seasonText" strokeType="OUTSIDE" strokeWidth="0.0" text="Season">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="timeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Time">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="weekText" strokeType="OUTSIDE" strokeWidth="0.0" text="Week">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </TextFlow>
+               </graphic>
             </Label>
-            <Label fx:id="timeText" layoutX="10.0" layoutY="10.0" maxHeight="32.0" maxWidth="256.0" minHeight="32.0" minWidth="256.0" prefHeight="32.0" prefWidth="256.0" text="Text">
+            <Label fx:id="textLabel" maxHeight="32.0" maxWidth="256.0" minHeight="32.0" minWidth="256.0" prefHeight="32.0" prefWidth="256.0">
                <font>
                   <Font size="20.0" />
                </font>
+               <graphic>
+                  <TextFlow prefHeight="200.0" prefWidth="200.0" />
+               </graphic>
             </Label>
          </children></HBox>
    </children>

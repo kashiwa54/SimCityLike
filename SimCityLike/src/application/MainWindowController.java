@@ -31,6 +31,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.NonInvertibleTransformException;
 
@@ -66,6 +67,16 @@ public class MainWindowController {
 	Label timeLabel;
 	@FXML
 	Label textLabel;
+	@FXML
+	TextFlow timeFlow;
+	@FXML
+	Text yearText;
+	@FXML
+	Text seasonText;
+	@FXML
+	Text timeText;
+	@FXML
+	Text weekText;
 
 	ArrayList<FlowPane> tabList = new ArrayList<FlowPane>(5);
 	private Map map;
@@ -297,9 +308,14 @@ public class MainWindowController {
 	}
 	public void updateLabels()	{
 		if(time == null)	{
-			timeLabel.setText("null");
+			timeLabel.setText("");
 		}else {
-	    	timeLabel.setText(time.getYear() + "年" + time.getSeason().getJp() + time.getWeek().getJp() + time.getHour() + ":" + time.getMinute());
+			yearText.setText(time.getYear() + "年 ");
+			seasonText.setFill(time.getSeason().getColor());
+			seasonText.setText(time.getSeason().getJp() + " ");
+			timeText.setText(time.format());
+			weekText.setFill(time.getWeek().getColor());
+	    	weekText.setText(" " + time.getWeek().getJp());
 		}
 	}
 	public void setMouseType(PlacableEnum type,SpreadType spread)	{

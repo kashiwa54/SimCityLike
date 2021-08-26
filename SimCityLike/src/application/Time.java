@@ -171,4 +171,7 @@ public class Time {
 	public void backYear(int back)	{
 		this.year -= back;
 	}
+	public String format()	{
+		return String.format("%02d : %02d", getHour(),getMinute());
+	}
 }
