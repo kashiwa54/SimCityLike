@@ -3,10 +3,10 @@ package application;
 import javafx.scene.paint.Color;
 
 public enum Season {
-	SPRING("春",Color.PINK),
-	SUMMER("夏",Color.LIGHTBLUE),
-	AUTUMN("秋",Color.YELLOW),
-	WINTER("冬",Color.LIGHTGRAY);
+	SPRING("春",Color.DEEPPINK),
+	SUMMER("夏",Color.BLUE),
+	AUTUMN("秋",Color.DARKORANGE),
+	WINTER("冬",Color.STEELBLUE);
 
 	private String jp;
 	private Color color;

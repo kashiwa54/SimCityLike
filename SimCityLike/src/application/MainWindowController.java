@@ -17,6 +17,8 @@ import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -77,6 +79,8 @@ public class MainWindowController {
 	Text timeText;
 	@FXML
 	Text weekText;
+
+	DemandBarChart<String,Number> demand;
 
 	ArrayList<FlowPane> tabList = new ArrayList<FlowPane>(5);
 	private Map map;
@@ -161,6 +165,8 @@ public class MainWindowController {
     	tabList.add(specialTab);
     	root.getChildren().add(specialTab);
 
+    	demand = creatDemand();
+    	root.getChildren().add(demand);
 
     	System.out.println("Main window initialized.");
     }
@@ -190,6 +196,19 @@ public class MainWindowController {
 				setMouseType(mouseType,spread);
 			});
     	}
+	}
+	public DemandBarChart<String,Number> creatDemand()	{
+		DemandBarChart<String,Number> demand;
+    	CategoryAxis xAxis = new CategoryAxis();
+    	NumberAxis yAxis = new NumberAxis();
+    	demand = new DemandBarChart<String,Number>(xAxis,yAxis);
+    	AnchorPane.setRightAnchor(demand,0.0);
+    	AnchorPane.setBottomAnchor(demand, CommonConst.INFO_BAR_SIZE);
+    	demand.setMaxSize(CommonConst.DEMAND_CHART_SIZE, CommonConst.DEMAND_CHART_SIZE);
+    	demand.setPrefSize(CommonConst.DEMAND_CHART_SIZE, CommonConst.DEMAND_CHART_SIZE);
+    	demand.setMinSize(CommonConst.DEMAND_CHART_SIZE, CommonConst.DEMAND_CHART_SIZE);
+
+    	return demand;
 	}
 	public void setMap(Map map)		{
 		this.map = map;

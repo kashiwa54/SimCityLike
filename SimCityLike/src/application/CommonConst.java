@@ -20,6 +20,8 @@ public class CommonConst {
 	public static final double MAX_SIZE_RATE = 300;
 	public static final double MIN_SIZE_RATE = 30;
 	public static final double BUTTON_SIZE = 64.0;
+	public static final double INFO_BAR_SIZE = 32.0;
+	public static final double DEMAND_CHART_SIZE = 192.0;
 
 	public static final int DEFAULT_YEAR = 2020;
 	public static final Season DEFAULUT_SEASON = Season.SPRING;
