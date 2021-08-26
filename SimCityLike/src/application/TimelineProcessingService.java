@@ -12,7 +12,7 @@ public class TimelineProcessingService extends ScheduledService<Boolean>{
 
 			@Override
 			protected Boolean call() throws Exception {
-				time.addSecond(10);
+				time.addSecond(0.1);
 				return true;
 			}
 

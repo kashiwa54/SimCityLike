@@ -108,11 +108,11 @@ public class Time {
 		this.time -= (hour * 60) + minute;
 		formatTime(this);
 	}
-	public void addSecond(int add)	{
+	public void addSecond(double add)	{
 		this.second += add;
 		formatTime(this);
 	}
-	public void backSecond(int back)	{
+	public void backSecond(double back)	{
 		this.second -= back;
 		formatTime(this);
 	}
