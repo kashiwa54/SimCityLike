@@ -1,6 +1,9 @@
 package application;
 
-public class Time {
+public class Time implements Comparable<Time> , Cloneable{
+	public static final int ONEDAYTIME = 24 * 60;
+	public static final int ONESEASONTIME = ONEDAYTIME * 7;
+	public static final int ONEYEARTIME = ONESEASONTIME * 4;
 	//0時0分からの経過時間
 	private double second;
 	private int time;
@@ -41,6 +44,57 @@ public class Time {
 		increaseSeason = time.addWeek(increaseDay);
 		increaseYear = time.addSeason(increaseSeason);
 		time.addYear(increaseYear);
+	}
+	synchronized public static Time calcDistance(Time first,Time second)	{
+		if(first.compareTo(second) < 0)	{
+			Time tmp = second;
+			second = first;
+			first = tmp;
+		}
+		long fMinute = ONEYEARTIME * first.getYear() + ONESEASONTIME * first.getSeason().getIndex() +
+				ONEDAYTIME * first.getWeek().getIndex() + first.getTime();
+		long sMinute = ONEYEARTIME * second.getYear() + ONESEASONTIME * second.getSeason().getIndex() +
+				ONEDAYTIME * second.getWeek().getIndex() + second.getTime();
+		long dMinute = fMinute - sMinute;
+		double dSecond = first.getSecond() - second.getSecond();
+		if (dSecond < 0)	{
+			dMinute--;
+			dSecond += 60;
+		}
+		Time newTime = new Time((int)dMinute);
+		newTime.setSecond(dSecond);
+		return newTime;
+	}
+	@Override
+	public int compareTo(Time time)		{
+		if (this.getYear() < time.getYear())	{
+			return -1;
+		}else if(this.getYear() == time.getYear()){
+			if (this.getSeason().getIndex() < time.getSeason().getIndex()) {
+				return -1;
+			}else if(this.getSeason() == time.getSeason())	{
+				if(this.getWeek().getIndex() < time.getWeek().getIndex())	{
+					return -1;
+				}else if(this.getWeek() == time.getWeek())	{
+					if(this.getTime() < time.getTime())	{
+						return -1;
+					}else if(this.getTime() == time.getTime())	{
+						if(this.getSecond() < time.getSecond())	{
+							return -1;
+						}else if(this.getSecond() == time.getSecond())	{
+							return 0;
+						}
+					}
+				}
+			}
+		}
+		return 1;
+	}
+	@Override
+	public Time clone()	{
+		Time clone = null;
+
+		return clone;
 	}
 	private void setTime(int time)	{
 		this.time = time;
