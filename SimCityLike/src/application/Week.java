@@ -21,16 +21,19 @@ public enum Week {
 	private static Map<Integer,Week> weekMap = new HashMap<Integer,Week>(){{
 		for(Week w : Week.values())	 put(w.index,w);
 	}};
-	
+
 	private Week(int index,String japanese,String jp,Color color)	{
 		this.index = index;
 		this.japanese = japanese;
 		this.jp = jp;
 		this.color = color;
-		
+
 	}
 
 	public static Week indexToWeek(int index)	{
+		if (index < 0)	{
+			index = -index + 7;
+		}
 		return weekMap.get(index);
 	}
 	public int getIndex()	{
