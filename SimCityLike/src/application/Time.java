@@ -150,27 +150,27 @@ public class Time implements Comparable<Time> , Cloneable{
 	public double getSecond()	{
 		return this.second;
 	}
-	public void add(int minute)	{
+	synchronized public void add(int minute)	{
 		this.time += minute;
 		formatTime(this);
 	}
-	public void add(int hour,int minute)	{
+	synchronized public void add(int hour,int minute)	{
 		this.time += (hour * 60) + minute;
 		formatTime(this);
 	}
-	public void back(int minute)	{
+	synchronized public void back(int minute)	{
 		this.time -= minute;
 		formatTime(this);
 	}
-	public void back(int hour,int minute)	{
+	synchronized public void back(int hour,int minute)	{
 		this.time -= (hour * 60) + minute;
 		formatTime(this);
 	}
-	public void addSecond(double add)	{
+	synchronized public void addSecond(double add)	{
 		this.second += add;
 		formatTime(this);
 	}
-	public void backSecond(double back)	{
+	synchronized public void backSecond(double back)	{
 		this.second -= back;
 		formatTime(this);
 	}
@@ -223,10 +223,10 @@ public class Time implements Comparable<Time> , Cloneable{
 		return backYear;
 	}
 
-	public void addYear(int add)	{
+	synchronized public void addYear(int add)	{
 		this.year += add;
 	}
-	public void backYear(int back)	{
+	synchronized public void backYear(int back)	{
 		this.year -= back;
 	}
 	public String format()	{
