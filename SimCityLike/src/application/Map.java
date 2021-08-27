@@ -47,7 +47,7 @@ public class Map {
 		}
 	}
 
-	public TileObject place(TileObject obj,int x,int y)	{
+	synchronized public TileObject place(TileObject obj,int x,int y)	{
 		if (isInside(x,y))	{
 			TileObject mapObj = getTileObject(x,y);
 			if ((obj instanceof Way)&&(mapObj instanceof Way))	{
@@ -90,7 +90,7 @@ public class Map {
 		}
 	}
 
-	public void remove(int x,int y)	{
+	synchronized public void remove(int x,int y)	{
 		int opX = tile[x][y].getX();
 		int opY = tile[x][y].getY();
 		int w = tile[x][y].getWidth();
@@ -103,7 +103,7 @@ public class Map {
 		}
 	}
 
-	private void clear(int x,int y)	{
+	synchronized private void clear(int x,int y)	{
 		tile[x][y].remove();
 		tile[x][y].setOnMap(false);
 		tile[x][y] = new Space(x,y);
