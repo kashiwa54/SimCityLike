@@ -4,7 +4,10 @@ import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Task;
 
 public class TimelineProcessingService extends ScheduledService<Boolean>{
-	private Time time = new Time(CommonConst.DEFAULT_YEAR,CommonConst.DEFAULUT_SEASON,CommonConst.DEFAULT_WEEK,0,0);
+	private Time time;
+	public TimelineProcessingService(Time worldTime)	{
+		this.time = worldTime;
+	}
 
 	@Override
 	protected Task<Boolean> createTask() {
@@ -19,8 +22,4 @@ public class TimelineProcessingService extends ScheduledService<Boolean>{
 		};
 		return task;
 	}
-	public Time getTime()	{
-		return this.time;
-	}
-
 }

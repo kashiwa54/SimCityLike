@@ -21,17 +21,20 @@ import javafx.util.Duration;
 
 public class Main extends Application {
 	static final Rectangle2D SYSTEM_WINDOW = Screen.getPrimary().getVisualBounds();
-	
+
 	final Canvas canvas = new Canvas(CommonConst.WINDOW_MAX_WIDTH,CommonConst.WINDOW_MAX_HEIGHT);
 	final Timeline timeline = new Timeline();
-	final TimelineProcessingService mainProcess = new TimelineProcessingService();
 
+	TimelineProcessingService mainProcess = null;
 
+	Map map = new Map(CommonConst.TILE_WIDTH,CommonConst.TILE_HEIGHT);
+	Time worldTime = new Time(CommonConst.DEFAULT_YEAR,CommonConst.DEFAULUT_SEASON,CommonConst.DEFAULT_WEEK,0,0);
 
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Map map = new Map(CommonConst.TILE_WIDTH,CommonConst.TILE_HEIGHT);
+
+			mainProcess = new TimelineProcessingService(worldTime);
 
 			MainWindowController window = mainWindowSetup(primaryStage,map);
 			GraphicsContext gc = window.getGraphicsContext();
@@ -47,10 +50,10 @@ public class Main extends Application {
 			}));
 			timeline.setCycleCount(Timeline.INDEFINITE);
 			timeline.play();
-			
+
 			mainProcess.setDelay(Duration.millis(CommonConst.DEFAULT_DURATION));
 			mainProcess.start();
-			window.setTime(mainProcess.getTime());
+			window.setTime(worldTime);
 
 			console.write("Start method complete.");
 		} catch(Exception e) {
