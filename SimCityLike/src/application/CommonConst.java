@@ -23,8 +23,12 @@ public class CommonConst {
 	public static final double INFO_BAR_SIZE = 32.0;
 	public static final double DEMAND_CHART_SIZE = 192.0;
 
+	public static final int PEOPLE_INISIAL_CAPACITY = 50;
+	public static final int PEOPLE_INCREMENT_CAPACITY = 50;
+
 	public static final int DEFAULT_YEAR = 2020;
 	public static final Season DEFAULUT_SEASON = Season.SPRING;
 	public static final Week DEFAULT_WEEK = Week.MONDAY;
 	public static final int DEFAULT_DURATION = 100;
+	public static final double DEFAULT_INCREMENT_SECOND = 0.1;
 }
