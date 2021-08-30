@@ -29,10 +29,12 @@ public class Main extends Application {
 
 	Map map = new Map(CommonConst.TILE_WIDTH,CommonConst.TILE_HEIGHT);
 	Time worldTime = new Time(CommonConst.DEFAULT_YEAR,CommonConst.DEFAULUT_SEASON,CommonConst.DEFAULT_WEEK,0,0);
+	PeopleManager pm = new PeopleManager(worldTime);
 
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			pm.bindMap(map);
 
 			mainProcess = new TimelineProcessingService(worldTime);
 

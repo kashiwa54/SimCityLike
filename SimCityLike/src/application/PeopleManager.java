@@ -9,18 +9,24 @@ public class PeopleManager {
 	private Time worldClock = null;
 	private Map fieldMap = null;
 
-	private ArrayList<People> peopleList = new ArrayList<People>(INISIAL_CAPACITY);
+	private ArrayList<People> homelessList = new ArrayList<People>(INISIAL_CAPACITY);
+	private ArrayList<ResidentalBuilding> residental = new ArrayList<ResidentalBuilding>(INISIAL_CAPACITY);
 
 	public PeopleManager(Time worldTime)	{
 		this.worldClock = worldTime;
-
 	}
+
 	public boolean bindMap(Map map)	{
 		if(map == null)	{
 			return false;
 		}else {
 			this.fieldMap = map;
-			return true;
+			if(map.bindPeopleManager(this))	{
+				return true;
+			}else {
+				this.fieldMap = null;
+				return false;
+			}
 		}
 	}
 

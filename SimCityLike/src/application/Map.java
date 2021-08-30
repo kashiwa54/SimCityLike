@@ -5,6 +5,8 @@ public class Map {
 	private int height;
 	private TileObject[][] tile;
 
+	private PeopleManager pManager = null;
+
 	public Map(int x,int y)	{
 		this.width = x;
 		this.height = y;
@@ -108,5 +110,17 @@ public class Map {
 		tile[x][y].setOnMap(false);
 		tile[x][y] = new Space(x,y);
 		tile[x][y].setOnMap(true);
+	}
+
+	public boolean bindPeopleManager(PeopleManager pm)	{
+		if(pm == null)	{
+			return false;
+		}else {
+			pManager = pm;
+			return true;
+		}
+	}
+	public PeopleManager getPeopleManager()	{
+		return this.pManager;
 	}
 }
