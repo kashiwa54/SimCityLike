@@ -15,7 +15,7 @@ public class TimelineProcessingService extends ScheduledService<Boolean>{
 
 			@Override
 			protected Boolean call() throws Exception {
-				time.addSecond(0.1);
+				time.addSecond(CommonConst.DEFAULT_INCREMENT_SECOND);
 				return true;
 			}
 
