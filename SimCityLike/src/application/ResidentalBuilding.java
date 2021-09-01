@@ -1,6 +1,6 @@
 package application;
 
-public abstract class ResidentalBuilding extends Building{
+public abstract class ResidentalBuilding extends Building implements Habitable{
 	private int capacity;
 	private People[] resident = new People[capacity];
 	public ResidentalBuilding()	{

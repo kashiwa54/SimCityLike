@@ -10,7 +10,7 @@ public class PeopleManager {
 	private Map fieldMap = null;
 
 	private ArrayList<People> homelessList = new ArrayList<People>(INISIAL_CAPACITY);
-	private ArrayList<ResidentalBuilding> residental = new ArrayList<ResidentalBuilding>(INISIAL_CAPACITY);
+	private ArrayList<ResidentalBuilding> residentalList = new ArrayList<ResidentalBuilding>(INISIAL_CAPACITY);
 
 	public PeopleManager(Time worldTime)	{
 		this.worldClock = worldTime;
