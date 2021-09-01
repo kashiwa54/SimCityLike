@@ -2,8 +2,8 @@ package application;
 
 public class People {
 	private int age;
-	private Residental home;
-	private Building workspace;
+	private Habitable home;
+	private Workable workspace;
 	private int money;
 	private Time birthday;
 
@@ -12,10 +12,10 @@ public class People {
 		age = calcAge(world);
 	}
 
-	public void setHome(Residental r)	{
+	public void setHome(Habitable r)	{
 		this.home = r;
 	}
-	public void setWork(Building b)		{
+	public void setWork(Workable b)		{
 		this.workspace = b;
 	}
 	public void setMoney(int money)	{
@@ -32,10 +32,10 @@ public class People {
 	public int getMoney()	{
 		return this.money;
 	}
-	public Residental getHome()	{
+	public Habitable getHome()	{
 		return this.home;
 	}
-	public Building getWorkspace()	{
+	public Workable getWorkspace()	{
 		return this.workspace;
 	}
 	public Time getBirthday()	{
