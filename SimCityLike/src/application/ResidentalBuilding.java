@@ -28,4 +28,32 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 		info = info.concat("住人数:" + residentNumber + "\n");
 		return info;
 	}
+
+	@Override
+	public boolean addResident(People p) {
+		for(int i = 0;i < resident.length;i++)	{
+			if(resident[i] == null)	{
+				resident[i] = p;
+				p.setHome(this);
+				return true;
+			}
+		}
+		return false;
+	}
+	@Override
+	public boolean removeResident(People p) {
+		for(int i = 0;i < resident.length; i++)	{
+			if (resident[i] == p)	{
+				resident[i] = null;
+				p.setHome(null);
+				while((i < resident.length - 1))	{
+					resident[i] = resident[i + 1];
+					if(resident[i] == null) break;
+					i++;
+				}
+				return true;
+			}
+		}
+		return false;
+	}
 }
