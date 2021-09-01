@@ -1,6 +1,11 @@
 package application;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public abstract class ResidentalBuilding extends Building implements Habitable{
+	public static List<ResidentalBuilding> residentalList = Collections.synchronizedList(new ArrayList<ResidentalBuilding>(CommonConst.BUILDING_INISIAL_CAPACITY));
 	private int capacity;
 	private People[] resident = new People[capacity];
 	public ResidentalBuilding()	{

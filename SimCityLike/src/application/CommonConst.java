@@ -25,6 +25,7 @@ public class CommonConst {
 
 	public static final int PEOPLE_INISIAL_CAPACITY = 50;
 	public static final int PEOPLE_INCREMENT_CAPACITY = 50;
+	public static final int BUILDING_INISIAL_CAPACITY = 50;
 
 	public static final int DEFAULT_YEAR = 2020;
 	public static final Season DEFAULUT_SEASON = Season.SPRING;
