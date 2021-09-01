@@ -73,4 +73,13 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 		}
 		return capacity - rCnt;
 	}
+	@Override
+	public boolean place() {
+		residentalList.add(this);
+		return false;
+	}
+	@Override
+	public void remove() {
+		residentalList.remove(this);
+	}
 }

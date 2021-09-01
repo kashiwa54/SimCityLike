@@ -7,16 +7,6 @@ public class Cottage extends ResidentalBuilding{
 		type = ResidentalBuildingEnum.COTTAGE;
 	}
 	@Override
-	public boolean place() {
-		// TODO 自動生成されたメソッド・スタブ
-		return false;
-	}
-	@Override
-	public void remove() {
-		// TODO 自動生成されたメソッド・スタブ
-
-	}
-	@Override
 	public TileObject copy() {
 		return new Cottage(this.getX(),this.getY());
 	}
