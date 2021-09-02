@@ -2,14 +2,16 @@ package application;
 
 public class People {
 	private int age;
+	private String name;
 	private Habitable home;
 	private Workable workspace;
 	private int money;
 	private Time birthday;
 
-	public People(Time birthday,Time world){
+	public People(Time birthday,Time world,String name){
 		this.birthday = birthday.clone();
-		age = calcAge(world);
+		this.age = calcAge(world);
+		this.name = name;
 	}
 
 	public void setHome(Habitable r)	{
@@ -40,5 +42,8 @@ public class People {
 	}
 	public Time getBirthday()	{
 		return this.birthday;
+	}
+	public String getName()	{
+		return this.name;
 	}
 }

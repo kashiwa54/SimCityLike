@@ -1,7 +1,11 @@
 package application;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class PeopleManager {
 	public static final int INISIAL_CAPACITY = CommonConst.PEOPLE_INISIAL_CAPACITY;
@@ -10,11 +14,14 @@ public class PeopleManager {
 	private Time worldClock = null;
 	private Map fieldMap = null;
 
+	private ArrayList<String> myoujiList = new ArrayList<String>(CommonConst.MYOUJI_INISIAL_CAPACITY);;
+
 	private ArrayList<People> homelessList = new ArrayList<People>(INISIAL_CAPACITY);
 	private List<ResidentalBuilding> residentalList = ResidentalBuilding.residentalList;;
 
 	public PeopleManager(Time worldTime)	{
 		this.worldClock = worldTime;
+		readNameFile();
 	}
 
 	public boolean bindMap(Map map)	{
@@ -34,15 +41,43 @@ public class PeopleManager {
 	public People createPeople(int age)	{
 		Time birthday = worldClock.clone();
 		birthday.backYear(age);
-		People p = new People(birthday,worldClock);
+		String name = createName();
+		People p = new People(birthday,worldClock,name);
 		homelessList.add(p);
 		return p;
 	}
 	public People birthPeople()	{
 		Time birthday = worldClock.clone();
-		People p = new People(birthday,worldClock);
+		String name = createName();
+		People p = new People(birthday,worldClock,name);
 		homelessList.add(p);
 		return p;
+	}
+	private void readNameFile()	{
+		BufferedReader myouji = null;
+		try {
+			myouji = new BufferedReader(new FileReader(CommonConst.MYOUJI_FILE_NAME));
+			String buffer = null;
+			while((buffer = myouji.readLine()) != null)	{
+				myoujiList.add(buffer);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				myouji.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		myoujiList = new ArrayList<String>();
+	}
+	private String createName()	{
+		Random rnd = new Random();
+		String name;
+		name = myoujiList.get(rnd.nextInt(myoujiList.size()));
+
+		return name;
 	}
 
 }
