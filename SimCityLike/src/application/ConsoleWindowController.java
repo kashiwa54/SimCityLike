@@ -49,25 +49,25 @@ public class ConsoleWindowController	{
 			builder.append(value + "_");
 		}
 		builder.append("\n");
-		
+
 		switch(arg[0])	{
-		case "end" : 
+		case "end" :
 			builder.append("shutdown...\n");
 			break;
-			
-		case "area" : 
+
+		case "area" :
 			try	{
 				x = Integer.parseInt(arg[2]);
 				y = Integer.parseInt(arg[3]);
 				width = Integer.parseInt(arg[4]);
 				height = Integer.parseInt(arg[5]);
-	
+
 			}catch(NumberFormatException e)	{
 				builder.append("area command format is\n");
 				builder.append("area [building name] [position x] [position y] [width] [height]\n");
 			}
 			switch(arg[1])	{
-			case "residental" : 
+			case "residental" :
 				for(int i = 0;i <= width;i++)	{
 					for(int j = 0;j <= height;j++)	{
 						Residental r = new Residental(x + i,y + j);
@@ -76,7 +76,7 @@ public class ConsoleWindowController	{
 					}
 				}
 				break;
-			case "commercial" : 
+			case "commercial" :
 				for(int i = 0;i <= width;i++)	{
 					for(int j = 0;j <= height;j++)	{
 						Commercial r = new Commercial(x + i,y + j);
@@ -85,7 +85,7 @@ public class ConsoleWindowController	{
 					}
 				}
 				break;
-			case "industrial" : 
+			case "industrial" :
 				for(int i = 0;i <= width;i++)	{
 					for(int j = 0;j <= height;j++)	{
 						Industrial r = new Industrial(x + i,y + j);
@@ -94,24 +94,25 @@ public class ConsoleWindowController	{
 					}
 				}
 				break;
-			default : 
+			default :
 				builder.append("Cannot find this area name.\n");
 			}
 			break;
-			
-		case "remove" : 
+
+		case "remove" :
 			try	{
 				x = Integer.parseInt(arg[1]);
 				y = Integer.parseInt(arg[2]);
-	
+
 			}catch(Exception e)	{
+				e.printStackTrace();
 				builder.append("remove command format is\n");
 				builder.append("remove [position x] [position y]\n");
 			}
 			this.map.remove(x,y);
 			break;
-			
-		case "place" : 
+
+		case "place" :
 			try	{
 				boolean isFind = false;
 				x = Integer.parseInt(arg[2]);
@@ -138,12 +139,36 @@ public class ConsoleWindowController	{
 				if (isFind)	break;
 				builder.append("Cannot find this building name.\n");
 			}catch(Exception e)	{
+				e.printStackTrace();
 				builder.append("place command format is\n");
 				builder.append("place [position x] [position y]\n");
 			}
 			break;
-			
-		default : 
+
+		case "people" :
+			PeopleManager pm = map.getPeopleManager();
+			switch(arg[1])	{
+			case "list" :
+				for(People p : pm.getPeopleList())	{
+					builder.append(p.toString() + "\n");
+				}
+				break;
+			case "create" :
+				try {
+					int age = Integer.parseInt(arg[2]);
+					pm.createPeople(age);
+				}catch(Exception e)	{
+					e.printStackTrace();
+					builder.append("people create command format is \n");
+					builder.append("people create [age].\n");
+				}
+				break;
+			default :
+				builder.append("Available augments of people command are\n");
+				builder.append(" [list] [create [age]].\n");
+			}
+			break;
+		default :
 			builder.append("cannot find this command.\n");
 		}
 //		if(arg[0].equals("end"))	{

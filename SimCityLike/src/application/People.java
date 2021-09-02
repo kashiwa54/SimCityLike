@@ -46,4 +46,13 @@ public class People {
 	public String getName()	{
 		return this.name;
 	}
+	@Override
+	public String toString()	{
+		return "name : " + name + "\n"
+				+"age : " + age + "\n"
+				+"birthday : " + birthday + "\n"
+				+"home : " + home + "\n"
+				+"workSpace : " + workspace + "\n"
+				+"money : " + money + "\n";
+	}
 }

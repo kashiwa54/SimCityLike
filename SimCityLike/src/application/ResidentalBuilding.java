@@ -61,6 +61,9 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 		}
 		return false;
 	}
+	public People[] getResident()	{
+		return resident;
+	}
 	@Override
 	public int getFreeCapacity()	{
 		int rCnt = 0;

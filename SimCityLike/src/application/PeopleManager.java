@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -17,7 +18,7 @@ public class PeopleManager {
 	private ArrayList<String> myoujiList = new ArrayList<String>(CommonConst.MYOUJI_INISIAL_CAPACITY);;
 
 	private ArrayList<People> homelessList = new ArrayList<People>(INISIAL_CAPACITY);
-	private List<ResidentalBuilding> residentalList = ResidentalBuilding.residentalList;;
+	private List<ResidentalBuilding> residentalList = ResidentalBuilding.residentalList;
 
 	public PeopleManager(Time worldTime)	{
 		this.worldClock = worldTime;
@@ -53,6 +54,14 @@ public class PeopleManager {
 		homelessList.add(p);
 		return p;
 	}
+	public List<People> getPeopleList()	{
+		List<People> list = (ArrayList<People>) homelessList.clone();
+		for(ResidentalBuilding r : residentalList)	{
+			list.addAll(Arrays.asList(r.getResident()));
+		}
+		return list;
+
+	}
 	private void readNameFile()	{
 		BufferedReader myouji = null;
 		try {
@@ -70,7 +79,6 @@ public class PeopleManager {
 				e.printStackTrace();
 			}
 		}
-		myoujiList = new ArrayList<String>();
 	}
 	private String createName()	{
 		Random rnd = new Random();
