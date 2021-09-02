@@ -232,4 +232,8 @@ public class Time implements Comparable<Time> , Cloneable{
 	public String format()	{
 		return String.format("%02d : %02d", getHour(),getMinute());
 	}
+	@Override
+	public String toString()	{
+		return "" + year + " " + season + " " + format() + " " + week;
+	}
 }
