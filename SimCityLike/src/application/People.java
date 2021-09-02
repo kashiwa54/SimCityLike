@@ -25,7 +25,7 @@ public class People {
 	}
 	private int calcAge(Time now){
 
-		return Time.calcSpan(now, this.birthday).getYear();
+		return Time.calcSpan(this.birthday,now).getYear();
 	}
 	public int getAge(Time world)	 throws NullPointerException{
 		age = calcAge(world);

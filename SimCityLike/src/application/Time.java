@@ -17,7 +17,7 @@ public class Time implements Comparable<Time> , Cloneable{
 		this(0,time);
 	}
 	public Time(int hour,int minute)	{
-		this(2000,Season.SPRING,Week.SUNDAY,hour,minute);
+		this(0,Season.SPRING,Week.SUNDAY,hour,minute);
 	}
 	public Time(int year,Season season,Week week,int hour ,int minute)	{
 		this.year = year;
@@ -36,10 +36,10 @@ public class Time implements Comparable<Time> , Cloneable{
 		}
 		if((time.getTime() / 60) >= 24)	{
 			increaseDay = time.getTime() / (60 * 24);
-			time.setTime(time.getTime() % 60 * 24);
+			time.setTime(time.getTime() % (60 * 24));
 		}else if(time.getTime() < 0)	{
 			increaseDay = time.getTime() / (60 * 24) - 1;
-			time.setTime((time.getTime() % 60 * 24) + (60 * 24));
+			time.setTime((time.getTime() % (60 * 24)) + (60 * 24));
 		}
 		increaseSeason = time.addWeek(increaseDay);
 		increaseYear = time.addSeason(increaseSeason);
