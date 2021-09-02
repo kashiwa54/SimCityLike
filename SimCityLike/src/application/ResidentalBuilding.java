@@ -7,6 +7,7 @@ import java.util.List;
 public abstract class ResidentalBuilding extends Building implements Habitable{
 	public static List<ResidentalBuilding> residentalList = Collections.synchronizedList(new ArrayList<ResidentalBuilding>(CommonConst.BUILDING_INISIAL_CAPACITY));
 	private int capacity;
+	private int freeCapacity;
 	private People[] resident = new People[capacity];
 	public ResidentalBuilding()	{
 		this(0,0);
@@ -43,6 +44,7 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 				return true;
 			}
 		}
+		calcFreeCapacity();
 		return false;
 	}
 	@Override
@@ -56,6 +58,7 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 					if(resident[i] == null) break;
 					i++;
 				}
+				calcFreeCapacity();
 				return true;
 			}
 		}
@@ -65,7 +68,10 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 		return resident;
 	}
 	@Override
-	public int getFreeCapacity()	{
+	public int getFreeCapacity() {
+		return freeCapacity;
+	}
+	private void calcFreeCapacity()	{
 		int rCnt = 0;
 		for(People p : resident)	{
 			if(p != null)	{
@@ -74,7 +80,7 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 				break;
 			}
 		}
-		return capacity - rCnt;
+		this.freeCapacity = capacity - rCnt;
 	}
 	@Override
 	public boolean place() {
@@ -84,5 +90,8 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 	@Override
 	public void remove() {
 		residentalList.remove(this);
+		for(People p : resident)	{
+			p.setHome(null);
+		}
 	}
 }

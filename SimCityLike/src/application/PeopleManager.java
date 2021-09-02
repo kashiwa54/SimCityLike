@@ -43,24 +43,29 @@ public class PeopleManager {
 		Time birthday = worldClock.clone();
 		birthday.backYear(age);
 		String name = createName();
-		People p = new People(birthday,worldClock,name);
+		People p = new People(this,birthday,worldClock,name);
 		homelessList.add(p);
 		return p;
 	}
 	public People birthPeople()	{
 		Time birthday = worldClock.clone();
 		String name = createName();
-		People p = new People(birthday,worldClock,name);
+		People p = new People(this,birthday,worldClock,name);
 		homelessList.add(p);
 		return p;
 	}
 	public List<People> getPeopleList()	{
+		@SuppressWarnings("unchecked")
 		List<People> list = (ArrayList<People>) homelessList.clone();
 		for(ResidentalBuilding r : residentalList)	{
 			list.addAll(Arrays.asList(r.getResident()));
 		}
 		return list;
 
+	}
+	public void removeHome(People p)	{
+		p.setHome(null);
+		homelessList.add(p);
 	}
 	private void readNameFile()	{
 		BufferedReader myouji = null;

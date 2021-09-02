@@ -1,6 +1,7 @@
 package application;
 
 public class People {
+	private PeopleManager manager;
 	private int age;
 	private String name;
 	private Habitable home;
@@ -8,7 +9,8 @@ public class People {
 	private int money;
 	private Time birthday;
 
-	public People(Time birthday,Time world,String name){
+	public People(PeopleManager manager,Time birthday,Time world,String name){
+		this.manager = manager;
 		this.birthday = birthday.clone();
 		this.age = calcAge(world);
 		this.name = name;
