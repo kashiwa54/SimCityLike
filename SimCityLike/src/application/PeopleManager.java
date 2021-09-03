@@ -19,6 +19,7 @@ public class PeopleManager {
 
 	private ArrayList<People> homelessList = new ArrayList<People>(INISIAL_CAPACITY);
 	private List<ResidentalBuilding> residentalList = ResidentalBuilding.residentalList;
+	private ArrayList<Habitable> vacantHomeList = null;
 
 	public PeopleManager(Time worldTime)	{
 		this.worldClock = worldTime;
@@ -65,6 +66,28 @@ public class PeopleManager {
 	}
 	public void addHomelessList(People p)	{
 		homelessList.add(p);
+	}
+	public void checkVacantHome()	{
+		vacantHomeList = new ArrayList<Habitable>(INISIAL_CAPACITY);
+		for(ResidentalBuilding rb : residentalList)	{
+			if(rb.getFreeCapacity() > 0)	{
+				vacantHomeList.add(rb);
+			}
+		}
+	}
+	public boolean MoveIntoBuilding(People p)	{
+		Random rnd = new Random();
+		int size = vacantHomeList.size();
+		if(size <= 0)	{
+			return false;
+		}
+		Habitable home = vacantHomeList.get(rnd.nextInt(size));
+		home.addResident(p);
+		homelessList.remove(p);
+		if(home.getFreeCapacity() <= 0)	{
+			vacantHomeList.remove(home);
+		}
+		return true;
 	}
 	private void readNameFile()	{
 		BufferedReader myouji = null;
