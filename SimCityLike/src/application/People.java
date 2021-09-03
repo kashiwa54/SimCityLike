@@ -17,6 +17,9 @@ public class People {
 	}
 
 	public void setHome(Habitable r)	{
+		if(r == null)	{
+			removeHome();
+		}
 		this.home = r;
 	}
 	public void setWork(Workable b)		{
@@ -47,6 +50,10 @@ public class People {
 	}
 	public String getName()	{
 		return this.name;
+	}
+	public void removeHome()	{
+		manager.addHomelessList(this);
+		this.home = null;
 	}
 	@Override
 	public String toString()	{

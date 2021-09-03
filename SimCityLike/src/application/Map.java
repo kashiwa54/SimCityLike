@@ -108,6 +108,10 @@ public class Map {
 
 	synchronized private void clear(int x,int y)	{
 		tile[x][y].remove();
+		if(tile[x][y] instanceof Habitable)	{
+			Habitable home = (Habitable) tile[x][y];
+			home.removeResidentAll();
+		}
 		tile[x][y].setOnMap(false);
 		tile[x][y] = new Space(x,y);
 		tile[x][y].setOnMap(true);

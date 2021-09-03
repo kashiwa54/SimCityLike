@@ -52,7 +52,7 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 		for(int i = 0;i < resident.length; i++)	{
 			if (resident[i] == p)	{
 				resident[i] = null;
-				p.setHome(null);
+				p.removeHome();
 				while((i < resident.length - 1))	{
 					resident[i] = resident[i + 1];
 					if(resident[i] == null) break;
@@ -63,6 +63,11 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 			}
 		}
 		return false;
+	}
+	public void removeResidentAll()	{
+		for(People p : resident)	{
+			p.removeHome();
+		}
 	}
 	public People[] getResident()	{
 		return resident;

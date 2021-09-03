@@ -63,8 +63,7 @@ public class PeopleManager {
 		return list;
 
 	}
-	public void removeHome(People p)	{
-		p.setHome(null);
+	public void addHomelessList(People p)	{
 		homelessList.add(p);
 	}
 	private void readNameFile()	{
