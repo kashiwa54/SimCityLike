@@ -75,7 +75,7 @@ public class PeopleManager {
 			}
 		}
 	}
-	public boolean MoveIntoBuilding(People p)	{
+	public boolean moveIntoAny(People p)	{
 		Random rnd = new Random();
 		int size = vacantHomeList.size();
 		if(size <= 0)	{
@@ -88,6 +88,11 @@ public class PeopleManager {
 			vacantHomeList.remove(home);
 		}
 		return true;
+	}
+	public void allMoveInto()	{
+		for(People p : homelessList)	{
+			if(!moveIntoAny(p)) break;
+		}
 	}
 	private void readNameFile()	{
 		BufferedReader myouji = null;
