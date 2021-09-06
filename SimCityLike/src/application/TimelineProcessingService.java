@@ -6,13 +6,17 @@ import javafx.concurrent.Task;
 public class TimelineProcessingService extends ScheduledService<Boolean>{
 	private Time time;
 	private Time previousTime;
+	private Map worldMap;
+	private PeopleManager pm;
 	private Boolean switchHour = false;
 	private Boolean switchNoon = false;
 	private Boolean switchDay = false;
 	private Boolean switchSeason = false;
 	private Boolean switchYear = false;
-	public TimelineProcessingService(Time worldTime)	{
+	public TimelineProcessingService(Time worldTime,Map map)	{
 		this.time = worldTime;
+		this.worldMap = map;
+		this.pm = map.getPeopleManager();
 	}
 
 	@Override
@@ -47,7 +51,8 @@ public class TimelineProcessingService extends ScheduledService<Boolean>{
 					switchYear = false;
 				}
 				if(switchNoon)	{
-
+					pm.checkVacantHome();
+					pm.allMoveInto();
 				}
 				return true;
 			}

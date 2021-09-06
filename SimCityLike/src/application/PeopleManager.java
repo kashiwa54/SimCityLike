@@ -91,7 +91,10 @@ public class PeopleManager {
 	}
 	public void allMoveInto()	{
 		for(People p : homelessList)	{
-			if(!moveIntoAny(p)) break;
+			if(!moveIntoAny(p)) {
+				System.out.println("break");
+				break;
+			}
 		}
 	}
 	private void readNameFile()	{

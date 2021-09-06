@@ -36,7 +36,7 @@ public class Main extends Application {
 		try {
 			pm.bindMap(map);
 
-			mainProcess = new TimelineProcessingService(worldTime);
+			mainProcess = new TimelineProcessingService(worldTime,map);
 
 			MainWindowController window = mainWindowSetup(primaryStage,map);
 			GraphicsContext gc = window.getGraphicsContext();
