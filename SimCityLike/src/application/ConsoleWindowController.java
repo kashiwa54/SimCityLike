@@ -1,5 +1,7 @@
 package application;
 
+import java.util.Random;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.GraphicsContext;
@@ -149,11 +151,13 @@ public class ConsoleWindowController	{
 			PeopleManager pm = map.getPeopleManager();
 			switch(arg[1])	{
 			case "list" :
+				builder.append("--------------------------------\n");
 				for(People p : pm.getPeopleList())	{
 					if(p != null)	{
 						builder.append(p.toString() + "\n");
 					}
 				}
+				builder.append("--------------------------------\n");
 				break;
 			case "create" :
 				try {
@@ -163,6 +167,18 @@ public class ConsoleWindowController	{
 					e.printStackTrace();
 					builder.append("people create command format is \n");
 					builder.append("people create [age].\n");
+				}
+				break;
+			case "bulk" : 
+				try {
+					int number = Integer.parseInt(arg[2]);
+					for(int i = 0; i < number;i++)	{
+						pm.createPeople();
+					}
+				}catch(Exception e)	{
+					e.printStackTrace();
+					builder.append("people bulk command format is \n");
+					builder.append("people bulk [number].\n");
 				}
 				break;
 			default :

@@ -5,12 +5,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
 public class PeopleManager {
 	public static final int INISIAL_CAPACITY = CommonConst.PEOPLE_INISIAL_CAPACITY;
 	public static final int INCREMENT_CAPACITY = CommonConst.PEOPLE_INCREMENT_CAPACITY;
+	public static final int MAX_AGE = CommonConst.PEOPLE_MAX_AGE;
+	public static final int MIN_AGE = CommonConst.PEOPLE_MIN_AGE;
 
 	private Time worldClock = null;
 	private Map fieldMap = null;
@@ -20,6 +23,8 @@ public class PeopleManager {
 	private ArrayList<People> homelessList = new ArrayList<People>(INISIAL_CAPACITY);
 	private List<ResidentalBuilding> residentalList = ResidentalBuilding.residentalList;
 	private ArrayList<Habitable> vacantHomeList = null;
+	
+	Random rnd = new Random();
 
 	public PeopleManager(Time worldTime)	{
 		this.worldClock = worldTime;
@@ -39,7 +44,10 @@ public class PeopleManager {
 			}
 		}
 	}
-
+	public People createPeople()	{
+		int age = rnd.nextInt(MAX_AGE - MIN_AGE + 1) + MIN_AGE;
+		return createPeople(age);
+	}
 	public People createPeople(int age)	{
 		Time birthday = worldClock.clone();
 		birthday.backYear(age);
@@ -93,7 +101,11 @@ public class PeopleManager {
 		}
 	}
 	public void allMoveInto() {
-		for(People p : homelessList) {
+		@SuppressWarnings("unchecked")
+		Iterator<People> it = ((ArrayList)homelessList.clone()).iterator();
+		while(it.hasNext()) {
+			People p = it.next();
+			System.out.println(p);
 			if(!moveIntoAny(p))	{
 				break;
 			}
@@ -118,7 +130,6 @@ public class PeopleManager {
 		}
 	}
 	private String createName()	{
-		Random rnd = new Random();
 		String name;
 		name = myoujiList.get(rnd.nextInt(myoujiList.size()));
 
