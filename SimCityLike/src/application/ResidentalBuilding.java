@@ -8,7 +8,7 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 	public static List<ResidentalBuilding> residentalList = Collections.synchronizedList(new ArrayList<ResidentalBuilding>(CommonConst.BUILDING_INISIAL_CAPACITY));
 	private int capacity;
 	private int freeCapacity;
-	private People[] resident = new People[capacity];
+	private People[] resident = null;
 	public ResidentalBuilding()	{
 		this(0,0);
 	}
@@ -22,6 +22,7 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 		super(x,y,width,height);
 		this.capacity = capacity;
 		type = null;
+		resident = new People[capacity];
 		calcFreeCapacity();
 	}
 	public String getInfo()	{
