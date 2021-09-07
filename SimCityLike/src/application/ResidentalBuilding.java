@@ -8,7 +8,7 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 	public static List<ResidentalBuilding> residentalList = Collections.synchronizedList(new ArrayList<ResidentalBuilding>(CommonConst.BUILDING_INISIAL_CAPACITY));
 	private int capacity;
 	private int freeCapacity;
-	private People[] resident = new People[capacity];
+	private People[] resident = null;
 	public ResidentalBuilding()	{
 		this(0,0);
 	}
@@ -22,16 +22,19 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 		super(x,y,width,height);
 		this.capacity = capacity;
 		type = null;
+		resident = new People[capacity];
+		calcFreeCapacity();
 	}
 	public String getInfo()	{
 		String info = "住人容量:" + capacity + "\n";
 		int residentNumber = 0;
 		for(People p : resident)	{
-			if(p == null)	{
+			if(p != null)	{
 				residentNumber++;
 			}
 		}
 		info = info.concat("住人数:" + residentNumber + "\n");
+		info = info.concat("住居空き" + freeCapacity + "\n");
 		return info;
 	}
 
@@ -41,10 +44,10 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 			if(resident[i] == null)	{
 				resident[i] = p;
 				p.setHome(this);
+				calcFreeCapacity();
 				return true;
 			}
 		}
-		calcFreeCapacity();
 		return false;
 	}
 	@Override
@@ -80,6 +83,7 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 		int rCnt = 0;
 		for(People p : resident)	{
 			if(p != null)	{
+				System.out.println(p);
 				rCnt++;
 			}else {
 				break;
