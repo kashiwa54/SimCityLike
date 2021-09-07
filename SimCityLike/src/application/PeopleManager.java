@@ -82,12 +82,15 @@ public class PeopleManager {
 			return false;
 		}
 		Habitable home = vacantHomeList.get(rnd.nextInt(size));
-		home.addResident(p);
-		homelessList.remove(p);
-		if(home.getFreeCapacity() <= 0)	{
-			vacantHomeList.remove(home);
+		if(home.addResident(p))	{
+			homelessList.remove(p);
+			if(home.getFreeCapacity() <= 0)	{
+				vacantHomeList.remove(home);
+			}
+			return true;
+		}else {
+			return false;
 		}
-		return true;
 	}
 	public void allMoveInto() {
 		for(People p : homelessList) {

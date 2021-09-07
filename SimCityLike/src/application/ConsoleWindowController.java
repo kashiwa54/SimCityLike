@@ -150,7 +150,9 @@ public class ConsoleWindowController	{
 			switch(arg[1])	{
 			case "list" :
 				for(People p : pm.getPeopleList())	{
-					builder.append(p.toString() + "\n");
+					if(p != null)	{
+						builder.append(p.toString() + "\n");
+					}
 				}
 				break;
 			case "create" :

@@ -83,7 +83,6 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 		int rCnt = 0;
 		for(People p : resident)	{
 			if(p != null)	{
-				System.out.println(p);
 				rCnt++;
 			}else {
 				break;
