@@ -85,6 +85,7 @@ public class Map {
 				}
 				obj.setPosition(x,y);
 				obj.place();
+				obj.refresh();
 				return obj;
 			}
 			return mapObj;

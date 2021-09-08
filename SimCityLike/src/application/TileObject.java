@@ -1,6 +1,7 @@
 package application;
 
 public abstract class TileObject {
+	private static final int DISTANCE = CommonConst.NEAR_ROAD_DISTANCE;
 	private Map fieldMap;
 	private int x;
 	private int y;
@@ -73,7 +74,43 @@ public abstract class TileObject {
 		if(nearRoad == null)	{
 			return false;
 		}else {
-			return true;
+			if (nearRoad.isOnMap())	{
+				return true;
+			}else {
+				nearRoad = null;
+				return false;
+			}
+		}
+	}
+	public void refresh()	{
+		checkNearRoad();
+	}
+	public Road checkNearRoad()	{
+		Road best = null;
+		for(int i = 0; i < DISTANCE;i++)	{
+			for(int j = -i;j <= i;j++)	{
+				findBestRoad(fieldMap.getTileObject(this.getX() + j,this.getY() + i),best);
+				findBestRoad(fieldMap.getTileObject(this.getX() + j,this.getY() - i),best);
+			}
+			for(int j = -i + 1;j <= i - 1;j++)	{
+				findBestRoad(fieldMap.getTileObject(this.getX() + i,this.getY() + j),best);
+				findBestRoad(fieldMap.getTileObject(this.getX() - i,this.getY() + j),best);
+			}
+		}
+		return null;
+	}
+
+	private void findBestRoad(TileObject t,Road best)	{
+		double bestDistance = 0.0;
+		if((t != null)&&(t instanceof Road))	{
+			if(best != null)	{
+				bestDistance = Math.sqrt(Math.pow(best.getX() - this.getX(),2) + Math.pow(best.getY() - this.getY(), 2));
+				if(bestDistance > Math.sqrt(Math.pow(t.getX() - this.getX(),2) + Math.pow(t.getY() - this.getY(), 2)))	{
+					best = (Road) t;
+				}
+			}else {
+				best = (Road) t;
+			}
 		}
 	}
 	abstract public boolean place();

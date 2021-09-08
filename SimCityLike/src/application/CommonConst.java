@@ -23,6 +23,8 @@ public class CommonConst {
 	public static final double INFO_BAR_SIZE = 32.0;
 	public static final double DEMAND_CHART_SIZE = 192.0;
 
+	public static final int NEAR_ROAD_DISTANCE = 3;
+
 	public static final int PEOPLE_INISIAL_CAPACITY = 50;
 	public static final int PEOPLE_INCREMENT_CAPACITY = 50;
 	public static final int PEOPLE_MAX_AGE = 80;
