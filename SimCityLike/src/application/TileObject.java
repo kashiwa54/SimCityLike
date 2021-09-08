@@ -70,6 +70,10 @@ public abstract class TileObject {
 	public boolean getCanPass()	{
 		return this.canPass;
 	}
+	public Road getNearRoad()	{
+		checkNearRoad();
+		return this.nearRoad;
+	}
 	public boolean haveNearRoad()	{
 		if(nearRoad == null)	{
 			return false;
@@ -87,7 +91,7 @@ public abstract class TileObject {
 	}
 	public void checkNearRoad()	{
 		Road best = null;
-		for(int i = 0; i < DISTANCE;i++)	{
+		for(int i = 0; i <= DISTANCE;i++)	{
 			for(int j = -i;j <= i;j++)	{
 				best = findBestRoad(fieldMap.getTileObject(this.getX() + j,this.getY() + i),best);
 				best = findBestRoad(fieldMap.getTileObject(this.getX() + j,this.getY() - i),best);

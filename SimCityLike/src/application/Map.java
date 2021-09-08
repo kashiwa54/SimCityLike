@@ -108,7 +108,7 @@ public class Map {
 		for(int i = 0;i < w;i++)	{
 			for(int j = 0;j < h;j++)	{
 				clear(opX + i,opY + j);
-				System.out.println("remove " + (opX + i) + "," + (opY + j));
+				//System.out.println("remove " + (opX + i) + "," + (opY + j));
 			}
 		}
 	}
@@ -131,7 +131,7 @@ public class Map {
 		int by = y + DISTANCE;
 
 		for(int i = tx; i <= bx;i++)	{
-			for(int j = ty ; j <= by;j++)	{
+			for(int j = ty; j <= by;j++)	{
 				if(isInside(i,j))	{
 					getTileObject(i,j).refresh();
 				}
