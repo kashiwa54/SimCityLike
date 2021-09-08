@@ -12,11 +12,11 @@ public enum WayEnum implements PlacableEnum{
 	private String displayName;
 	private int cost;
 	private int level;
-	
+
 	private static final Map<Class<? extends TileObject>,WayEnum> classToEnum = new HashMap<Class<? extends TileObject>,WayEnum>()	{
 
 	/**
-		 * 
+		 *
 		 */
 		private static final long serialVersionUID = 8314162711755640833L;
 
@@ -64,9 +64,9 @@ public enum WayEnum implements PlacableEnum{
 		return null;
 	}
 	@Override
-	public TileObject getObject(int x,int y)	{
+	public TileObject getObject(application.Map map,int x,int y)	{
 		try {
-			return wayClass.getConstructor(int.class,int.class).newInstance(x,y);
+			return wayClass.getConstructor(application.Map.class,int.class,int.class).newInstance(map,x,y);
 		} catch (NoSuchMethodException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
@@ -98,4 +98,5 @@ public enum WayEnum implements PlacableEnum{
 	public static WayEnum classToEnum(Class<? extends TileObject> T)	{
 		return classToEnum.get(T);
 	}
+
 }

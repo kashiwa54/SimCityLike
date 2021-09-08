@@ -2,11 +2,11 @@ package application;
 
 
 public class Space extends TileObject implements Overwritable{
-	public Space()	{
-		this(0,0);
+	public Space(Map map)	{
+		this(map,0,0);
 	}
-	public Space(int x,int y)	{
-		super(x,y);
+	public Space(Map map,int x,int y)	{
+		super(map,x,y);
 		type = OtherTileEnum.SPACE;
 		setCanPass(true);
 	}
@@ -22,11 +22,11 @@ public class Space extends TileObject implements Overwritable{
 	}
 	@Override
 	public TileObject copy() {
-		return new Space(this.getX(),this.getY());
+		return new Space(this.getMap(),this.getX(),this.getY());
 	}
 	@Override
 	public TileObject copy(int x, int y) {
-		return new Space(x,y);
+		return new Space(this.getMap(),x,y);
 	}
 	@Override
 	public String getInfo()	{

@@ -60,9 +60,9 @@ public enum ResidentalBuildingEnum implements PlacableEnum{
 		}
 		return null;
 	}
-	public TileObject getObject(int x,int y)	{
+	public TileObject getObject(Map map,int x,int y)	{
 		try {
-			return buildingClass.getConstructor(int.class,int.class).newInstance(x,y);
+			return buildingClass.getConstructor(Map.class,int.class,int.class).newInstance(map,x,y);
 		} catch (NoSuchMethodException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();

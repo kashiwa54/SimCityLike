@@ -3,14 +3,14 @@ package application;
 public abstract class Building extends TileObject{
 	private int years;
 
-	public Building()	{
-		this(0,0);
+	public Building(Map map)	{
+		this(map,0,0);
 	}
-	public Building(int x,int y)	{
-		this(x,y,1,1);
+	public Building(Map map,int x,int y)	{
+		this(map,x,y,1,1);
 	}
-	public Building(int x,int y,int width,int height) {
-		super(x,y,width,height);
+	public Building(Map map,int x,int y,int width,int height) {
+		super(map,x,y,width,height);
 		type = null;
 		setCanPass(false);
 	}

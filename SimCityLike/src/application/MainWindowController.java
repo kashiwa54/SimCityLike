@@ -413,7 +413,7 @@ public class MainWindowController {
 					TileObject cursorTile = map.getTileObject((int)tilePos.getX(),(int)tilePos.getY());
 					root.getChildren().add(makeInfoWindow(mouse,cursorTile.type.getDisplayName(),cursorTile.getInfo()));
 				}else {
-					TileObject o = mouseType.getObject((int)tilePos.getX(),(int)tilePos.getY());
+					TileObject o = mouseType.getObject(map,(int)tilePos.getX(),(int)tilePos.getY());
 					map.place(o, o.getX(), o.getY());
 				}
 			}catch(Exception e)	{
@@ -435,7 +435,7 @@ public class MainWindowController {
 								if(mouseType == OtherTileEnum.REMOVE)	{
 									map.remove(i, j);
 								}else {
-									TileObject o = mouseType.getObject(i,j);
+									TileObject o = mouseType.getObject(map,i,j);
 									map.place(o, o.getX(), o.getY());
 								}
 							}
@@ -450,7 +450,7 @@ public class MainWindowController {
 						if(tile == null)	{
 							continue;
 						}
-						TileObject o = mouseType.getObject(tile.getX(),tile.getY());
+						TileObject o = mouseType.getObject(map,tile.getX(),tile.getY());
 						if(o instanceof Way)	{
 							Way w = (Way)o;
 							if(previousWay != null)	{

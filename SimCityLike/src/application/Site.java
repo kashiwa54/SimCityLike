@@ -1,8 +1,8 @@
 package application;
 
 public abstract class Site extends TileObject implements Overwritable{
-	public Site(int x,int y)	{
-		super(x,y);
+	public Site(Map map,int x,int y)	{
+		super(map,x,y);
 		type = null;
 		setCanPass(true);
 	}

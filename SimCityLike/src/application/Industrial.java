@@ -1,11 +1,11 @@
 package application;
 
 public class Industrial extends Site{
-	public Industrial(int x,int y)	{
-		this(x,y,0);
+	public Industrial(Map map,int x,int y)	{
+		this(map,x,y,0);
 	}
-	public Industrial(int x,int y,int capacity)	{
-		super(x,y);
+	public Industrial(Map map,int x,int y,int capacity)	{
+		super(map,x,y);
 		type = SiteEnum.INDUSTRIAL;
 	}
 	@Override
@@ -19,10 +19,10 @@ public class Industrial extends Site{
 	}
 	@Override
 	public TileObject copy() {
-		return new Industrial(this.getX(),this.getY());
+		return new Industrial(this.getMap(),this.getX(),this.getY());
 	}
 	@Override
 	public TileObject copy(int x, int y) {
-		return new Industrial(x,y);
+		return new Industrial(this.getMap(),x,y);
 	}
 }

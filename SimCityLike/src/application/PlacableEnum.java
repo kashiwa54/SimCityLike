@@ -4,5 +4,5 @@ public interface PlacableEnum {
 	public String getDisplayName();
 	public Class<? extends TileObject> getObjectClass();
 	public TileObject getObject();
-	public TileObject getObject(int x,int y);
+	public TileObject getObject(Map map,int x,int y);
 }

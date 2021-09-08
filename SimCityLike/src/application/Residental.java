@@ -1,11 +1,11 @@
 package application;
 
 public class Residental extends Site{
-	public Residental(int x,int y)	{
-		this(x,y,0);
+	public Residental(Map map,int x,int y)	{
+		this(map,x,y,0);
 	}
-	public Residental(int x,int y,int capacity)	{
-		super(x,y);
+	public Residental(Map map,int x,int y,int capacity)	{
+		super(map,x,y);
 		type = SiteEnum.RESIDENTAL;
 	}
 	@Override
@@ -19,10 +19,10 @@ public class Residental extends Site{
 	}
 	@Override
 	public TileObject copy() {
-		return new Residental(this.getX(),this.getY());
+		return new Residental(this.getMap(),this.getX(),this.getY());
 	}
 	@Override
 	public TileObject copy(int x, int y) {
-		return new Residental(x,y);
+		return new Residental(this.getMap(),x,y);
 	}
 }

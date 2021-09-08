@@ -1,7 +1,5 @@
 package application;
 
-import java.util.Random;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.GraphicsContext;
@@ -72,7 +70,7 @@ public class ConsoleWindowController	{
 			case "residental" :
 				for(int i = 0;i <= width;i++)	{
 					for(int j = 0;j <= height;j++)	{
-						Residental r = new Residental(x + i,y + j);
+						Residental r = new Residental(map,x + i,y + j);
 						this.map.place(r, r.getX(),r.getY());
 						builder.append("Place residental in (" + r.getX() + "," + r.getY() + ") successful\n");
 					}
@@ -81,7 +79,7 @@ public class ConsoleWindowController	{
 			case "commercial" :
 				for(int i = 0;i <= width;i++)	{
 					for(int j = 0;j <= height;j++)	{
-						Commercial r = new Commercial(x + i,y + j);
+						Commercial r = new Commercial(map,x + i,y + j);
 						this.map.place(r, r.getX(),r.getY());
 						builder.append("Place commercial in (" + r.getX() + "," + r.getY() + ") successful\n");
 					}
@@ -90,7 +88,7 @@ public class ConsoleWindowController	{
 			case "industrial" :
 				for(int i = 0;i <= width;i++)	{
 					for(int j = 0;j <= height;j++)	{
-						Industrial r = new Industrial(x + i,y + j);
+						Industrial r = new Industrial(map,x + i,y + j);
 						this.map.place(r, r.getX(),r.getY());
 						builder.append("Place industrial in (" + r.getX() + "," + r.getY() + ") successful\n");
 					}
@@ -121,7 +119,7 @@ public class ConsoleWindowController	{
 				y = Integer.parseInt(arg[3]);
 				for(ResidentalBuildingEnum b : ResidentalBuildingEnum.values()) {
 					if (b.getObjectClass().getSimpleName().equalsIgnoreCase(arg[1]))	{
-						TileObject o = b.getObject(x,y);
+						TileObject o = b.getObject(map,x,y);
 						this.map.place(o, o.getX(),o.getY());
 						builder.append("Place in (" + o.getX() + "," + o.getY() + ") successful\n");
 						isFind = true;
@@ -131,7 +129,7 @@ public class ConsoleWindowController	{
 				if (isFind)	break;
 				for(WayEnum b : WayEnum.values()) {
 					if (b.getObjectClass().getSimpleName().equalsIgnoreCase(arg[1]))	{
-						TileObject o = b.getObject(x,y);
+						TileObject o = b.getObject(map,x,y);
 						this.map.place(o, o.getX(),o.getY());
 						builder.append("Place in (" + o.getX() + "," + o.getY() + ") successful\n");
 						isFind = true;
@@ -169,7 +167,7 @@ public class ConsoleWindowController	{
 					builder.append("people create [age].\n");
 				}
 				break;
-			case "bulk" : 
+			case "bulk" :
 				try {
 					int number = Integer.parseInt(arg[2]);
 					for(int i = 0; i < number;i++)	{

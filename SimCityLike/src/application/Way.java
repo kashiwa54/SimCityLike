@@ -10,14 +10,14 @@ public abstract class Way extends TileObject{
 	private EnumSet<Direction> connectSet = EnumSet.noneOf(Direction.class);
 	private DirectionForImage connectState = DirectionForImage.NONE;
 
-	public Way()	{
-		this(0,0,DEFAULT_SPEED);
+	public Way(Map map)	{
+		this(map,0,0,DEFAULT_SPEED);
 	}
-	public Way(int x,int y)	{
-		this(x,y,DEFAULT_SPEED);
+	public Way(Map map,int x,int y)	{
+		this(map,x,y,DEFAULT_SPEED);
 	}
-	public Way(int x,int y,int maxSpeed)	{
-		super(x,y);
+	public Way(Map map,int x,int y,int maxSpeed)	{
+		super(map,x,y);
 		this.maxSpeed = maxSpeed;
 		this.type = null;
 		setCanPass(true);

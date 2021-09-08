@@ -13,7 +13,7 @@ public class Map {
 		tile = new TileObject[width][height];
 		for(int i = 0;i < tile.length;i++)	{
 			for(int j = 0;j < tile[i].length;j++)	{
-				tile[i][j] = new Space(i,j);
+				tile[i][j] = new Space(this,i,j);
 			}
 		}
 	}
@@ -113,7 +113,7 @@ public class Map {
 			home.removeResidentAll();
 		}
 		tile[x][y].setOnMap(false);
-		tile[x][y] = new Space(x,y);
+		tile[x][y] = new Space(this,x,y);
 		tile[x][y].setOnMap(true);
 	}
 

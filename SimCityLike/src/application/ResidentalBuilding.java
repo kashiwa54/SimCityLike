@@ -9,17 +9,17 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 	private int capacity;
 	private int freeCapacity;
 	private People[] resident = null;
-	public ResidentalBuilding()	{
-		this(0,0);
+	public ResidentalBuilding(Map map)	{
+		this(map,0,0);
 	}
-	public ResidentalBuilding(int x,int y)	{
-		this(x,y,1,1);
+	public ResidentalBuilding(Map map,int x,int y)	{
+		this(map,x,y,1,1);
 	}
-	public ResidentalBuilding(int x,int y,int width,int height)	{
-		this(x,y,width,height,1);
+	public ResidentalBuilding(Map map,int x,int y,int width,int height)	{
+		this(map,x,y,width,height,1);
 	}
-	public ResidentalBuilding(int x,int y,int width,int height,int capacity)	{
-		super(x,y,width,height);
+	public ResidentalBuilding(Map map,int x,int y,int width,int height,int capacity)	{
+		super(map,x,y,width,height);
 		this.capacity = capacity;
 		type = null;
 		resident = new People[capacity];
@@ -69,7 +69,7 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 	}
 	public void removeResidentAll()	{
 		for(People p : resident)	{
-			p.removeHome();
+			if(p != null) p.removeHome();
 		}
 	}
 	public People[] getResident()	{
@@ -99,7 +99,7 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 	public void remove() {
 		residentalList.remove(this);
 		for(People p : resident)	{
-			p.setHome(null);
+			if(p != null) p.setHome(null);
 		}
 	}
 }

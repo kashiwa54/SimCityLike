@@ -50,9 +50,9 @@ public enum SiteEnum implements PlacableEnum{
 		return null;
 	}
 	@Override
-	public TileObject getObject(int x,int y)	{
+	public TileObject getObject(Map map,int x,int y)	{
 		try {
-			return siteClass.getConstructor(int.class,int.class).newInstance(x,y);
+			return siteClass.getConstructor(Map.class,int.class,int.class).newInstance(map,x,y);
 		} catch (NoSuchMethodException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
