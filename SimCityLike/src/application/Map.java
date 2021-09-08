@@ -1,6 +1,7 @@
 package application;
 
 public class Map {
+	private static final int DISTANCE = CommonConst.NEAR_ROAD_DISTANCE;
 	private int width;
 	private int height;
 	private TileObject[][] tile;
@@ -30,6 +31,9 @@ public class Map {
 		}else {
 			return this.tile[x][y];
 		}
+	}
+	public PeopleManager getPeopleManager()	{
+		return this.pManager;
 	}
 
 	public boolean isSpace(int x,int y)	{
@@ -62,6 +66,8 @@ public class Map {
 				tile[x][y] = ((Upgradable) mapObj).upgrade(obj);
 				if(tile[x][y].equals(obj))	{
 					obj.setOnMap(true);
+					obj.place();
+					refreshAround(x,y);
 					return obj;
 				}else {
 					return mapObj;
@@ -85,7 +91,7 @@ public class Map {
 				}
 				obj.setPosition(x,y);
 				obj.place();
-				obj.refresh();
+				refreshAround(x,y);
 				return obj;
 			}
 			return mapObj;
@@ -109,6 +115,7 @@ public class Map {
 
 	synchronized private void clear(int x,int y)	{
 		tile[x][y].remove();
+		refreshAround(x,y);
 		if(tile[x][y] instanceof Habitable)	{
 			Habitable home = (Habitable) tile[x][y];
 			home.removeResidentAll();
@@ -116,6 +123,20 @@ public class Map {
 		tile[x][y].setOnMap(false);
 		tile[x][y] = new Space(this,x,y);
 		tile[x][y].setOnMap(true);
+	}
+	public void refreshAround(int x,int y)	{
+		int tx = x - DISTANCE;
+		int ty = y - DISTANCE;
+		int bx = x + DISTANCE;
+		int by = y + DISTANCE;
+
+		for(int i = tx; i <= bx;i++)	{
+			for(int j = ty ; j <= by;j++)	{
+				if(isInside(i,j))	{
+					getTileObject(i,j).refresh();
+				}
+			}
+		}
 	}
 
 	public boolean bindPeopleManager(PeopleManager pm)	{
@@ -125,8 +146,5 @@ public class Map {
 			pManager = pm;
 			return true;
 		}
-	}
-	public PeopleManager getPeopleManager()	{
-		return this.pManager;
 	}
 }
