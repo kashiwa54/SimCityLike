@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -23,7 +22,7 @@ public class PeopleManager {
 	private ArrayList<People> homelessList = new ArrayList<People>(INISIAL_CAPACITY);
 	private List<ResidentalBuilding> residentalList = ResidentalBuilding.residentalList;
 	private ArrayList<Habitable> vacantHomeList = null;
-	
+
 	Random rnd = new Random();
 
 	public PeopleManager(Time worldTime)	{
@@ -102,10 +101,8 @@ public class PeopleManager {
 	}
 	public void allMoveInto() {
 		@SuppressWarnings("unchecked")
-		Iterator<People> it = ((ArrayList)homelessList.clone()).iterator();
-		while(it.hasNext()) {
-			People p = it.next();
-			System.out.println(p);
+		ArrayList<People> tmpList = ((ArrayList<People>)homelessList.clone());
+		for(People p : tmpList) {
 			if(!moveIntoAny(p))	{
 				break;
 			}
