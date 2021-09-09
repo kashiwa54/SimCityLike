@@ -8,6 +8,7 @@ public class People {
 	private Workable workspace;
 	private int money;
 	private Time birthday;
+	private int shoppingDemand = 50;
 
 	public People(PeopleManager manager,Time birthday,Time world,String name){
 		this.manager = manager;
@@ -58,6 +59,26 @@ public class People {
 	public void removeWork()	{
 		manager.addJoblessList(this);
 		this.workspace = null;
+	}
+
+	public int getShoppingDemand()	{
+		return this.shoppingDemand;
+	}
+	public void increaseShoppingDemand(int d)	{
+		shoppingDemand += d;
+		if(shoppingDemand < 0)	{
+			shoppingDemand = 0;
+		}else if(shoppingDemand > 100)	{
+			shoppingDemand = 100;
+		}
+	}
+	public void decreaseShoppingDemand(int d)	{
+		shoppingDemand -= d;
+		if(shoppingDemand < 0)	{
+			shoppingDemand = 0;
+		}else if(shoppingDemand > 100)	{
+			shoppingDemand = 100;
+		}
 	}
 	@Override
 	public String toString()	{

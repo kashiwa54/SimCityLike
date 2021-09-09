@@ -1,16 +1,21 @@
 package application;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class DemandManager {
-	private int freeResidentalSum = 0;
-	private int freeCommercialSum = 0;
-	private int freeIndustrialSum = 0;
 	private int residentalDemand = 0;
 	private int commercialDemand = 0;
 	private int industrialDemand = 0;
 
-	private ArrayList<ResidentalBuilding> residentalList = null;
-	private ArrayList<CommercialBuilding> commercialList = null;
-	private ArrayList<IndustrialBuilding> industrialList = null;
+	private int freeResidentalSum = 0;
+	private int freeCommercialSum = 0;
+	private int freeIndustrialSum = 0;
+	private int shoppingDemandSum = 0;
+	private int productDemandSum = 0;
+
+	private List<ResidentalBuilding> residentalList = ResidentalBuilding.residentalList;
+	private List<CommercialBuilding> commercialList = CommercialBuilding.commercialList;
+	private List<IndustrialBuilding> industrialList = IndustrialBuilding.industrialList;
+
+
 }
