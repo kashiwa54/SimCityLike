@@ -8,6 +8,9 @@ public abstract class IndustrialBuilding extends Building implements Workable{
 	public static List<IndustrialBuilding> industrialList = Collections.synchronizedList(new ArrayList<IndustrialBuilding>(CommonConst.BUILDING_INISIAL_CAPACITY));
 	private int workspace;
 	private int freeWorkspace;
+	private int productCapacity;
+	private int production;
+	private int stock;
 	private People[] worker = null;
 	public IndustrialBuilding(Map map)	{
 		this(map,0,0);

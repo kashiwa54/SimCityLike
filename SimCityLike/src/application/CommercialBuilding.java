@@ -8,6 +8,9 @@ public abstract class CommercialBuilding extends Building implements Workable{
 	public static List<CommercialBuilding> commercialList = Collections.synchronizedList(new ArrayList<CommercialBuilding>(CommonConst.BUILDING_INISIAL_CAPACITY));
 	private int workspace;
 	private int freeWorkspace;
+	private int productCapacity;
+	private int consumption;
+	private int stock;
 	private People[] worker = null;
 	public CommercialBuilding(Map map)	{
 		this(map,0,0);
