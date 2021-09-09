@@ -73,7 +73,9 @@ public class PeopleManager {
 			list.addAll(Arrays.asList(r.getResident()));
 		}
 		return list;
-
+	}
+	public List<People> getHomelessList()	{
+		return homelessList;
 	}
 	public void addHomelessList(People p)	{
 		homelessList.add(p);

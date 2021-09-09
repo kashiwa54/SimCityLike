@@ -40,7 +40,15 @@ public abstract class IndustrialBuilding extends Building implements Workable{
 		info = info.concat("住居空き" + freeWorkspace + "\n");
 		return info;
 	}
-
+	public int getProductCapacity()	{
+		return this.productCapacity;
+	}
+	public int getProduction()	{
+		return this.production;
+	}
+	public int getStock()	{
+		return this.stock;
+	}
 	@Override
 	public boolean addWorker(People p) {
 		for(int i = 0;i < worker.length;i++)	{

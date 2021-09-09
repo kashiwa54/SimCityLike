@@ -41,6 +41,16 @@ public abstract class CommercialBuilding extends Building implements Workable{
 		return info;
 	}
 
+	public int getStock()	{
+		return this.stock;
+	}
+	public int getConsumption()	{
+		return this.consumption;
+	}
+	public int getProductCapacity()	{
+		return this.productCapacity;
+	}
+	
 	@Override
 	public boolean addWorker(People p) {
 		for(int i = 0;i < worker.length;i++)	{
