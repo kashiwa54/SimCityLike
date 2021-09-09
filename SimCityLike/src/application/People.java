@@ -55,6 +55,10 @@ public class People {
 		manager.addHomelessList(this);
 		this.home = null;
 	}
+	public void removeWork()	{
+		manager.addJoblessList(this);
+		this.workspace = null;
+	}
 	@Override
 	public String toString()	{
 		return "name : " + name + "\n"

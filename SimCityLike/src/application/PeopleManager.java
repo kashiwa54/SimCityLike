@@ -22,6 +22,10 @@ public class PeopleManager {
 	private ArrayList<People> homelessList = new ArrayList<People>(INISIAL_CAPACITY);
 	private List<ResidentalBuilding> residentalList = ResidentalBuilding.residentalList;
 	private ArrayList<Habitable> vacantHomeList = null;
+	private ArrayList<People> joblessList = new ArrayList<People>(INISIAL_CAPACITY);
+	private List<CommercialBuilding> commercialList = CommercialBuilding.commercialList;
+	private List<IndustrialBuilding> industrialList = IndustrialBuilding.industrialList;
+	private ArrayList<Workable> vacantWorkspaceList = null;
 
 	Random rnd = new Random();
 
@@ -107,6 +111,10 @@ public class PeopleManager {
 				break;
 			}
 		}
+	}
+
+	public void addJoblessList(People p)	{
+		joblessList.add(p);
 	}
 	private void readNameFile()	{
 		BufferedReader myouji = null;
