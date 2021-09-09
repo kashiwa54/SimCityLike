@@ -30,6 +30,7 @@ public class Main extends Application {
 	Map map = new Map(CommonConst.TILE_WIDTH,CommonConst.TILE_HEIGHT);
 	Time worldTime = new Time(CommonConst.DEFAULT_YEAR,CommonConst.DEFAULUT_SEASON,CommonConst.DEFAULT_WEEK,0,0);
 	PeopleManager pm = new PeopleManager(worldTime);
+	DemandManager dm = null;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -43,7 +44,10 @@ public class Main extends Application {
 
 			ConsoleWindowController console = consoleWindowSetup(window,map);
 			window.paintMainCanvas(gc,map);
-
+			
+			dm = new DemandManager(window.getDemand(),pm);
+			mainProcess.setDemandManager(dm);
+			
 			timeline.getKeyFrames().add(new KeyFrame(Duration.millis(CommonConst.DEFAULT_DURATION),new EventHandler<ActionEvent>()	{
 		    @Override
 		    public void handle(ActionEvent event) {

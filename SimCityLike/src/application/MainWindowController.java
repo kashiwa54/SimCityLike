@@ -119,9 +119,9 @@ public class MainWindowController {
 
 	private Time time = null;
 	
-	private int residentalDemand = 50;
-	private int commercialDemand = 10;
-	private int industrialDemand = 30;
+	private int residentalDemand = 0;
+	private int commercialDemand = 0;
+	private int industrialDemand = 0;
 	
 	private XYChart.Series<String,Number> residental;
 	private XYChart.Series<String,Number> commercial;

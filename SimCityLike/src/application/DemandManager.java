@@ -28,9 +28,12 @@ public class DemandManager {
 		this.bc = bc;
 		this.pm = pm;
 	}
-	public void update()	{
+	public boolean update()	{
+		boolean success = false;
 		calcDemand();
 		setDemandToChart(residentalDemand,commercialDemand,industrialDemand);
+		success = true;
+		return success;
 	}
 
 	public int getResidentalDemand()	{
@@ -76,14 +79,15 @@ public class DemandManager {
 	private void calcDemand()	{
 		calcPeopleTally();
 		if(population == 0)	residentalDemand = 0;
-		residentalDemand = (int) ((homelessNumber / population) * CommonConst.RESIDENTAL_DEMAND_FACTOR);
+		residentalDemand = (int) ((homelessNumber / population) * CommonConst.RESIDENTAL_DEMAND_FACTOR) * 100;
 		if(residentalDemand > 100) residentalDemand = 100;
 		
 		commercialDemand = (int) (shoppingDemandAverage * CommonConst.COMMERCIAL_DEMAND_FACTOR);
+		if(commercialDemand > 100) commercialDemand = 100;
 		
 		int underStockShopSum = 0;
 		for(CommercialBuilding c : commercialList)	{
-			double stockRate = c.getStock() / c.getProductCapacity();
+			double stockRate = c.getStock() / c.getProductCapacity() * 100;
 			if(stockRate <= CommonConst.INDUSTRIAL_DEMAND_FACTOR)	{
 				underStockShopSum++;
 			}

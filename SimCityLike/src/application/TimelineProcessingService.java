@@ -8,6 +8,7 @@ public class TimelineProcessingService extends ScheduledService<Boolean>{
 	private Time previousTime;
 	private Map worldMap;
 	private PeopleManager pm;
+	private DemandManager dm;
 	private Boolean switchHour = false;
 	private Boolean switchNoon = false;
 	private Boolean switchDay = false;
@@ -18,7 +19,9 @@ public class TimelineProcessingService extends ScheduledService<Boolean>{
 		this.worldMap = map;
 		this.pm = map.getPeopleManager();
 	}
-
+	public void setDemandManager(DemandManager dm)	{
+		this.dm = dm;
+	}
 	@Override
 	protected Task<Boolean> createTask() {
 		Task<Boolean> task = new Task<Boolean>(){
@@ -53,6 +56,10 @@ public class TimelineProcessingService extends ScheduledService<Boolean>{
 				if(switchNoon)	{
 					pm.checkVacantHome();
 					pm.allMoveInto();
+					if (dm != null) {
+						System.out.println("non null");
+						System.out.println(dm.update());
+					}
 				}
 				return true;
 			}
