@@ -17,12 +17,14 @@ public class DemandManager {
 	private List<CommercialBuilding> commercialList = CommercialBuilding.commercialList;
 	private List<IndustrialBuilding> industrialList = IndustrialBuilding.industrialList;
 	
-	private DemandBarChart<String,Integer> bc = null;
+	private DemandBarChart<String,Number> bc = null;
 	private PeopleManager pm = null;
 	
 	public DemandManager(DemandBarChart bc,PeopleManager pm)	{
 		this.bc = bc;
 		this.pm = pm;
+	}
+	public void update()	{
 	}
 
 	public int getResidentalDemand()	{

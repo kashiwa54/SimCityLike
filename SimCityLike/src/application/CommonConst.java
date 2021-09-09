@@ -22,6 +22,7 @@ public class CommonConst {
 	public static final double BUTTON_SIZE = 64.0;
 	public static final double INFO_BAR_SIZE = 32.0;
 	public static final double DEMAND_CHART_SIZE = 192.0;
+	public static final double DEMAND_AXIS_MAX = 100.0;
 
 	public static final int NEAR_ROAD_DISTANCE = 3;
 

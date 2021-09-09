@@ -91,3 +91,15 @@
 .delete:hover .text	{
 	-fx-effect:null;
 }
+.chart	{
+	-fx-background-position:center;
+}
+.series0.chart-bar	{
+	-fx-background-color: lime;
+}
+.series1.chart-bar	{
+	-fx-background-color: aqua;
+}
+.series2.chart-bar	{
+	-fx-background-color: gold;
+}

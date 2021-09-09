@@ -19,6 +19,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -117,6 +118,18 @@ public class MainWindowController {
 	private EnumMap<WayEnum,EnumMap<DirectionForImage,Image>> wayMap = new EnumMap<WayEnum,EnumMap<DirectionForImage,Image>>(WayEnum.class);
 
 	private Time time = null;
+	
+	private int residentalDemand = 50;
+	private int commercialDemand = 10;
+	private int industrialDemand = 30;
+	
+	private XYChart.Series<String,Number> residental;
+	private XYChart.Series<String,Number> commercial;
+	private XYChart.Series<String,Number> industrial;
+	
+	private XYChart.Data<String, Number> residentalData;
+	private XYChart.Data<String, Number> commercialData;
+	private XYChart.Data<String, Number> industrialData;
 
 	@FXML
     public void initialize() {
@@ -200,13 +213,34 @@ public class MainWindowController {
 	public DemandBarChart<String,Number> creatDemand()	{
 		DemandBarChart<String,Number> demand;
     	CategoryAxis xAxis = new CategoryAxis();
-    	NumberAxis yAxis = new NumberAxis();
+    	NumberAxis yAxis = new NumberAxis(0,CommonConst.DEMAND_AXIS_MAX,20);
     	demand = new DemandBarChart<String,Number>(xAxis,yAxis);
     	AnchorPane.setRightAnchor(demand,0.0);
     	AnchorPane.setBottomAnchor(demand, CommonConst.INFO_BAR_SIZE);
     	demand.setMaxSize(CommonConst.DEMAND_CHART_SIZE, CommonConst.DEMAND_CHART_SIZE);
     	demand.setPrefSize(CommonConst.DEMAND_CHART_SIZE, CommonConst.DEMAND_CHART_SIZE);
     	demand.setMinSize(CommonConst.DEMAND_CHART_SIZE, CommonConst.DEMAND_CHART_SIZE);
+    	
+		residental = new XYChart.Series<String,Number>();
+		commercial = new XYChart.Series<String,Number>();
+		industrial = new XYChart.Series<String,Number>();
+		
+		residentalData = new XYChart.Data<String, Number>();
+		commercialData = new XYChart.Data<String, Number>();
+		industrialData = new XYChart.Data<String, Number>();
+		residentalData.setXValue("住宅");
+		commercialData.setXValue("商業");
+		industrialData.setXValue("工業");
+		residentalData.setYValue(residentalDemand);
+		commercialData.setYValue(commercialDemand);
+		industrialData.setYValue(industrialDemand);
+		residental.getData().add(residentalData);
+		commercial.getData().add(commercialData);
+		industrial.getData().add(industrialData);
+		
+		demand.getData().add(residental);
+		demand.getData().add(commercial);
+		demand.getData().add(industrial);
 
     	return demand;
 	}
