@@ -16,6 +16,40 @@ public class DemandManager {
 	private List<ResidentalBuilding> residentalList = ResidentalBuilding.residentalList;
 	private List<CommercialBuilding> commercialList = CommercialBuilding.commercialList;
 	private List<IndustrialBuilding> industrialList = IndustrialBuilding.industrialList;
+	
+	private DemandBarChart<String,Integer> bc = null;
+	private PeopleManager pm = null;
+	
+	public DemandManager(DemandBarChart bc,PeopleManager pm)	{
+		this.bc = bc;
+		this.pm = pm;
+	}
 
-
+	public int getResidentalDemand()	{
+		return this.residentalDemand;
+	}
+	public int getCommercialDemand()	{
+		return this.commercialDemand;
+	}
+	public int getIndustrialDemand()	{
+		return this.industrialDemand;
+	}
+	
+	private void calcFreeCapacitySum()	{
+		int rSum = 0;
+		int cSum = 0;
+		int iSum = 0;
+		for(ResidentalBuilding r : residentalList)	{
+			rSum += r.getFreeCapacity();
+		}
+		for(CommercialBuilding c : commercialList)	{
+			cSum += c.getFreeWorkspace();
+		}
+		for(IndustrialBuilding i : industrialList)	{
+			iSum += i.getFreeWorkspace();
+		}
+		freeResidentalSum = rSum;
+		freeCommercialSum = cSum;
+		freeIndustrialSum = iSum;
+	}
 }

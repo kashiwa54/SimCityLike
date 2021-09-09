@@ -586,6 +586,9 @@ public class MainWindowController {
 	public void setTime(Time time)	{
 		this.time = time;
 	}
+	public DemandBarChart<String, Number> getDemand()	{
+		return demand;
+	}
 
 	public void repaint()	{
 		paintMainCanvas(graphics,map);
