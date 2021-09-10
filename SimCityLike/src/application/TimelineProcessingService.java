@@ -57,7 +57,6 @@ public class TimelineProcessingService extends ScheduledService<Boolean>{
 					pm.checkVacantHome();
 					pm.allMoveInto();
 					if (dm != null) {
-						System.out.println("non null");
 						System.out.println(dm.update());
 					}
 				}

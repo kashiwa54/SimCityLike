@@ -12,7 +12,7 @@ public class DemandManager {
 	private int freeIndustrialSum = 0;
 	private int shoppingDemandSum = 0;
 	private int productDemandSum = 0;
-	
+
 	private int homelessNumber = 0;
 	private int population = 0;
 	private double shoppingDemandAverage = 0;
@@ -20,10 +20,10 @@ public class DemandManager {
 	private List<ResidentalBuilding> residentalList = ResidentalBuilding.residentalList;
 	private List<CommercialBuilding> commercialList = CommercialBuilding.commercialList;
 	private List<IndustrialBuilding> industrialList = IndustrialBuilding.industrialList;
-	
+
 	private DemandBarChart<String,Number> bc = null;
 	private PeopleManager pm = null;
-	
+
 	public DemandManager(DemandBarChart<String, Number> bc,PeopleManager pm)	{
 		this.bc = bc;
 		this.pm = pm;
@@ -45,7 +45,7 @@ public class DemandManager {
 	public int getIndustrialDemand()	{
 		return this.industrialDemand;
 	}
-	
+
 	private void calcFreeCapacitySum()	{
 		int rSum = 0;
 		int cSum = 0;
@@ -81,10 +81,10 @@ public class DemandManager {
 		if(population == 0)	residentalDemand = 0;
 		residentalDemand = (int) ((homelessNumber / population) * CommonConst.RESIDENTAL_DEMAND_FACTOR) * 100;
 		if(residentalDemand > 100) residentalDemand = 100;
-		
+
 		commercialDemand = (int) (shoppingDemandAverage * CommonConst.COMMERCIAL_DEMAND_FACTOR);
 		if(commercialDemand > 100) commercialDemand = 100;
-		
+
 		int underStockShopSum = 0;
 		for(CommercialBuilding c : commercialList)	{
 			double stockRate = c.getStock() / c.getProductCapacity() * 100;
@@ -92,7 +92,9 @@ public class DemandManager {
 				underStockShopSum++;
 			}
 		}
-		industrialDemand = underStockShopSum / commercialList.size() * 2;
+		if(commercialList.size() != 0)	{
+			industrialDemand = underStockShopSum / commercialList.size() * 2;
+		}
 	}
 	private void setDemandToChart(int rValue,int cValue,int iValue)	{
 		bc.getData().get(0).getData().get(0).setYValue(rValue);
