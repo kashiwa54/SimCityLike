@@ -53,12 +53,13 @@ public class TimelineProcessingService extends ScheduledService<Boolean>{
 					switchSeason = false;
 					switchYear = false;
 				}
-				if(switchNoon)	{
+				if(switchHour)	{
+					pm.migration(dm.getResidentalDemand());
 					pm.checkVacantHome();
 					pm.allMoveInto();
-					if (dm != null) {
-						System.out.println(dm.update());
-					}
+					if (dm != null) dm.update();
+				}
+				if(switchNoon)	{
 				}
 				return true;
 			}

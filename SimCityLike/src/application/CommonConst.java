@@ -23,10 +23,13 @@ public class CommonConst {
 	public static final double INFO_BAR_SIZE = 32.0;
 	public static final double DEMAND_CHART_SIZE = 192.0;
 	public static final double DEMAND_AXIS_MAX = 100.0;
-	
+
 	public static final double RESIDENTAL_DEMAND_FACTOR = 20.0;
 	public static final double COMMERCIAL_DEMAND_FACTOR = 1.0;
 	public static final double INDUSTRIAL_DEMAND_FACTOR = 0.2;
+
+	public static final double MIGRATION_FACTOR = 5.0;
+	public static final int MIGRATION_EXTRA = 5;
 
 	public static final int NEAR_ROAD_DISTANCE = 3;
 

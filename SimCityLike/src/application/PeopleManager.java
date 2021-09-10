@@ -114,7 +114,14 @@ public class PeopleManager {
 			}
 		}
 	}
-
+	public void migration(int residentalDemand)	{
+		double population = getPeopleList().size();
+		int increase = (int)((population / 100 * CommonConst.MIGRATION_FACTOR + rnd.nextInt(CommonConst.MIGRATION_EXTRA))
+				 * ((double)(100 - residentalDemand) / 100));
+		for(int i = 0;i < increase;i++)	{
+			createPeople();
+		}
+	}
 	public void addJoblessList(People p)	{
 		joblessList.add(p);
 	}
