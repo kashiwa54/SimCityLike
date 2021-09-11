@@ -9,19 +9,10 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 	private int capacity;
 	private int freeCapacity;
 	private People[] resident = null;
-	public ResidentalBuilding(Map map)	{
-		this(map,0,0);
-	}
-	public ResidentalBuilding(Map map,int x,int y)	{
-		this(map,x,y,1,1);
-	}
-	public ResidentalBuilding(Map map,int x,int y,int width,int height)	{
-		this(map,x,y,width,height,1);
-	}
-	public ResidentalBuilding(Map map,int x,int y,int width,int height,int capacity)	{
-		super(map,x,y,width,height);
-		this.capacity = capacity;
-		type = null;
+	public ResidentalBuilding(Map map,int x,int y,ResidentalBuildingEnum rbe)	{
+		super(map,x,y,rbe.getWidth(),rbe.getHeight());
+		this.capacity = rbe.getCapacity();
+		type = rbe;
 		resident = new People[capacity];
 		calcFreeCapacity();
 	}

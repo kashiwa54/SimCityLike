@@ -3,8 +3,7 @@ package application;
 
 public class Cottage extends ResidentalBuilding{
 	public Cottage(Map map,int x,int y) {
-		super(map,x,y, ResidentalBuildingEnum.COTTAGE.getWidth(),ResidentalBuildingEnum.COTTAGE.getHeight(),ResidentalBuildingEnum.COTTAGE.getCapacity());
-		type = ResidentalBuildingEnum.COTTAGE;
+		super(map,x,y, ResidentalBuildingEnum.COTTAGE);
 	}
 	@Override
 	public TileObject copy() {
