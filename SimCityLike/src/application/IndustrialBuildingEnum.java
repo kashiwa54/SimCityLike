@@ -2,7 +2,7 @@ package application;
 
 import java.lang.reflect.InvocationTargetException;
 public enum IndustrialBuildingEnum implements PlacableEnum{
-	RICEFIELD(Cottage.class,"src/image/ricefield","水田",1,1,100,10,200,25,5,1);
+	RICEFIELD(RiceField.class,"src/image/ricefield","水田",1,1,100,10,200,25,5,1);
 	private Class<? extends TileObject> buildingClass;
 	private String imagePath;
 	private String displayName;
