@@ -28,15 +28,17 @@ public abstract class CommercialBuilding extends Building implements Workable{
 		calcFreeWorkspace();
 	}
 	public String getInfo()	{
-		String info = "住人容量:" + workspace + "\n";
-		int residentNumber = 0;
+		String info = "職場容量:" + workspace + "\n";
+		int workerNumber = 0;
 		for(People p : worker)	{
 			if(p != null)	{
-				residentNumber++;
+				workerNumber++;
 			}
 		}
-		info = info.concat("住人数:" + residentNumber + "\n");
-		info = info.concat("住居空き" + freeWorkspace + "\n");
+		info = info.concat("労働者数:" + workerNumber + "\n");
+		info = info.concat("求人数" + freeWorkspace + "\n");
+		info = info.concat("商品消費量" + consumption + "\n");
+		info = info.concat("商品量" + stock + " / " + productCapacity + "\n");
 		return info;
 	}
 
@@ -106,11 +108,6 @@ public abstract class CommercialBuilding extends Building implements Workable{
 	}
 	public void removeWorkerAll()	{
 		for(People p : worker)	{
-			if(p != null) p.removeWork();
-		}
-	}
-	public void removeCustomerAll()	{
-		for(People p : customer)	{
 			if(p != null) p.removeWork();
 		}
 	}
