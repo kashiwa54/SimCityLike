@@ -113,8 +113,10 @@ public class MainWindowController {
 	private Point2D cacheStart = null;
 	private Point2D cacheEnd = null;
 
-	//TODO別スレッドに移動
+	//TODO 別スレッドに移動
 	private EnumMap<ResidentalBuildingEnum,Image> residentalMap = new EnumMap<ResidentalBuildingEnum,Image>(ResidentalBuildingEnum.class);
+	private EnumMap<CommercialBuildingEnum,Image> commercialMap = new EnumMap<CommercialBuildingEnum,Image>(CommercialBuildingEnum.class);
+	private EnumMap<IndustrialBuildingEnum,Image> industrialMap = new EnumMap<IndustrialBuildingEnum,Image>(IndustrialBuildingEnum.class);
 	private EnumMap<WayEnum,EnumMap<DirectionForImage,Image>> wayMap = new EnumMap<WayEnum,EnumMap<DirectionForImage,Image>>(WayEnum.class);
 
 	private Time time = null;
@@ -141,6 +143,24 @@ public class MainWindowController {
 			try {
 				imageFile = new File(type.getImagePath());
 				residentalMap.put(type,new Image(imageFile.toURI().toString()));
+			} catch (IllegalArgumentException e) {
+				checkFileError(e,imageFile);
+			}
+    	}
+    	for(CommercialBuildingEnum type : CommercialBuildingEnum.values())	{
+			File imageFile = null;
+			try {
+				imageFile = new File(type.getImagePath());
+				commercialMap.put(type,new Image(imageFile.toURI().toString()));
+			} catch (IllegalArgumentException e) {
+				checkFileError(e,imageFile);
+			}
+    	}
+    	for(IndustrialBuildingEnum type : IndustrialBuildingEnum.values())	{
+			File imageFile = null;
+			try {
+				imageFile = new File(type.getImagePath());
+				industrialMap.put(type,new Image(imageFile.toURI().toString()));
 			} catch (IllegalArgumentException e) {
 				checkFileError(e,imageFile);
 			}
@@ -284,22 +304,21 @@ public class MainWindowController {
 				if(type instanceof SiteEnum)	{
 					gc.setFill(((SiteEnum) type).getColor());
 					gc.fillRect(i * CommonConst.TILE_SIZE,j * CommonConst.TILE_SIZE,CommonConst.TILE_SIZE,CommonConst.TILE_SIZE);
-				}else if(type instanceof WayEnum)	{
-					Way way = (Way)map.getTileObject(i, j);
-
+				}else {
 					imgAff.setToTransform(1,0,0,0,1,0);
 					tmpP = affine.transform(i * CommonConst.TILE_SIZE,j * CommonConst.TILE_SIZE);
 					imgAff.appendScale(zoomX,zoomY,tmpP.getX(),tmpP.getY());
 					gc.setTransform(imgAff);
-					gc.drawImage(wayMap.get(type).get(way.getConnectState()),tmpP.getX() - (CommonConst.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
-					gc.setTransform(affine);
-
-				}else if(type instanceof ResidentalBuildingEnum)	{
-					imgAff.setToTransform(1,0,0,0,1,0);
-					tmpP = affine.transform(i * CommonConst.TILE_SIZE,j * CommonConst.TILE_SIZE);
-					imgAff.appendScale(zoomX,zoomY,tmpP.getX(),tmpP.getY());
-					gc.setTransform(imgAff);
-					gc.drawImage(residentalMap.get(type),tmpP.getX() - (CommonConst.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
+					if(type instanceof WayEnum)	{
+						Way way = (Way)map.getTileObject(i, j);
+						gc.drawImage(wayMap.get(type).get(way.getConnectState()),tmpP.getX() - (CommonConst.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
+					}else if(type instanceof ResidentalBuildingEnum)	{
+						gc.drawImage(residentalMap.get(type),tmpP.getX() - (CommonConst.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
+					}else if(type instanceof CommercialBuildingEnum)	{
+						gc.drawImage(commercialMap.get(type),tmpP.getX() - (CommonConst.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
+					}else if(type instanceof IndustrialBuildingEnum)	{
+						gc.drawImage(industrialMap.get(type),tmpP.getX() - (CommonConst.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
+					}
 					gc.setTransform(affine);
 				}
 
@@ -317,6 +336,12 @@ public class MainWindowController {
 
 				if(mouseType instanceof ResidentalBuildingEnum)	{
 					gc.drawImage(residentalMap.get(mouseType),tmpP.getX() - (CommonConst.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
+				}
+				if(mouseType instanceof CommercialBuildingEnum)	{
+					gc.drawImage(commercialMap.get(mouseType),tmpP.getX() - (CommonConst.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
+				}
+				if(mouseType instanceof IndustrialBuildingEnum)	{
+					gc.drawImage(industrialMap.get(mouseType),tmpP.getX() - (CommonConst.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
 				}
 			gc.setGlobalAlpha(1.0);
 
