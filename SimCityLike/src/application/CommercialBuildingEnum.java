@@ -2,7 +2,7 @@ package application;
 
 import java.lang.reflect.InvocationTargetException;
 public enum CommercialBuildingEnum implements PlacableEnum{
-	SMALLSHOP_A(SmallShopA.class,"src/image/shopA.png","個人商店A",1,1,100,2,50,5,5,1);
+	SMALLSHOP_A(SmallShopA.class,"src/image/smallshopA1.png","個人商店A",1,1,100,2,50,5,5,1);
 	private Class<? extends TileObject> buildingClass;
 	private String imagePath;
 	private String displayName;
