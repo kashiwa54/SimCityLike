@@ -11,33 +11,34 @@ public abstract class CommercialBuilding extends Building implements Workable{
 	private int productCapacity;
 	private int consumption;
 	private int stock;
+	private int customerCapacity;
+	private int freeCustomer;
 	private People[] worker = null;
-	public CommercialBuilding(Map map)	{
-		this(map,0,0);
-	}
-	public CommercialBuilding(Map map,int x,int y)	{
-		this(map,x,y,1,1);
-	}
-	public CommercialBuilding(Map map,int x,int y,int width,int height)	{
-		this(map,x,y,width,height,1);
-	}
-	public CommercialBuilding(Map map,int x,int y,int width,int height,int workspace)	{
-		super(map,x,y,width,height);
-		this.workspace = workspace;
-		type = null;
+	private People[] customer = null;
+	public CommercialBuilding(Map map,int x,int y,CommercialBuildingEnum cbe)	{
+		super(map,x,y,cbe.getWidth(),cbe.getHeight());
+		this.workspace = cbe.getWorkspace();
+		this.productCapacity = cbe.getproductCapacity();
+		this.consumption = cbe.getConsumption();
+		this.stock = 0;
+		this.customerCapacity = cbe.getCustomerCapacity();
+		type = cbe;
 		worker = new People[workspace];
+		customer = new People[customerCapacity];
 		calcFreeWorkspace();
 	}
 	public String getInfo()	{
-		String info = "住人容量:" + workspace + "\n";
-		int residentNumber = 0;
+		String info = "職場容量:" + workspace + "\n";
+		int workerNumber = 0;
 		for(People p : worker)	{
 			if(p != null)	{
-				residentNumber++;
+				workerNumber++;
 			}
 		}
-		info = info.concat("住人数:" + residentNumber + "\n");
-		info = info.concat("住居空き" + freeWorkspace + "\n");
+		info = info.concat("労働者数:" + workerNumber + "\n");
+		info = info.concat("求人数" + freeWorkspace + "\n");
+		info = info.concat("商品消費量" + consumption + "\n");
+		info = info.concat("商品量" + stock + " / " + productCapacity + "\n");
 		return info;
 	}
 
@@ -69,9 +70,34 @@ public abstract class CommercialBuilding extends Building implements Workable{
 			if (worker[i] == p)	{
 				worker[i] = null;
 				p.removeWork();
-				while((i < worker.length - 1))	{
+				while(i < worker.length - 1)	{
 					worker[i] = worker[i + 1];
 					if(worker[i] == null) break;
+					i++;
+				}
+				calcFreeWorkspace();
+				return true;
+			}
+		}
+		return false;
+	}
+	public boolean addCustomer(People p) {
+		for(int i = 0;i < customer.length;i++)	{
+			if(customer[i] == null)	{
+				customer[i] = p;
+				calcFreeCustomer();
+				return true;
+			}
+		}
+		return false;
+	}
+	public boolean removeCustomer(People p) {
+		for(int i = 0;i < customer.length; i++)	{
+			if (customer[i] == p)	{
+				customer[i] = null;
+				while(i < customer.length - 1)	{
+					customer[i] = customer[i + 1];
+					if(customer[i] == null) break;
 					i++;
 				}
 				calcFreeWorkspace();
@@ -88,9 +114,15 @@ public abstract class CommercialBuilding extends Building implements Workable{
 	public People[] getWorker()	{
 		return worker;
 	}
+	public People[] getCustomer()	{
+		return customer;
+	}
 	@Override
 	public int getFreeWorkspace() {
 		return freeWorkspace;
+	}
+	public int getFreeCustomer()	{
+		return freeCustomer;
 	}
 	private void calcFreeWorkspace()	{
 		int rCnt = 0;
@@ -102,6 +134,17 @@ public abstract class CommercialBuilding extends Building implements Workable{
 			}
 		}
 		this.freeWorkspace = workspace - rCnt;
+	}
+	private void calcFreeCustomer()	{
+		int rCnt = 0;
+		for(People p : customer)	{
+			if(p != null)	{
+				rCnt++;
+			}else {
+				break;
+			}
+		}
+		this.freeCustomer = customerCapacity - rCnt;
 	}
 	@Override
 	public boolean place() {
