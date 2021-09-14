@@ -10,6 +10,7 @@ public class DemandBarChart<X,Y> extends StackedBarChart<X, Y>{
 		xAxis.setTickLabelsVisible(false);
 		yAxis.setTickLabelsVisible(false);
 		this.setLegendVisible(false);
+		this.setAnimated(false);
 	}
 
 }
