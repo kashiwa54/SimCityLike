@@ -68,7 +68,7 @@ public class DemandManager {
 		homelessNumber = pm.getHomelessList().size();
 		int shoppingSum = 0;
 		for(People p : pm.getPeopleList())	{
-			shoppingSum += p.getShoppingDemand();
+			if (p != null) shoppingSum += p.getShoppingDemand();
 		}
 		if (population != 0)	{
 			shoppingDemandAverage = shoppingSum / population;
