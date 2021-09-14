@@ -24,7 +24,7 @@ public class CommonConst {
 	public static final double DEMAND_CHART_SIZE = 192.0;
 	public static final double DEMAND_AXIS_MAX = 100.0;
 
-	public static final double RESIDENTAL_DEMAND_FACTOR = 20.0;
+	public static final double RESIDENTAL_DEMAND_FACTOR = 2.0;
 	public static final double COMMERCIAL_DEMAND_FACTOR = 1.0;
 	public static final double INDUSTRIAL_DEMAND_FACTOR = 0.2;
 

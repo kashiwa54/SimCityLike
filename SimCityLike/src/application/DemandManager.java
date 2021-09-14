@@ -78,9 +78,12 @@ public class DemandManager {
 	}
 	private void calcDemand()	{
 		calcPeopleTally();
-		if(population == 0)	residentalDemand = 0;
-		residentalDemand = (int) ((homelessNumber / population) * CommonConst.RESIDENTAL_DEMAND_FACTOR) * 100;
-		if(residentalDemand > 100) residentalDemand = 100;
+		if(population != 0)	{
+			residentalDemand = (int) (((double)homelessNumber / population) * CommonConst.RESIDENTAL_DEMAND_FACTOR * 100);
+			if(residentalDemand > 100) residentalDemand = 100;
+		}else {
+			residentalDemand = 0;
+		}
 
 		commercialDemand = (int) (shoppingDemandAverage * CommonConst.COMMERCIAL_DEMAND_FACTOR);
 		if(commercialDemand > 100) commercialDemand = 100;
@@ -94,6 +97,8 @@ public class DemandManager {
 		}
 		if(commercialList.size() != 0)	{
 			industrialDemand = underStockShopSum / commercialList.size() * 2;
+		}else {
+			industrialDemand = 0;
 		}
 	}
 	private void setDemandToChart(int rValue,int cValue,int iValue)	{

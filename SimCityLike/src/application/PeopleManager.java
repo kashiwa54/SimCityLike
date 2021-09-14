@@ -68,13 +68,15 @@ public class PeopleManager {
 	}
 	public List<People> getPeopleList()	{
 		@SuppressWarnings("unchecked")
-		List<People> list = (ArrayList<People>) homelessList.clone();
+		ArrayList<People> list = (ArrayList<People>) homelessList.clone();
 		for(ResidentalBuilding r : residentalList)	{
 			list.addAll(Arrays.asList(r.getResident()));
 		}
+		list.trimToSize();
 		return list;
 	}
 	public List<People> getHomelessList()	{
+		homelessList.trimToSize();
 		return homelessList;
 	}
 	public void addHomelessList(People p)	{
