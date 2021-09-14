@@ -32,6 +32,8 @@ public class Main extends Application {
 	PeopleManager pm = new PeopleManager(worldTime);
 	DemandManager dm = null;
 
+	static TimeFlow timeFlow = TimeFlow.LOW;
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -44,10 +46,10 @@ public class Main extends Application {
 
 			ConsoleWindowController console = consoleWindowSetup(window,map);
 			window.paintMainCanvas(gc,map);
-			
+
 			dm = new DemandManager(window.getDemand(),pm);
 			mainProcess.setDemandManager(dm);
-			
+
 			timeline.getKeyFrames().add(new KeyFrame(Duration.millis(CommonConst.DEFAULT_DURATION),new EventHandler<ActionEvent>()	{
 		    @Override
 		    public void handle(ActionEvent event) {
@@ -140,6 +142,10 @@ public class Main extends Application {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public static void setTimeFlow(TimeFlow timeFlow)	{
+		timeFlow = timeFlow;
 	}
 
 
