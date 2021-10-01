@@ -54,7 +54,7 @@
             <Insets left="16.0" right="16.0" />
          </padding>
       </HBox>
-      <HBox fx:id="statusBar" prefHeight="32.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <HBox fx:id="statusBar" maxHeight="32.0" minHeight="32.0" prefHeight="32.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <Label fx:id="timeLabel" maxHeight="32.0" maxWidth="256.0" minHeight="32.0" minWidth="256.0" prefHeight="32.0" prefWidth="256.0">
                <font>
@@ -87,14 +87,14 @@
                   </TextFlow>
                </graphic>
             </Label>
-            <Label fx:id="textLabel" maxHeight="32.0" maxWidth="256.0" minHeight="32.0" minWidth="256.0" prefHeight="32.0" prefWidth="256.0">
-               <font>
-                  <Font size="20.0" />
-               </font>
-               <graphic>
-                  <TextFlow prefHeight="200.0" prefWidth="200.0" />
-               </graphic>
-            </Label>
+            <HBox maxHeight="32.0" maxWidth="128.0" minHeight="32.0" minWidth="128.0" prefHeight="32.0" prefWidth="128.0">
+               <children>
+                  <Button fx:id="pause" onAction="#buttonPause" maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" text="停" />
+                  <Button fx:id="lowSpeed" onAction="#buttonLowSpeed" maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" text="低" />
+                  <Button fx:id="midSpeed" onAction="#buttonMidSpeed" maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" text="中" />
+                  <Button fx:id="highSpeed" onAction="#buttonHighSpeed" maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" text="高" />
+               </children>
+            </HBox>
          </children></HBox>
    </children>
 </AnchorPane>
