@@ -80,14 +80,6 @@ public class MainWindowController {
 	Text timeText;
 	@FXML
 	Text weekText;
-	@FXML
-	Button stop;
-	@FXML
-	Button lowSpeed;
-	@FXML
-	Button midSpeed;
-	@FXML
-	Button highSpeed;
 
 	DemandBarChart<String,Number> demand;
 
@@ -128,15 +120,15 @@ public class MainWindowController {
 	private EnumMap<WayEnum,EnumMap<DirectionForImage,Image>> wayMap = new EnumMap<WayEnum,EnumMap<DirectionForImage,Image>>(WayEnum.class);
 
 	private Time time = null;
-
+	
 	private int residentalDemand = 0;
 	private int commercialDemand = 0;
 	private int industrialDemand = 0;
-
+	
 	private XYChart.Series<String,Number> residental;
 	private XYChart.Series<String,Number> commercial;
 	private XYChart.Series<String,Number> industrial;
-
+	
 	private XYChart.Data<String, Number> residentalData;
 	private XYChart.Data<String, Number> commercialData;
 	private XYChart.Data<String, Number> industrialData;
@@ -248,11 +240,11 @@ public class MainWindowController {
     	demand.setMaxSize(CommonConst.DEMAND_CHART_SIZE, CommonConst.DEMAND_CHART_SIZE);
     	demand.setPrefSize(CommonConst.DEMAND_CHART_SIZE, CommonConst.DEMAND_CHART_SIZE);
     	demand.setMinSize(CommonConst.DEMAND_CHART_SIZE, CommonConst.DEMAND_CHART_SIZE);
-
+    	
 		residental = new XYChart.Series<String,Number>();
 		commercial = new XYChart.Series<String,Number>();
 		industrial = new XYChart.Series<String,Number>();
-
+		
 		residentalData = new XYChart.Data<String, Number>();
 		commercialData = new XYChart.Data<String, Number>();
 		industrialData = new XYChart.Data<String, Number>();
@@ -265,7 +257,7 @@ public class MainWindowController {
 		residental.getData().add(residentalData);
 		commercial.getData().add(commercialData);
 		industrial.getData().add(industrialData);
-
+		
 		demand.getData().add(residental);
 		demand.getData().add(commercial);
 		demand.getData().add(industrial);
@@ -448,10 +440,7 @@ public class MainWindowController {
 		for(FlowPane pane : tabList)	{
 			pane.setVisible(false);
 		}
-	}
-	@FXML
-	public void buttonPause(ActionEvent ae)	{
-		Main.setTimeFlow(TimeFlow.PAUSE);
+
 	}
 	@FXML
 	public void mouseMove(MouseEvent me)	{
