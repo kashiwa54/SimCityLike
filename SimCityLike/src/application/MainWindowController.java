@@ -454,6 +454,18 @@ public class MainWindowController {
 		Main.setTimeFlow(TimeFlow.PAUSE);
 	}
 	@FXML
+	public void buttonLowSpeed(ActionEvent ae)	{
+		Main.setTimeFlow(TimeFlow.LOW);
+	}
+	@FXML
+	public void buttonMidSpeed(ActionEvent ae)	{
+		Main.setTimeFlow(TimeFlow.MID);
+	}
+	@FXML
+	public void buttonHighSpeed(ActionEvent ae)	{
+		Main.setTimeFlow(TimeFlow.HIGH);
+	}
+	@FXML
 	public void mouseMove(MouseEvent me)	{
 		mouseX = me.getSceneX();
 		mouseY = me.getSceneY();

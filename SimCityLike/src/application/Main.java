@@ -79,8 +79,6 @@ public class Main extends Application {
 			stage.setScene(mScene);
 			stage.setMaxWidth(CommonConst.WINDOW_MAX_WIDTH);
 			stage.setMaxHeight(CommonConst.WINDOW_MAX_HEIGHT);
-//			stage.setWidth(WINDOW_PREF_HEIGHT);
-//			stage.setHeight(WINDOW_PREF_HEIGHT);
 
 	    	mScene.widthProperty().addListener(new ChangeListener<Number>() {
 				@Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
@@ -144,8 +142,11 @@ public class Main extends Application {
 		}
 	}
 
-	public static void setTimeFlow(TimeFlow timeFlow)	{
-		timeFlow = timeFlow;
+	public static void setTimeFlow(TimeFlow flow)	{
+		timeFlow = flow;
+	}
+	public static TimeFlow getTimeFlow()	{
+		return timeFlow;
 	}
 
 

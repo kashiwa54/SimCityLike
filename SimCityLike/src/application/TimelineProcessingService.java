@@ -14,6 +14,7 @@ public class TimelineProcessingService extends ScheduledService<Boolean>{
 	private Boolean switchDay = false;
 	private Boolean switchSeason = false;
 	private Boolean switchYear = false;
+	private TimeFlow timeFlow;
 	public TimelineProcessingService(Time worldTime,Map map)	{
 		this.time = worldTime;
 		this.worldMap = map;
@@ -29,7 +30,25 @@ public class TimelineProcessingService extends ScheduledService<Boolean>{
 			@Override
 			protected Boolean call() throws Exception {
 				previousTime = time.clone();
-				time.addSecond(CommonConst.DEFAULT_INCREMENT_SECOND);
+				timeFlow = Main.getTimeFlow();
+				double incrementSecond = CommonConst.DEFAULT_INCREMENT_SECOND;
+				switch(timeFlow)	{
+				case HIGH:
+					incrementSecond *= 10;
+					break;
+				case MID:
+					incrementSecond *= 3;
+					break;
+				case LOW:
+					break;
+				case PAUSE:
+					incrementSecond *= 0;
+					break;
+				default:
+					break;
+
+				}
+				time.addSecond(incrementSecond);
 
 				if(previousTime.getHour() != time.getHour())	{
 					switchHour = true;
