@@ -42,7 +42,7 @@ public class TimelineProcessingService extends ScheduledService<Boolean>{
 				case LOW:
 					break;
 				case PAUSE:
-					incrementSecond *= 0;
+					incrementSecond = 0;
 					break;
 				default:
 					break;

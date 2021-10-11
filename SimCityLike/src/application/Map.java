@@ -7,6 +7,7 @@ public class Map {
 	private TileObject[][] tile;
 
 	private PeopleManager pManager = null;
+	private RoadGraph graph = null;
 
 	public Map(int x,int y)	{
 		this.width = x;
@@ -146,5 +147,13 @@ public class Map {
 			pManager = pm;
 			return true;
 		}
+	}
+
+	public void createRoadGraph(Road road)	{
+		graph = new RoadGraph(road);
+	}
+
+	public RoadGraph getRoadGraph()	{
+		return graph;
 	}
 }
