@@ -15,22 +15,44 @@ public class RoadGraph {
 		createGraph(startNode);
 	}
 
-	public LinkedList<GraphNode> calcPath(Road road)	{
+	public LinkedList<GraphNode> getNodeList()	{
+		return nodeList;
+	}
+
+	public LinkedList<GraphNode> calcPath(Road start,Road end)	{
+		LinkedList<GraphNode> route = new LinkedList<GraphNode>();
 		PriorityQueue<GraphNode> queue = new PriorityQueue<GraphNode>();
-		GraphNode doneNode;
+		GraphNode doneNode = null;
+		GraphNode endNode = null;
 		boolean dupflg = false;
 		for(GraphNode n : nodeList)	{
-			if(n.getRoad() == road) {
+			if(n.getRoad() == start) {
 				dupflg = true;
+				n.setCost(0);
 				queue.add(n);
 				break;
 			}
 		}
 		if(!dupflg)	{
-			GraphNode newNode = new GraphNode(road);
+			GraphNode newNode = new GraphNode(start);
 			addNode(newNode);
+			newNode.setCost(0);
 			queue.add(newNode);
 		}
+		dupflg = false;
+		for(GraphNode n : nodeList)	{
+			if(n.getRoad() == end) {
+				dupflg = true;
+				endNode = n;
+				break;
+			}
+		}
+		if(!dupflg)	{
+			GraphNode newNode = new GraphNode(end);
+			addNode(newNode);
+			endNode = newNode;
+		}
+
 		while(!queue.isEmpty())	{
 			doneNode = queue.poll();
 			doneNode.setDone(true);
@@ -49,7 +71,13 @@ public class RoadGraph {
 				}
 			}
 		}
-		return null;
+		GraphNode currentNode = endNode;
+		route.addFirst(endNode);
+		while(currentNode.getFrom() != null)	{
+			currentNode = currentNode.getFrom();
+			route.addFirst(currentNode);
+		}
+		return route;
 	}
 
 	public GraphNode[] addNode(GraphNode node)	{
@@ -65,13 +93,14 @@ public class RoadGraph {
 				while(connection.size() == 2)	{
 					boolean loopflg = false;
 					dCost++;
+					nextWay = nextWay.getConnectWay(nextDir);
 					for(GraphNode n : nodeList)	{
 						if (n.getRoad() == (Road)nextWay) loopflg = true;
+						break;
 					}
 					if(loopflg) break;
-					nextWay = nextWay.getConnectWay(nextDir);
 					for(Direction dir : connection)	{
-						if(dir != Direction.reverse(d))	{
+						if(dir != Direction.reverse(nextDir))	{
 							nextDir = dir;
 						}
 					}
@@ -91,7 +120,6 @@ public class RoadGraph {
 					newNodes[index] = newNode;
 					index++;
 				}
-
 			}
 		}
 		return newNodes;
@@ -114,7 +142,6 @@ public class RoadGraph {
 			}
 		}
 	}
-
 
 }
 

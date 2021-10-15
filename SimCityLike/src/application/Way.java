@@ -127,7 +127,8 @@ public abstract class Way extends TileObject{
 		}
 	}
 	public String getInfo()	{
-		String info = "最高速度:" + this.maxSpeed + "\n";
+		String info = "(" + getX() + "," + getY() + ")\n";
+		info = info.concat("最高速度:" + this.maxSpeed + "\n");
 		info = info.concat("接続方向:");
 		for(Direction d: connectMap.keySet())	{
 			switch(d)	{

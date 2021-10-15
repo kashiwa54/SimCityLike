@@ -1,5 +1,7 @@
 package application;
 
+import java.util.LinkedList;
+
 public class Map {
 	private static final int DISTANCE = CommonConst.NEAR_ROAD_DISTANCE;
 	private int width;
@@ -155,5 +157,11 @@ public class Map {
 
 	public RoadGraph getRoadGraph()	{
 		return graph;
+	}
+	public LinkedList<GraphNode> getRoute(Road start,Road end)	{
+		if(graph == null)	{
+			createRoadGraph(start);
+		}
+		return graph.calcPath(start, end);
 	}
 }

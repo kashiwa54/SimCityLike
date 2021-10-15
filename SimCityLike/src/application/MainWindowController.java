@@ -548,9 +548,9 @@ public class MainWindowController {
 							map.place(o, o.getX(), o.getY());
 						}
 					}
-					if(path.get(0) instanceof Road)	{
-						map.createRoadGraph((Road)path.get(0));
-					}
+//					if(path.get(0) instanceof Road)	{
+//						map.createRoadGraph((Road)path.get(0));
+//					}
 
 				}
 			}

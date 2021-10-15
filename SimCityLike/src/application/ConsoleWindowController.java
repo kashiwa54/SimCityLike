@@ -1,5 +1,7 @@
 package application;
 
+import java.util.LinkedList;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.GraphicsContext;
@@ -182,6 +184,57 @@ public class ConsoleWindowController	{
 			default :
 				builder.append("Available augments of people command are\n");
 				builder.append(" [list] [create [age]].\n");
+			}
+			break;
+		case "route":
+			try {
+				int sx = Integer.parseInt(arg[1]);
+				int sy = Integer.parseInt(arg[2]);
+				int ex = Integer.parseInt(arg[3]);
+				int ey = Integer.parseInt(arg[4]);
+				Road start;
+				Road end;
+				if(!(map.getTileObject(sx, sy) instanceof Road)&&(map.getTileObject(ex, ey) instanceof Road))	{
+					builder.append("[" + sx + "," + sy + "] or [" + ex + "," + ey + "] is not Road.");
+					break;
+				}else {
+					start = (Road)map.getTileObject(sx, sy);
+					end = (Road)map.getTileObject(ex, ey);
+				}
+				LinkedList<GraphNode> route = map.getRoute(start, end);
+				GraphNode node;
+				while(!route.isEmpty())	{
+					node = route.pop();
+					builder.append("[" + node.getRoad().getX() + "," + node.getRoad().getY() + "]\n");
+				}
+
+			}catch(Exception e)	{
+				e.printStackTrace();
+				builder.append("route command format is \n");
+				builder.append("route [startX] [startY] [endX] [endY].\n");
+			}
+			break;
+		case "node":
+			try {
+				int sx = Integer.parseInt(arg[1]);
+				int sy = Integer.parseInt(arg[2]);
+				Road start;
+				if(!(map.getTileObject(sx, sy) instanceof Road))	{
+					builder.append("[" + sx + "," + sy + "] is not Road.");
+					break;
+				}else {
+					start = (Road)map.getTileObject(sx, sy);
+				}
+				map.createRoadGraph(start);
+				RoadGraph graph = map.getRoadGraph();
+				LinkedList<GraphNode> list = graph.getNodeList();
+				for(GraphNode n : list)	{
+					builder.append("[" + n.getRoad().getX() + "," + n.getRoad().getY() + "]\n");
+				}
+			}catch(Exception e)	{
+				e.printStackTrace();
+				builder.append("node command format is \n");
+				builder.append("node [startX] [startY].\n");
 			}
 			break;
 		default :
