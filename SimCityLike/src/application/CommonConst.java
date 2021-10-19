@@ -47,4 +47,6 @@ public class CommonConst {
 	public static final double DEFAULT_INCREMENT_SECOND = 0.1;
 
 	public static final String MYOUJI_FILE_NAME = "src/application/myouji.txt";
+
+	public static final int CHECK_WORKABLE_NUMBER = 10;
 }

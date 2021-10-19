@@ -5,4 +5,7 @@ public interface Workable {
 	boolean removeWorker(People p);
 	void removeWorkerAll();
 	int getFreeWorkspace();
+	int getX();
+	int getY();
+	Road getNearRoad();
 }

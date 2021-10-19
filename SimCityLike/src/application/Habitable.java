@@ -5,4 +5,7 @@ public interface Habitable {
 	boolean removeResident(People p);
 	void removeResidentAll();
 	int getFreeCapacity();
+	int getX();
+	int getY();
+	Road getNearRoad();
 }

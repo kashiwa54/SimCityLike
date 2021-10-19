@@ -127,6 +127,34 @@ public class PeopleManager {
 	public void addJoblessList(People p)	{
 		joblessList.add(p);
 	}
+
+	public void employAny(People p)	{
+
+	}
+
+	public Workable findNearJob(Habitable home,int distance,int areaDistance)	{
+		int minX = Math.max(0, home.getX() - areaDistance);
+		int maxX = Math.min(CommonConst.TILE_WIDTH, home.getX() + areaDistance);
+		int minY = Math.max(0, home.getY() - areaDistance);
+		int maxY = Math.min(CommonConst.TILE_WIDTH, home.getY() + areaDistance);
+		ArrayList<Workable> nearWorkable = new ArrayList<Workable>();
+		for(Workable w : fieldMap.getWorkableList())	{
+			if((w.getX() >= minX)&&(w.getX() <= maxX)&&(w.getY() >= minY)&&(w.getY() <= maxY))	{
+				nearWorkable.add(w);
+			}
+		}
+		for(int i = 0;i < CommonConst.CHECK_WORKABLE_NUMBER;i++)	{
+			int rndIndex = rnd.nextInt(nearWorkable.size());
+			Workable tmpWork = nearWorkable.get(rndIndex);
+			RoadGraph graph = fieldMap.getRoadGraph();
+			if(tmpWork.getFreeWorkspace() >= 1)	{
+				if(graph.getRouteCost(home.getNearRoad(),tmpWork.getNearRoad()) <= distance){
+					return tmpWork;
+				}
+			}
+		}
+		return null;
+	}
 	private void readNameFile()	{
 		BufferedReader myouji = null;
 		try {

@@ -19,6 +19,15 @@ public class RoadGraph {
 		return nodeList;
 	}
 
+	public int getRouteCost(Road start,Road end)	{
+		LinkedList<GraphNode> path = calcPath(start,end);
+		int totalCost = 0;
+		for(GraphNode n : path)	{
+			totalCost += n.getCost();
+		}
+		return totalCost;
+	}
+
 	public LinkedList<GraphNode> calcPath(Road start,Road end)	{
 		LinkedList<GraphNode> route = new LinkedList<GraphNode>();
 		PriorityQueue<GraphNode> queue = new PriorityQueue<GraphNode>();

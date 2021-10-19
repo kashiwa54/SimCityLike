@@ -1,5 +1,6 @@
 package application;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Map {
@@ -10,6 +11,9 @@ public class Map {
 
 	private PeopleManager pManager = null;
 	private RoadGraph graph = null;
+
+	private ArrayList<Habitable> habitableList = new ArrayList<Habitable>();
+	private ArrayList<Workable> workableList = new ArrayList<Workable>();
 
 	public Map(int x,int y)	{
 		this.width = x;
@@ -37,6 +41,16 @@ public class Map {
 	}
 	public PeopleManager getPeopleManager()	{
 		return this.pManager;
+	}
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<Habitable> getHabitableList()	{
+		return (ArrayList<Habitable>) habitableList.clone();
+	}
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<Workable> getWorkableList()	{
+		return (ArrayList<Workable>) workableList.clone();
 	}
 
 	public boolean isSpace(int x,int y)	{
@@ -70,6 +84,8 @@ public class Map {
 				if(tile[x][y].equals(obj))	{
 					obj.setOnMap(true);
 					obj.place();
+					addList(obj);
+					removeList(mapObj);
 					refreshAround(x,y);
 					return obj;
 				}else {
@@ -94,6 +110,7 @@ public class Map {
 				}
 				obj.setPosition(x,y);
 				obj.place();
+				addList(obj);
 				refreshAround(x,y);
 				return obj;
 			}
@@ -124,6 +141,7 @@ public class Map {
 			home.removeResidentAll();
 		}
 		tile[x][y].setOnMap(false);
+		removeList(tile[x][y]);
 		tile[x][y] = new Space(this,x,y);
 		tile[x][y].setOnMap(true);
 	}
@@ -163,5 +181,22 @@ public class Map {
 			createRoadGraph(start);
 		}
 		return graph.calcPath(start, end);
+	}
+
+	private void addList(TileObject obj)	{
+		if(obj instanceof Habitable)	{
+			habitableList.add((Habitable)obj);
+		}
+		if(obj instanceof Workable)	{
+			workableList.add((Workable)obj);
+		}
+	}
+	private void removeList(TileObject obj)	{
+		if(obj instanceof Habitable)	{
+			habitableList.remove((Habitable)obj);
+		}
+		if(obj instanceof Workable)	{
+			workableList.remove((Workable)obj);
+		}
 	}
 }
