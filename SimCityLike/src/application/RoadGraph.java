@@ -84,45 +84,60 @@ public class RoadGraph {
 		GraphNode[] newNodes = new GraphNode[3];
 		int index = 0;
 		boolean dupflg = false;
-		if(node.getRoad().getConnect().size() >= 2)	{
-			for(Direction d : node.getRoad().getConnect())	{
-				int dCost = 1;
-				Way nextWay = node.getRoad();
-				Direction nextDir = d;
-				EnumSet<Direction> connection = nextWay.getConnectWay(nextDir).getConnect();
-				while(connection.size() == 2)	{
-					boolean loopflg = false;
-					dCost++;
-					nextWay = nextWay.getConnectWay(nextDir);
-					for(GraphNode n : nodeList)	{
-						if (n.getRoad() == (Road)nextWay) loopflg = true;
-						break;
-					}
-					if(loopflg) break;
-					for(Direction dir : connection)	{
-						if(dir != Direction.reverse(nextDir))	{
-							nextDir = dir;
-						}
-					}
-					connection = nextWay.getConnectWay(nextDir).getConnect();
-				}
+		if(node.getRoad().getConnect().size() <= 1)	{
+			for(GraphNode n : node.getEdgeTo())	{
+				if(n != null) break;
+			}
+		}
+		for(Direction d : node.getRoad().getConnect())	{
+			dupflg = false;
+			int dCost = 1;
+			Way nextWay = node.getRoad();
+			Direction nextDir = d;
+			EnumSet<Direction> connection = nextWay.getConnectWay(nextDir).getConnect();
+			while(connection.size() == 2)	{
+				boolean loopflg = false;
+				dCost++;
+				nextWay = nextWay.getConnectWay(nextDir);
 				for(GraphNode n : nodeList)	{
-					if(n.getRoad() == (Road)nextWay)	{
-						dupflg = true;
-						node.addEdge(n,d,dCost);
-						break;
+					if (n.getRoad() == (Road)nextWay) loopflg = true;
+					break;
+				}
+				if(loopflg) break;
+				Direction comeDir = Direction.reverse(nextDir);
+				for(Direction dir : connection)	{
+					if(dir != comeDir)	{
+						nextDir = dir;
 					}
 				}
-				if(!dupflg)	{
-					GraphNode newNode = new GraphNode((Road) nextWay);
-					node.addEdge(newNode, d, dCost);
-					nodeList.add(newNode);
-					newNodes[index] = newNode;
-					index++;
+				connection = nextWay.getConnectWay(nextDir).getConnect();
+			}
+			if (nextWay.getConnectWay(nextDir) == null)	{
+				System.out.println(nextDir);
+				System.out.println(nextWay);
+				System.out.println(nextWay.getConnect());
+			}
+			nextWay = nextWay.getConnectWay(nextDir);
+			for(GraphNode n : nodeList)	{
+				if(n.getRoad() == (Road)nextWay)	{
+					dupflg = true;
+					node.addEdge(n,d,dCost);
+					break;
 				}
+			}
+			if(!dupflg)	{
+				GraphNode newNode = new GraphNode((Road) nextWay);
+				node.addEdge(newNode, d, dCost);
+				nodeList.add(newNode);
+				newNodes[index] = newNode;
+				index++;
 			}
 		}
 		return newNodes;
+	}
+
+	public void connectNode(Node node)	{
+
 	}
 	public GraphNode[] addNode(Road road)	{
 		GraphNode node = new GraphNode(road);
