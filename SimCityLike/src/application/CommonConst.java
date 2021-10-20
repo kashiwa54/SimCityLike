@@ -48,5 +48,7 @@ public class CommonConst {
 
 	public static final String MYOUJI_FILE_NAME = "src/application/myouji.txt";
 
+	public static final int WORK_DISTANCE = 10;
+	public static final int WORK_AREA_DISTANCE = 8;
 	public static final int CHECK_WORKABLE_NUMBER = 10;
 }

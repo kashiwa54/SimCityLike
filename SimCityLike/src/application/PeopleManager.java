@@ -57,6 +57,7 @@ public class PeopleManager {
 		String name = createName();
 		People p = new People(this,birthday,worldClock,name);
 		homelessList.add(p);
+		joblessList.add(p);
 		return p;
 	}
 	public People birthPeople()	{
@@ -64,6 +65,7 @@ public class PeopleManager {
 		String name = createName();
 		People p = new People(this,birthday,worldClock,name);
 		homelessList.add(p);
+		joblessList.add(p);
 		return p;
 	}
 	public List<People> getPeopleList()	{
@@ -82,11 +84,28 @@ public class PeopleManager {
 	public void addHomelessList(People p)	{
 		homelessList.add(p);
 	}
+	public List<People> getJoblessList()	{
+		joblessList.trimToSize();
+		return joblessList;
+	}
 	public void checkVacantHome()	{
 		vacantHomeList = new ArrayList<Habitable>(INISIAL_CAPACITY);
 		for(ResidentalBuilding rb : residentalList)	{
 			if(rb.getFreeCapacity() > 0)	{
 				vacantHomeList.add(rb);
+			}
+		}
+	}
+	public void checkVacantWorkspace()	{
+		vacantWorkspaceList = new ArrayList<Workable>(INISIAL_CAPACITY);
+		for(CommercialBuilding cb : commercialList)	{
+			if(cb.getFreeWorkspace() > 0)	{
+				vacantWorkspaceList.add(cb);
+			}
+		}
+		for(IndustrialBuilding ib : industrialList)	{
+			if(ib.getFreeWorkspace() > 0)	{
+				vacantWorkspaceList.add(ib);
 			}
 		}
 	}
@@ -128,27 +147,43 @@ public class PeopleManager {
 		joblessList.add(p);
 	}
 
-	public void employAny(People p)	{
-
+	public boolean employAny(People p)	{
+		if(p.getHome() == null) return false;
+		Workable work = findNearJob(p.getHome(),CommonConst.WORK_DISTANCE,CommonConst.WORK_AREA_DISTANCE);
+		if((work != null)&&(work.addWorker(p)))	{
+			p.setWork(work);
+			joblessList.remove(p);
+			return true;
+		}else {
+			return false;
+		}
 	}
 
+	public void jobSeek(int jobSeeker)	{
+		checkVacantWorkspace();
+		for(int i  = 0; i < jobSeeker; i++)	{
+			if(joblessList.size() <= 0)	break;
+			int index = rnd.nextInt(joblessList.size());
+			employAny(joblessList.get(index));
+		}
+	}
 	public Workable findNearJob(Habitable home,int distance,int areaDistance)	{
 		int minX = Math.max(0, home.getX() - areaDistance);
 		int maxX = Math.min(CommonConst.TILE_WIDTH, home.getX() + areaDistance);
 		int minY = Math.max(0, home.getY() - areaDistance);
 		int maxY = Math.min(CommonConst.TILE_WIDTH, home.getY() + areaDistance);
 		ArrayList<Workable> nearWorkable = new ArrayList<Workable>();
-		for(Workable w : fieldMap.getWorkableList())	{
+		for(Workable w : vacantWorkspaceList)	{
 			if((w.getX() >= minX)&&(w.getX() <= maxX)&&(w.getY() >= minY)&&(w.getY() <= maxY))	{
 				nearWorkable.add(w);
 			}
 		}
 		for(int i = 0;i < CommonConst.CHECK_WORKABLE_NUMBER;i++)	{
+			if(nearWorkable.size() <= 0)	break;
 			int rndIndex = rnd.nextInt(nearWorkable.size());
 			Workable tmpWork = nearWorkable.get(rndIndex);
-			RoadGraph graph = fieldMap.getRoadGraph();
-			if(tmpWork.getFreeWorkspace() >= 1)	{
-				if(graph.getRouteCost(home.getNearRoad(),tmpWork.getNearRoad()) <= distance){
+			if(tmpWork.getFreeWorkspace() > 0)	{
+				if(fieldMap.getRouteCost(home.getNearRoad(),tmpWork.getNearRoad()) <= distance){
 					return tmpWork;
 				}
 			}

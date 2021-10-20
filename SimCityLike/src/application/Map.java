@@ -183,6 +183,13 @@ public class Map {
 		return graph.calcPath(start, end);
 	}
 
+	public int getRouteCost(Road start,Road end)	{
+		if(graph == null)	{
+			createRoadGraph(start);
+		}
+		return graph.getRouteCost(start, end);
+	}
+
 	private void addList(TileObject obj)	{
 		if(obj instanceof Habitable)	{
 			habitableList.add((Habitable)obj);

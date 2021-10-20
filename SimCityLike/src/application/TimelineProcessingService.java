@@ -76,7 +76,11 @@ public class TimelineProcessingService extends ScheduledService<Boolean>{
 					pm.migration(dm.getResidentalDemand());
 					pm.checkVacantHome();
 					pm.allMoveInto();
-					if (dm != null) dm.update();
+					if(dm != null)	dm.update();
+
+					int jobSeeker = (pm.getJoblessList().size() / 2) + 1;
+					pm.jobSeek(jobSeeker);
+
 				}
 				if(switchNoon)	{
 				}

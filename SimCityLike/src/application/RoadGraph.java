@@ -21,17 +21,14 @@ public class RoadGraph {
 
 	public int getRouteCost(Road start,Road end)	{
 		LinkedList<GraphNode> path = calcPath(start,end);
-		int totalCost = 0;
-		for(GraphNode n : path)	{
-			totalCost += n.getCost();
-		}
-		return totalCost;
+		return path.getLast().getCost();
 	}
 
 	public LinkedList<GraphNode> calcPath(Road start,Road end)	{
 		LinkedList<GraphNode> route = new LinkedList<GraphNode>();
 		PriorityQueue<GraphNode> queue = new PriorityQueue<GraphNode>();
 		GraphNode doneNode = null;
+		GraphNode startNode = null;
 		GraphNode endNode = null;
 		boolean dupflg = false;
 		for(GraphNode n : nodeList)	{
@@ -44,6 +41,7 @@ public class RoadGraph {
 		}
 		if(!dupflg)	{
 			GraphNode newNode = new GraphNode(start);
+			nodeList.add(newNode);
 			addNode(newNode);
 			newNode.setCost(0);
 			queue.add(newNode);
@@ -58,9 +56,12 @@ public class RoadGraph {
 		}
 		if(!dupflg)	{
 			GraphNode newNode = new GraphNode(end);
+			nodeList.add(newNode);
 			addNode(newNode);
 			endNode = newNode;
 		}
+
+		addNode(endNode);
 
 		while(!queue.isEmpty())	{
 			doneNode = queue.poll();
@@ -90,7 +91,7 @@ public class RoadGraph {
 	}
 
 	public GraphNode[] addNode(GraphNode node)	{
-		GraphNode[] newNodes = new GraphNode[3];
+		GraphNode[] newNodes = new GraphNode[4];
 		int index = 0;
 		boolean dupflg = false;
 		if(node.getRoad().getConnect().size() <= 1)	{
@@ -143,10 +144,6 @@ public class RoadGraph {
 			}
 		}
 		return newNodes;
-	}
-
-	public void connectNode(Node node)	{
-
 	}
 	public GraphNode[] addNode(Road road)	{
 		GraphNode node = new GraphNode(road);

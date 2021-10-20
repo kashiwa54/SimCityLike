@@ -188,10 +188,10 @@ public class ConsoleWindowController	{
 			break;
 		case "route":
 			try {
-				int sx = Integer.parseInt(arg[1]);
-				int sy = Integer.parseInt(arg[2]);
-				int ex = Integer.parseInt(arg[3]);
-				int ey = Integer.parseInt(arg[4]);
+				int sx = Integer.parseInt(arg[2]);
+				int sy = Integer.parseInt(arg[3]);
+				int ex = Integer.parseInt(arg[4]);
+				int ey = Integer.parseInt(arg[5]);
 				Road start;
 				Road end;
 				if(!(map.getTileObject(sx, sy) instanceof Road)&&(map.getTileObject(ex, ey) instanceof Road))	{
@@ -201,17 +201,26 @@ public class ConsoleWindowController	{
 					start = (Road)map.getTileObject(sx, sy);
 					end = (Road)map.getTileObject(ex, ey);
 				}
-				LinkedList<GraphNode> route = map.getRoute(start, end);
-				GraphNode node;
-				while(!route.isEmpty())	{
-					node = route.pop();
-					builder.append("[" + node.getRoad().getX() + "," + node.getRoad().getY() + "]\n");
+				switch(arg[1])	{
+				case "cost":
+					int cost = map.getRouteCost(start, end);
+					builder.append("[" + sx + "," + sy + "] to [" + ex + "," + ey + "] cost is "+ cost +" .\n");
+					break;
+				case "node":
+					LinkedList<GraphNode> route = map.getRoute(start, end);
+					GraphNode node;
+					while(!route.isEmpty())	{
+						node = route.pop();
+						builder.append("[" + node.getRoad().getX() + "," + node.getRoad().getY() + "]\n");
+					}
+					break;
 				}
+
 
 			}catch(Exception e)	{
 				e.printStackTrace();
 				builder.append("route command format is \n");
-				builder.append("route [startX] [startY] [endX] [endY].\n");
+				builder.append("route [node or cost] [startX] [startY] [endX] [endY].\n");
 			}
 			break;
 		case "node":
