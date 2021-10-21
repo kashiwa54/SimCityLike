@@ -15,6 +15,8 @@ public class Map {
 	private ArrayList<Habitable> habitableList = new ArrayList<Habitable>();
 	private ArrayList<Workable> workableList = new ArrayList<Workable>();
 
+	private boolean changeFlg = false;
+
 	public Map(int x,int y)	{
 		this.width = x;
 		this.height = y;
@@ -87,6 +89,7 @@ public class Map {
 					addList(obj);
 					removeList(mapObj);
 					refreshAround(x,y);
+					changeFlg = true;
 					return obj;
 				}else {
 					return mapObj;
@@ -112,6 +115,7 @@ public class Map {
 				obj.place();
 				addList(obj);
 				refreshAround(x,y);
+				changeFlg = true;
 				return obj;
 			}
 			return mapObj;
@@ -144,6 +148,7 @@ public class Map {
 		removeList(tile[x][y]);
 		tile[x][y] = new Space(this,x,y);
 		tile[x][y].setOnMap(true);
+		changeFlg = true;
 	}
 	public void refreshAround(int x,int y)	{
 		int tx = x - DISTANCE;
@@ -169,22 +174,22 @@ public class Map {
 		}
 	}
 
-	public void createRoadGraph(Road road)	{
+	public RoadGraph createRoadGraph(Road road)	{
 		graph = new RoadGraph(road);
-	}
-
-	public RoadGraph getRoadGraph()	{
+		changeFlg = false;
 		return graph;
 	}
+
+
 	public LinkedList<GraphNode> getRoute(Road start,Road end)	{
-		if(graph == null)	{
+		if((graph == null)||(changeFlg))	{
 			createRoadGraph(start);
 		}
 		return graph.calcPath(start, end);
 	}
 
 	public int getRouteCost(Road start,Road end)	{
-		if(graph == null)	{
+		if((graph == null)||(changeFlg))	{
 			createRoadGraph(start);
 		}
 		return graph.getRouteCost(start, end);

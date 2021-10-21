@@ -234,8 +234,7 @@ public class ConsoleWindowController	{
 				}else {
 					start = (Road)map.getTileObject(sx, sy);
 				}
-				map.createRoadGraph(start);
-				RoadGraph graph = map.getRoadGraph();
+				RoadGraph graph = map.createRoadGraph(start);
 				LinkedList<GraphNode> list = graph.getNodeList();
 				for(GraphNode n : list)	{
 					builder.append("[" + n.getRoad().getX() + "," + n.getRoad().getY() + "]\n");
