@@ -6,13 +6,15 @@ import java.util.PriorityQueue;
 import java.util.Stack;
 
 public class RoadGraph {
-	private GraphNode startNode;
+	private GraphNode firstNode;
 	private LinkedList<GraphNode> nodeList = new LinkedList<GraphNode>();
+	private GraphNode startNode;
+	private GraphNode endNode;
 
 	public RoadGraph(Road road)	{
-		startNode = new GraphNode(road);
-		nodeList.add(startNode);
-		createGraph(startNode);
+		firstNode = new GraphNode(road);
+		nodeList.add(firstNode);
+		createGraph(firstNode);
 	}
 
 	public LinkedList<GraphNode> getNodeList()	{
@@ -28,41 +30,19 @@ public class RoadGraph {
 		LinkedList<GraphNode> route = new LinkedList<GraphNode>();
 		PriorityQueue<GraphNode> queue = new PriorityQueue<GraphNode>();
 		GraphNode doneNode = null;
-		GraphNode startNode = null;
-		GraphNode endNode = null;
-		boolean dupflg = false;
+
+
+		addEdgeNode(start,end);
+		queue.add(startNode);
+
+
 		for(GraphNode n : nodeList)	{
-			if(n.getRoad() == start) {
-				dupflg = true;
-				n.setCost(0);
-				queue.add(n);
-				break;
-			}
-		}
-		if(!dupflg)	{
-			GraphNode newNode = new GraphNode(start);
-			nodeList.add(newNode);
-			addNode(newNode);
-			newNode.setCost(0);
-			queue.add(newNode);
-		}
-		dupflg = false;
-		for(GraphNode n : nodeList)	{
-			if(n.getRoad() == end) {
-				dupflg = true;
-				endNode = n;
-				break;
-			}
-		}
-		if(!dupflg)	{
-			GraphNode newNode = new GraphNode(end);
-			nodeList.add(newNode);
-			addNode(newNode);
-			endNode = newNode;
+			n.setDone(false);
+			n.setCost(-1);
+			n.setFrom(null);
 		}
 
-		addNode(endNode);
-
+		queue.peek().setCost(0);
 		while(!queue.isEmpty())	{
 			doneNode = queue.poll();
 			doneNode.setDone(true);
@@ -108,7 +88,20 @@ public class RoadGraph {
 			while(connection.size() == 2)	{
 				boolean loopflg = false;
 				dCost++;
+
 				nextWay = nextWay.getConnectWay(nextDir);
+				if((startNode != null)&&(endNode != null))	{
+					if(startNode.getRoad() == (Road)nextWay){
+						dupflg = true;
+						node.addEdge(startNode,d,dCost);
+						break;
+					}else if(endNode.getRoad() == (Road)nextWay)	{
+						dupflg = true;
+						node.addEdge(endNode,d,dCost);
+						break;
+					}
+				}
+
 				for(GraphNode n : nodeList)	{
 					if (n.getRoad() == (Road)nextWay) loopflg = true;
 					break;
@@ -124,7 +117,7 @@ public class RoadGraph {
 			}
 			if (nextWay.getConnectWay(nextDir) == null)	{
 				System.out.println(nextDir);
-				System.out.println(nextWay);
+				System.out.println(nextWay.getX() + "," + nextWay.getY());
 				System.out.println(nextWay.getConnect());
 			}
 			nextWay = nextWay.getConnectWay(nextDir);
@@ -144,6 +137,38 @@ public class RoadGraph {
 			}
 		}
 		return newNodes;
+	}
+
+	public void addEdgeNode(Road start,Road end)	{
+		boolean dupflg = false;
+		for(GraphNode n : nodeList)	{
+			if(n.getRoad() == start) {
+				dupflg = true;
+				startNode = n;
+				break;
+			}
+		}
+		if(!dupflg)	{
+			GraphNode newNode = new GraphNode(start);
+			nodeList.add(newNode);
+			startNode = newNode;
+		}
+
+		dupflg = false;
+		for(GraphNode n : nodeList)	{
+			if(n.getRoad() == end) {
+				dupflg = true;
+				endNode = n;
+				break;
+			}
+		}
+		if(!dupflg)	{
+			GraphNode newNode = new GraphNode(end);
+			nodeList.add(newNode);
+			endNode = newNode;
+		}
+		addNode(startNode);
+		addNode(endNode);
 	}
 	public GraphNode[] addNode(Road road)	{
 		GraphNode node = new GraphNode(road);
