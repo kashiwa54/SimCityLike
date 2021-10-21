@@ -119,6 +119,7 @@ public class RoadGraph {
 				System.out.println(nextDir);
 				System.out.println(nextWay.getX() + "," + nextWay.getY());
 				System.out.println(nextWay.getConnect());
+				continue;
 			}
 			nextWay = nextWay.getConnectWay(nextDir);
 			for(GraphNode n : nodeList)	{
