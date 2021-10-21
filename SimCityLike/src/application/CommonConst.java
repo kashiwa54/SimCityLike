@@ -51,4 +51,6 @@ public class CommonConst {
 	public static final int WORK_DISTANCE = 10;
 	public static final int WORK_AREA_DISTANCE = 8;
 	public static final int CHECK_WORKABLE_NUMBER = 10;
+
+	public static final int GRAPH_CASHE_SIZE = 255;
 }

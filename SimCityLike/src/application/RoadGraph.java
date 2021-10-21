@@ -10,6 +10,7 @@ public class RoadGraph {
 	private LinkedList<GraphNode> nodeList = new LinkedList<GraphNode>();
 	private GraphNode startNode;
 	private GraphNode endNode;
+	private LinkedList<Cache> cache = new LinkedList<Cache>();
 
 	public RoadGraph(Road road)	{
 		firstNode = new GraphNode(road);
@@ -22,8 +23,15 @@ public class RoadGraph {
 	}
 
 	public int getRouteCost(Road start,Road end)	{
+		Cache hit = accessCashe(start,end);
+		if(hit != null)	return hit.cost;
+
 		LinkedList<GraphNode> path = calcPath(start,end);
-		return path.getLast().getCost();
+		int result = path.getLast().getCost();
+
+		addCache(start,end,result,path);
+
+		return result;
 	}
 
 	public LinkedList<GraphNode> calcPath(Road start,Road end)	{
@@ -116,9 +124,9 @@ public class RoadGraph {
 				connection = nextWay.getConnectWay(nextDir).getConnect();
 			}
 			if (nextWay.getConnectWay(nextDir) == null)	{
-				System.out.println(nextDir);
-				System.out.println(nextWay.getX() + "," + nextWay.getY());
-				System.out.println(nextWay.getConnect());
+//				System.out.println(nextDir);
+//				System.out.println(nextWay.getX() + "," + nextWay.getY());
+//				System.out.println(nextWay.getConnect());
 				continue;
 			}
 			nextWay = nextWay.getConnectWay(nextDir);
@@ -189,7 +197,37 @@ public class RoadGraph {
 			}
 		}
 	}
-
+	public Cache accessCashe(Road start,Road end)	{
+		for(Cache c : cache)	{
+			if(c.check(start, end))	return c;
+		}
+		return null;
+	}
+	public void addCache(Road start,Road end,int cost,LinkedList<GraphNode> path)	{
+		if(cache.size() >= CommonConst.GRAPH_CASHE_SIZE)	{
+			cache.removeLast();
+		}
+		cache.addFirst(new Cache(start,end,cost,path));
+	}
+	private class Cache	{
+		Road start = null;
+		Road end = null;
+		int cost = -1;
+		LinkedList<GraphNode> path = null;
+		public Cache(Road start,Road end,int cost,LinkedList<GraphNode> path)	{
+			this.start = start;
+			this.end = end;
+			this.cost = cost;
+			this.path = path;
+		}
+		public boolean check(Road start,Road end)	{
+			if((this.start == start)&&(this.end == end))	{
+				return true;
+			}else {
+				return false;
+			}
+		}
+	}
 }
 
 class GraphNode implements Comparable<GraphNode>{
