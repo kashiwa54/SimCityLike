@@ -1,0 +1,12 @@
+package application;
+
+public enum Products {
+	AGRICULTURE,
+	FISHERY,
+	FORESTORY,
+	FOOD_PROCESSING,
+	APPAREL,
+	CHEMICAL,
+	ELECTRONICS,
+	METAL;
+}
