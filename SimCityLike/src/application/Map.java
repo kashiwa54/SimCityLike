@@ -10,8 +10,10 @@ public class Map {
 	private TileObject[][] tile;
 
 	private PeopleManager pManager = null;
+	private ProductManager proManager = null;
 	private RoadGraph graph = null;
 
+	private ArrayList<Building> buildingList = new ArrayList<Building>();
 	private ArrayList<Habitable> habitableList = new ArrayList<Habitable>();
 	private ArrayList<Workable> workableList = new ArrayList<Workable>();
 
@@ -26,6 +28,7 @@ public class Map {
 				tile[i][j] = new Space(this,i,j);
 			}
 		}
+		proManager = new ProductManager(this);
 	}
 	public int getWidth()	{
 		return this.width;
@@ -44,12 +47,18 @@ public class Map {
 	public PeopleManager getPeopleManager()	{
 		return this.pManager;
 	}
+	public ProductManager getProductManager()	{
+		return proManager;
+	}
 
+	@SuppressWarnings("unchecked")
+	public ArrayList<Building> getBuildingList()	{
+		return (ArrayList<Building>) buildingList.clone();
+	}
 	@SuppressWarnings("unchecked")
 	public ArrayList<Habitable> getHabitableList()	{
 		return (ArrayList<Habitable>) habitableList.clone();
 	}
-
 	@SuppressWarnings("unchecked")
 	public ArrayList<Workable> getWorkableList()	{
 		return (ArrayList<Workable>) workableList.clone();
@@ -196,6 +205,10 @@ public class Map {
 	}
 
 	private void addList(TileObject obj)	{
+		if(obj instanceof Building)	{
+			buildingList.add((Building)obj);
+			proManager.addBuildingList((Building)obj);
+		}
 		if(obj instanceof Habitable)	{
 			habitableList.add((Habitable)obj);
 		}
@@ -204,6 +217,10 @@ public class Map {
 		}
 	}
 	private void removeList(TileObject obj)	{
+		if(obj instanceof Building)	{
+			buildingList.remove((Building)obj);
+			proManager.removeBuildingList((Building)obj);
+		}
 		if(obj instanceof Habitable)	{
 			habitableList.remove((Habitable)obj);
 		}

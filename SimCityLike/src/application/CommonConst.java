@@ -53,4 +53,6 @@ public class CommonConst {
 	public static final int CHECK_WORKABLE_NUMBER = 10;
 
 	public static final int GRAPH_CASHE_SIZE = 255;
+
+	public static final int PRODUCT_MAX_TRANSPORT_COST = 24;
 }
