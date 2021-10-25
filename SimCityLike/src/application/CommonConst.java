@@ -55,4 +55,7 @@ public class CommonConst {
 	public static final int GRAPH_CASHE_SIZE = 255;
 
 	public static final int PRODUCT_MAX_TRANSPORT_COST = 24;
+
+	public static final double PRODUCT_REQUEST_FACTOR = 1 / 2;
+	public static final int CLIENT_REQUEST_MAX_NUMBER = 15;
 }

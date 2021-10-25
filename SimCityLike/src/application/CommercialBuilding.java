@@ -2,25 +2,36 @@ package application;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumMap;
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Random;
 
-public abstract class CommercialBuilding extends Building implements Workable{
+public abstract class CommercialBuilding extends Building implements Workable,Consumable{
 	public static List<CommercialBuilding> commercialList = Collections.synchronizedList(new ArrayList<CommercialBuilding>(CommonConst.BUILDING_INISIAL_CAPACITY));
 	private int workspace;
 	private int freeWorkspace;
 	private int productCapacity;
 	private int consumption;
-	private int stock;
 	private int customerCapacity;
 	private int freeCustomer;
 	private People[] worker = null;
 	private People[] customer = null;
+
+	private ArrayList<Producable> clientList = null;
+	private EnumSet<Products> consumeSet = EnumSet.noneOf(Products.class);
+	private EnumMap<Products,Integer> stockMap = new EnumMap<Products,Integer>(Products.class);
+
+	Random rnd = new Random();
 	public CommercialBuilding(Map map,int x,int y,CommercialBuildingEnum cbe)	{
 		super(map,x,y,cbe.getWidth(),cbe.getHeight());
 		this.workspace = cbe.getWorkspace();
 		this.productCapacity = cbe.getproductCapacity();
 		this.consumption = cbe.getConsumption();
-		this.stock = 0;
+		this.consumeSet = cbe.getConsumeSet();
+		for(Products p : consumeSet)	{
+			stockMap.put(p, 0);
+		}
 		this.customerCapacity = cbe.getCustomerCapacity();
 		type = cbe;
 		worker = new People[workspace];
@@ -38,12 +49,15 @@ public abstract class CommercialBuilding extends Building implements Workable{
 		info = info.concat("労働者数:" + workerNumber + "\n");
 		info = info.concat("求人数" + freeWorkspace + "\n");
 		info = info.concat("商品消費量" + consumption + "\n");
-		info = info.concat("商品量" + stock + " / " + productCapacity + "\n");
+		info = info.concat("商品量\n");
+		for(Products p : consumeSet)	{
+			info = info.concat(p.japanese + " : " +stockMap.get(p) + " / " + productCapacity + "\n");
+		}
 		return info;
 	}
 
-	public int getStock()	{
-		return this.stock;
+	public int getStock(Products product)	{
+		return stockMap.get(product);
 	}
 	public int getConsumption()	{
 		return this.consumption;
@@ -51,7 +65,17 @@ public abstract class CommercialBuilding extends Building implements Workable{
 	public int getProductCapacity()	{
 		return this.productCapacity;
 	}
-	
+	public double getStockAverage()	{
+		double ave = 0;
+		int cnt = 0;
+		for(Products p : stockMap.keySet())	{
+			ave += stockMap.get(p);
+			cnt++;
+		}
+		if(cnt > 0) ave /= cnt;
+		return ave;
+	}
+
 	@Override
 	public boolean addWorker(People p) {
 		for(int i = 0;i < worker.length;i++)	{
@@ -157,5 +181,48 @@ public abstract class CommercialBuilding extends Building implements Workable{
 		for(People p : worker)	{
 			if(p != null) p.setWork(null);
 		}
+	}
+	@Override
+	public void setClientList(ArrayList<Producable> list)	{
+		this.clientList = list;
+	}
+	@Override
+	public ArrayList<Producable> getClientList()	{
+		return this.clientList;
+	}
+	@Override
+	public EnumSet<Products> getConsumeSet()	{
+		return this.consumeSet;
+	}
+	@Override
+	public int consume(Products product)	{
+		int stock = stockMap.get(product);
+		if(stock >= consumption)	{
+			stockMap.put(product, stock -= consumption);
+			return consumption;
+		}else	{
+			int tmp = stock;
+			stockMap.put(product, 0);
+			return tmp;
+		}
+	}
+	@Override
+	public boolean request(Producable to,Products product,int amount)	{
+		return to.receiveRequest(product, amount);
+//		Producable[] clients = (Producable[]) clientList.toArray();
+//		int len = clients.length;
+//		for(int i = 0; i < CommonConst.CLIENT_REQUEST_MAX_NUMBER;i++)	{
+//			int index = rnd.nextInt(len);
+//			Producable c = clients[index];
+//			if(c.receiveRequest(product, amount))	return true;
+//			clients[index] = clients[len - 1];
+//			len--;
+//		}
+//		return false;
+	}
+	@Override
+	public void receivePacket(ProductPacket packet)	{
+		Products pro = packet.getProduct();
+
 	}
 }

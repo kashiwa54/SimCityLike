@@ -90,7 +90,7 @@ public class DemandManager {
 
 		int underStockShopSum = 0;
 		for(CommercialBuilding c : commercialList)	{
-			double stockRate = c.getStock() / c.getProductCapacity() * 100;
+			double stockRate = c.getStockAverage() / c.getProductCapacity() * 100;
 			if(stockRate <= CommonConst.INDUSTRIAL_DEMAND_FACTOR)	{
 				underStockShopSum++;
 			}

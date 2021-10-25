@@ -1,8 +1,10 @@
 package application;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.EnumSet;
 public enum CommercialBuildingEnum implements PlacableEnum{
-	SMALLSHOP_A(SmallShopA.class,"src/image/smallshopA1.png","個人商店A",1,1,100,2,50,5,5,1);
+	SMALLSHOP_A(SmallShopA.class,"src/image/smallshopA1.png","個人商店A",1,1,100,2,50,5,5,
+			asSet(Products.AGRICULTURE,Products.FOOD_PROCESSING),1);
 	private Class<? extends TileObject> buildingClass;
 	private String imagePath;
 	private String displayName;
@@ -13,10 +15,12 @@ public enum CommercialBuildingEnum implements PlacableEnum{
 	private int productCapacity;
 	private int consumption;
 	private int customerCapacity;
+	private EnumSet<Products> product;
 	private int level;
 
 	private CommercialBuildingEnum(Class<? extends TileObject> buildingClass,String imagePath,String displayName,
-			int width,int height,int cost,int workspace,int productCapacity,int consumption,int customerCapacity,int level)	{
+			int width,int height,int cost,int workspace,int productCapacity,int consumption,int customerCapacity,
+			EnumSet<Products> product,int level)	{
 		this.buildingClass = buildingClass;
 		this.imagePath = imagePath;
 		this.displayName = displayName;
@@ -27,6 +31,7 @@ public enum CommercialBuildingEnum implements PlacableEnum{
 		this.productCapacity = productCapacity;
 		this.consumption = consumption;
 		this.customerCapacity = customerCapacity;
+		this.product = product;
 		this.level = level;
 	}
 	public Class<? extends TileObject> getObjectClass()	{
@@ -60,6 +65,9 @@ public enum CommercialBuildingEnum implements PlacableEnum{
 	}
 	public int getCustomerCapacity()	{
 		return customerCapacity;
+	}
+	public EnumSet<Products> getConsumeSet()	{
+		return product;
 	}
 	public int getLevel()	{
 		return level;
@@ -99,5 +107,13 @@ public enum CommercialBuildingEnum implements PlacableEnum{
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	private static EnumSet<Products> asSet(Products...products)	{
+		EnumSet<Products> set = EnumSet.noneOf(Products.class);
+		for(Products p : products)	{
+			set.add(p);
+		}
+		return set;
 	}
 }

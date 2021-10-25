@@ -5,7 +5,7 @@ import java.util.EnumSet;
 
 public interface Consumable {
 	public EnumSet<Products> getConsumeSet();
-	public void consume();
+	public int consume(Products product);
 	public boolean request(Producable to,Products product,int amount);
 	public void receivePacket(ProductPacket packet);
 	public void setClientList(ArrayList<Producable> list);
