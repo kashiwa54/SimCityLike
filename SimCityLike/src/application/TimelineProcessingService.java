@@ -9,6 +9,7 @@ public class TimelineProcessingService extends ScheduledService<Boolean>{
 	private Map worldMap;
 	private PeopleManager pm;
 	private DemandManager dm;
+	private ProductManager proMng;
 	private Boolean switchHour = false;
 	private Boolean switchNoon = false;
 	private Boolean switchDay = false;
@@ -19,6 +20,7 @@ public class TimelineProcessingService extends ScheduledService<Boolean>{
 		this.time = worldTime;
 		this.worldMap = map;
 		this.pm = map.getPeopleManager();
+		this.proMng = map.getProductManager();
 	}
 	public void setDemandManager(DemandManager dm)	{
 		this.dm = dm;
@@ -81,8 +83,13 @@ public class TimelineProcessingService extends ScheduledService<Boolean>{
 					int jobSeeker = (pm.getJoblessList().size() / 2) + 1;
 					pm.jobSeek(jobSeeker);
 
+					proMng.produceAll();
+
 				}
 				if(switchNoon)	{
+				}
+				if(switchDay)	{
+					proMng.stockingAll();
 				}
 				return true;
 			}

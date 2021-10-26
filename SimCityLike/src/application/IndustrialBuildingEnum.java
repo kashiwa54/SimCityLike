@@ -1,8 +1,9 @@
 package application;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.EnumSet;
 public enum IndustrialBuildingEnum implements PlacableEnum{
-	RICEFIELD(RiceField.class,"src/image/ricefield.png","水田",1,1,100,10,200,25,5,1);
+	RICEFIELD(RiceField.class,"src/image/ricefield.png","水田",1,1,100,10,200,25,5,asSet(Products.AGRICULTURE),1);
 	private Class<? extends TileObject> buildingClass;
 	private String imagePath;
 	private String displayName;
@@ -13,10 +14,12 @@ public enum IndustrialBuildingEnum implements PlacableEnum{
 	private int productCapacity;
 	private int production;
 	private int customerCapacity;
+	private EnumSet<Products> product;
 	private int level;
 
 	private IndustrialBuildingEnum(Class<? extends TileObject> buildingClass,String imagePath,String displayName,
-			int width,int height,int cost,int workspace,int productCapacity,int production,int customerCapacity,int level)	{
+			int width,int height,int cost,int workspace,int productCapacity,int production,int customerCapacity,
+			EnumSet<Products> product,int level)	{
 		this.buildingClass = buildingClass;
 		this.imagePath = imagePath;
 		this.displayName = displayName;
@@ -27,6 +30,7 @@ public enum IndustrialBuildingEnum implements PlacableEnum{
 		this.productCapacity = productCapacity;
 		this.production = production;
 		this.customerCapacity = customerCapacity;
+		this.product = product;
 		this.level = level;
 	}
 	public Class<? extends TileObject> getObjectClass()	{
@@ -60,6 +64,9 @@ public enum IndustrialBuildingEnum implements PlacableEnum{
 	}
 	public int getCustomerCapacity()	{
 		return customerCapacity;
+	}
+	public EnumSet<Products> getProductSet()	{
+		return product;
 	}
 	public int getLevel()	{
 		return level;
@@ -99,5 +106,13 @@ public enum IndustrialBuildingEnum implements PlacableEnum{
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	private static EnumSet<Products> asSet(Products...products)	{
+		EnumSet<Products> set = EnumSet.noneOf(Products.class);
+		for(Products p : products)	{
+			set.add(p);
+		}
+		return set;
 	}
 }

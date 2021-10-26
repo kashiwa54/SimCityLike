@@ -18,7 +18,7 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 	private People[] worker = null;
 	private People[] customer = null;
 
-	private ArrayList<Producable> clientList = null;
+	private ArrayList<Producable> clientList = new ArrayList<Producable>();
 	private EnumSet<Products> consumeSet = EnumSet.noneOf(Products.class);
 	private EnumMap<Products,Integer> stockMap = new EnumMap<Products,Integer>(Products.class);
 
@@ -199,30 +199,49 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 		int stock = stockMap.get(product);
 		if(stock >= consumption)	{
 			stockMap.put(product, stock -= consumption);
+			if(stockMap.get(product) <= productCapacity / 2)	{
+				selectingImport(product,productCapacity / 2);
+			}
 			return consumption;
 		}else	{
 			int tmp = stock;
 			stockMap.put(product, 0);
+			selectingImport(product,productCapacity);
 			return tmp;
 		}
 	}
-	@Override
-	public boolean request(Producable to,Products product,int amount)	{
-		return to.receiveRequest(product, amount);
-//		Producable[] clients = (Producable[]) clientList.toArray();
-//		int len = clients.length;
-//		for(int i = 0; i < CommonConst.CLIENT_REQUEST_MAX_NUMBER;i++)	{
-//			int index = rnd.nextInt(len);
-//			Producable c = clients[index];
-//			if(c.receiveRequest(product, amount))	return true;
-//			clients[index] = clients[len - 1];
-//			len--;
-//		}
-//		return false;
+	public boolean selectingImport(Products product,int amount)	{
+		@SuppressWarnings("unchecked")
+		ArrayList<Producable> clients = (ArrayList<Producable>) clientList.clone();
+		int len = clientList.size();
+		for(int i = 0; i < CommonConst.CLIENT_REQUEST_MAX_NUMBER;i++)	{
+			int index = 0;
+			if(len > 1)	{
+				index = rnd.nextInt(len);
+			}
+			Producable c = clients.get(index);
+			if(request(c,product, amount))	return true;
+			if(index == 0) break;
+			Producable tmp = clients.get(index);
+			clients.set(index, clients.get(len - 1));
+			clients.set(len - 1, tmp);
+			len--;
+		}
+		return false;
 	}
 	@Override
-	public void receivePacket(ProductPacket packet)	{
-		Products pro = packet.getProduct();
+	public boolean request(Producable to,Products product,int amount)	{
+		return to.receiveRequest(product, amount,this);
+	}
+	@Override
+	public boolean receivePacket(ProductPacket packet)	{
+		if(packet.getReceiver() != this) return false;
+		Products p = packet.getProduct();
+		int stock = stockMap.get(p);
+		stock += packet.getAmount();
+		if(stock > productCapacity)	stock = productCapacity;
+		stockMap.put(p,stock);
+		return true;
 
 	}
 }

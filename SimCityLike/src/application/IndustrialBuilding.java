@@ -2,17 +2,22 @@ package application;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumMap;
+import java.util.EnumSet;
 import java.util.List;
 
-public abstract class IndustrialBuilding extends Building implements Workable{
+public abstract class IndustrialBuilding extends Building implements Workable,Producable{
 	public static List<IndustrialBuilding> industrialList = Collections.synchronizedList(new ArrayList<IndustrialBuilding>(CommonConst.BUILDING_INISIAL_CAPACITY));
 	private int workspace;
 	private int freeWorkspace;
 	private int productCapacity;
 	private int production;
-	private int stock;
 	private int customerCapacity;
 	private int freeCustomer;
+
+	private ArrayList<Consumable> clientList = new ArrayList<Consumable>();
+	private EnumSet<Products> productSet = EnumSet.noneOf(Products.class);
+	private EnumMap<Products,Integer> stockMap = new EnumMap<Products,Integer>(Products.class);
 	private People[] worker = null;
 	private CommercialBuilding[] customer;
 	public IndustrialBuilding(Map map,int x,int y,IndustrialBuildingEnum ibe)	{
@@ -21,12 +26,16 @@ public abstract class IndustrialBuilding extends Building implements Workable{
 		type = ibe;
 		this.productCapacity = ibe.getproductCapacity();
 		this.production = ibe.getProduction();
-		this.stock = 0;
 		this.customerCapacity = ibe.getCustomerCapacity();
+		this.productSet = ibe.getProductSet();
+		for(Products p : productSet)	{
+			stockMap.put(p, 0);
+		}
 		worker = new People[workspace];
 		customer = new CommercialBuilding[customerCapacity];
 		calcFreeWorkspace();
 		calcFreeCustomer();
+
 	}
 	public String getInfo()	{
 		String info = "職場容量:" + workspace + "\n";
@@ -39,7 +48,10 @@ public abstract class IndustrialBuilding extends Building implements Workable{
 		info = info.concat("労働者数:" + workerNumber + "\n");
 		info = info.concat("求人数" + freeWorkspace + "\n");
 		info = info.concat("生産量" + production + "\n");
-		info = info.concat("商品量" + stock + " / " + productCapacity + "\n");
+		info = info.concat("商品量\n");
+		for(Products p : productSet)	{
+			info = info.concat(p.japanese + " : " +stockMap.get(p) + " / " + productCapacity + "\n");
+		}
 		return info;
 	}
 	public int getProductCapacity()	{
@@ -48,8 +60,8 @@ public abstract class IndustrialBuilding extends Building implements Workable{
 	public int getProduction()	{
 		return this.production;
 	}
-	public int getStock()	{
-		return this.stock;
+	public int getStock(Products p)	{
+		return this.stockMap.get(p);
 	}
 	@Override
 	public boolean addWorker(People p) {
@@ -156,5 +168,50 @@ public abstract class IndustrialBuilding extends Building implements Workable{
 		for(People p : worker)	{
 			if(p != null) p.setWork(null);
 		}
+	}
+	@Override
+	public void setClientList(ArrayList<Consumable> list) {
+		this.clientList = list;
+	}
+	@Override
+	public ArrayList<Consumable> getClientList()	{
+		return this.clientList;
+	}
+	@Override
+	public EnumSet<Products> getProductSet()	{
+		return this.productSet;
+	}
+	@Override
+	public void produce(Products product)	{
+		int stock = stockMap.get(product);
+		if(stock >= productCapacity) return;
+
+		stock += production;
+		if(stock > productCapacity) stock = productCapacity;
+
+		stockMap.put(product, stock);
+	}
+	@Override
+	public boolean receiveRequest(Products product,int amount,Consumable c)	{
+		if(!productSet.contains(product)) return false;
+		int stock = stockMap.get(product);
+		ProductPacket packet;
+		if(stock <= 0) {
+			return false;
+		}else if(stock < amount)	{
+			packet = new ProductPacket(product,stock,this,c);
+			stock = 0;
+		}else	{
+			packet = new ProductPacket(product,amount,this,c);
+			stock -= amount;
+		}
+		stockMap.put(product, stock);
+		send(packet);
+		return true;
+
+	}
+	@Override
+	public boolean send(ProductPacket packet) {
+		return packet.getReceiver().receivePacket(packet);
 	}
 }
