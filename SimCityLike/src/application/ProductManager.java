@@ -8,24 +8,21 @@ public class ProductManager {
 	private static final int MAX_TRANSPORT_COST = CommonConst.PRODUCT_MAX_TRANSPORT_COST;
 
 	private Map fieldMap;
+	private ArrayList<Habitable> habitableList = new ArrayList<Habitable>();
 	private ArrayList<Producable> producableList = new ArrayList<Producable>();
 	private ArrayList<Consumable> consumableList = new ArrayList<Consumable>();
-	private EnumMap<Products,ArrayList<Producable>> productMap;
-	private EnumMap<Products,ArrayList<Consumable>> consumeMap;
+	private EnumMap<Products,ArrayList<Producable>> productListMap;
+	private EnumMap<Products,ArrayList<Consumable>> consumeListMap;
+	private EnumMap<Desire,ArrayList<Habitable>> habitableDesireMap;
 
 	public ProductManager(Map map) {
 		this.fieldMap = map;
 
 		for(Building b : map.getBuildingList())	{
-			if(b instanceof Producable)	{
-				producableList.add((Producable)b);
-			}
-			if(b instanceof Consumable)	{
-				consumableList.add((Consumable)b);
-			}
+			addBuildingList(b);
 		}
 
-		productMap = new EnumMap<Products,ArrayList<Producable>>(Products.class) {{
+		productListMap = new EnumMap<Products,ArrayList<Producable>>(Products.class) {{
 			for(Products p : Products.values())	{
 				put(p, new ArrayList<Producable>());
 			}
@@ -36,7 +33,7 @@ public class ProductManager {
 			}
 		}};
 
-		consumeMap = new EnumMap<Products,ArrayList<Consumable>>(Products.class){{
+		consumeListMap = new EnumMap<Products,ArrayList<Consumable>>(Products.class){{
 			for(Products p : Products.values())	{
 				put(p, new ArrayList<Consumable>());
 			}
@@ -49,27 +46,44 @@ public class ProductManager {
 	}
 
 	public void addBuildingList(Building b)	{
+		if(b instanceof Habitable)	{
+			Habitable hab = (Habitable)b;
+			habitableList.add(hab);
+			for(Desire d : hab.getDesireSet())	{
+				habitableDesireMap.get(d).add(hab);
+			}
+			EnumMap<Desire,ArrayList<Consumable>> listMap = calcCustomerList(hab);
+			hab.setSupplierListMap(listMap);
+			for(Desire d : listMap.keySet())	{
+				for(Consumable con : listMap.get(d)) {
+					for(People p : hab.getResident())	{
+						if(!con.getCustomerList().contains(p)) con.getCustomerList().add(p);
+					}
+				}
+			}
+		}
 		if(b instanceof Producable)	{
 			Producable pro = (Producable)b;
 			producableList.add(pro);
 			for(Products p : pro.getProductSet())	{
-				productMap.get(p).add(pro);
-				pro.setClientList(calcClientList(pro));
-				for(Consumable con : pro.getClientList())	{
-					if(!con.getClientList().contains(pro)) con.getClientList().add(pro);
-				}
+				productListMap.get(p).add(pro);
+			}
+			pro.setClientList(calcClientList(pro));
+			for(Consumable con : pro.getClientList())	{
+				if(!con.getClientList().contains(pro)) con.getClientList().add(pro);
 			}
 		}
 		if(b instanceof Consumable)	{
 			Consumable con = (Consumable)b;
 			consumableList.add(con);
 			for(Products p : con.getConsumeSet())	{
-				consumeMap.get(p).add(con);
-				con.setClientList(calcClientList(con));
-				for(Producable pro : con.getClientList())	{
-					if(!pro.getClientList().contains(con)) pro.getClientList().add(con);
-				}
+				consumeListMap.get(p).add(con);
 			}
+			con.setClientList(calcClientList(con));
+			for(Producable pro : con.getClientList())	{
+				if(!pro.getClientList().contains(con)) pro.getClientList().add(con);
+			}
+
 		}
 	}
 
@@ -77,13 +91,13 @@ public class ProductManager {
 		if(b instanceof Producable)	{
 			Producable pro = (Producable)b;
 			for(Products p : pro.getProductSet())	{
-				productMap.get(p).remove(pro);
+				productListMap.get(p).remove(pro);
 			}
 		}
 		if(b instanceof Consumable)	{
 			Consumable con = (Consumable)b;
 			for(Products p : con.getConsumeSet())	{
-				consumeMap.get(p).remove(con);
+				consumeListMap.get(p).remove(con);
 			}
 		}
 	}
@@ -97,12 +111,8 @@ public class ProductManager {
 	public void stockingAll()	{
 		for(Consumable c : consumableList)	{
 			EnumSet<Products> set = c.getConsumeSet();
-			try {
-				for(Products pro : set)	{
-					c.selectingImport(pro, c.getProductCapacity() - c.getStock(pro));
-				}
-			}catch(Exception e) {
-				e.printStackTrace();
+			for(Products pro : set)	{
+				c.selectingImport(pro, c.getProductCapacity() - c.getStock(pro));
 			}
 		}
 	}
@@ -111,7 +121,7 @@ public class ProductManager {
 		ArrayList<Producable> list = new ArrayList<Producable>();
 		EnumSet<Products> set = c.getConsumeSet();
 		for(Products product : set)	{
-			for(Producable p : productMap.get(product))	{
+			for(Producable p : productListMap.get(product))	{
 				if((p instanceof TileObject)&&(c instanceof TileObject))	{
 					TileObject cObj = (TileObject)c;
 					TileObject pObj = (TileObject)p;
@@ -127,7 +137,7 @@ public class ProductManager {
 		ArrayList<Consumable> list = new ArrayList<Consumable>();
 		EnumSet<Products> set = p.getProductSet();
 		for(Products product : set)	{
-			for(Consumable c : consumeMap.get(product))	{
+			for(Consumable c : consumeListMap.get(product))	{
 				if((p instanceof TileObject)&&(c instanceof TileObject))	{
 					TileObject cObj = (TileObject)c;
 					TileObject pObj = (TileObject)p;
@@ -138,5 +148,28 @@ public class ProductManager {
 			}
 		}
 		return list;
+	}
+	private EnumMap<Desire,ArrayList<Consumable>> calcCustomerList(Habitable h)	{
+		EnumSet<Desire> set = h.getDesireSet();
+		EnumMap<Desire,ArrayList<Consumable>> listMap = new EnumMap<Desire,ArrayList<Consumable>>(Desire.class)	{{
+				for(Desire d : set)	{
+					put(d,new ArrayList<Consumable>());
+				}
+		}};
+		for(Desire d : set)	{
+			for(Products product : d.getProducts())	{
+				for(Consumable c : consumeListMap.get(product))	{
+					if((h instanceof TileObject)&&(c instanceof TileObject))	{
+						TileObject cObj = (TileObject)c;
+						TileObject hObj = (TileObject)h;
+						if(fieldMap.getRouteCost(cObj.getNearRoad(),hObj.getNearRoad()) < MAX_TRANSPORT_COST)	{
+							if(!listMap.get(d).contains(c)) listMap.get(d).add(c);
+						}
+					}
+				}
+			}
+		}
+
+		return listMap;
 	}
 }

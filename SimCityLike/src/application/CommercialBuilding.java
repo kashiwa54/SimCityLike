@@ -22,6 +22,8 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 	private EnumSet<Products> consumeSet = EnumSet.noneOf(Products.class);
 	private EnumMap<Products,Integer> stockMap = new EnumMap<Products,Integer>(Products.class);
 
+	private ArrayList<People> customerList = new ArrayList<People>();
+
 	Random rnd = new Random();
 	public CommercialBuilding(Map map,int x,int y,CommercialBuildingEnum cbe)	{
 		super(map,x,y,cbe.getWidth(),cbe.getHeight());
@@ -195,14 +197,15 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 		return this.consumeSet;
 	}
 	@Override
-	public int consume(Products product)	{
-		int stock = stockMap.get(product);
-		if(stock >= consumption)	{
-			stockMap.put(product, stock -= consumption);
+	public int consume(Products product,int amount)	{
+		Integer stock = stockMap.get(product);
+		if(stock == null)	return 0;
+		if(stock >= amount)	{
+			stockMap.put(product, stock -= amount);
 			if(stockMap.get(product) <= productCapacity / 2)	{
 				selectingImport(product,productCapacity / 2);
 			}
-			return consumption;
+			return amount;
 		}else	{
 			int tmp = stock;
 			stockMap.put(product, 0);
@@ -243,5 +246,11 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 		stockMap.put(p,stock);
 		return true;
 
+	}
+	public void setCustomerList(ArrayList<People> list) {
+		this.customerList = list;
+	}
+	public ArrayList<People> getCustomerList(){
+		return customerList;
 	}
 }

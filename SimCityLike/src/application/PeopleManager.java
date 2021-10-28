@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -19,6 +18,7 @@ public class PeopleManager {
 
 	private ArrayList<String> myoujiList = new ArrayList<String>(CommonConst.MYOUJI_INISIAL_CAPACITY);;
 
+	private ArrayList<People> peopleList = new ArrayList<People>(INISIAL_CAPACITY);
 	private ArrayList<People> homelessList = new ArrayList<People>(INISIAL_CAPACITY);
 	private List<ResidentalBuilding> residentalList = ResidentalBuilding.residentalList;
 	private ArrayList<Habitable> vacantHomeList = null;
@@ -56,6 +56,7 @@ public class PeopleManager {
 		birthday.backYear(age);
 		String name = createName();
 		People p = new People(this,birthday,worldClock,name);
+		peopleList.add(p);
 		homelessList.add(p);
 		joblessList.add(p);
 		return p;
@@ -64,18 +65,14 @@ public class PeopleManager {
 		Time birthday = worldClock.clone();
 		String name = createName();
 		People p = new People(this,birthday,worldClock,name);
+		peopleList.add(p);
 		homelessList.add(p);
 		joblessList.add(p);
 		return p;
 	}
+	@SuppressWarnings("unchecked")
 	public List<People> getPeopleList()	{
-		@SuppressWarnings("unchecked")
-		ArrayList<People> list = (ArrayList<People>) homelessList.clone();
-		for(ResidentalBuilding r : residentalList)	{
-			list.addAll(Arrays.asList(r.getResident()));
-		}
-		list.trimToSize();
-		return list;
+		return (ArrayList<People>)peopleList.clone();
 	}
 	public List<People> getHomelessList()	{
 		homelessList.trimToSize();
@@ -189,6 +186,12 @@ public class PeopleManager {
 			}
 		}
 		return null;
+	}
+
+	public void decreaseDesireAll()	{
+		for(People p : peopleList)	{
+			p.moreDesire();
+		}
 	}
 	private void readNameFile()	{
 		BufferedReader myouji = null;

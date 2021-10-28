@@ -75,15 +75,20 @@ public class TimelineProcessingService extends ScheduledService<Boolean>{
 					switchYear = false;
 				}
 				if(switchHour)	{
-					pm.migration(dm.getResidentalDemand());
-					pm.checkVacantHome();
-					pm.allMoveInto();
-					if(dm != null)	dm.update();
+					try	{
+						pm.decreaseDesireAll();
+						pm.migration(dm.getResidentalDemand());
+						pm.checkVacantHome();
+						pm.allMoveInto();
+						if(dm != null)	dm.update();
 
-					int jobSeeker = (pm.getJoblessList().size() / 2) + 1;
-					pm.jobSeek(jobSeeker);
+						int jobSeeker = (pm.getJoblessList().size() / 2) + 1;
+						pm.jobSeek(jobSeeker);
 
-					proMng.produceAll();
+						proMng.produceAll();
+					}catch(Exception e)	{
+						e.printStackTrace();
+					}
 
 				}
 				if(switchNoon)	{

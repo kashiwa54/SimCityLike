@@ -58,4 +58,6 @@ public class CommonConst {
 
 	public static final double PRODUCT_REQUEST_FACTOR = 1 / 2;
 	public static final int CLIENT_REQUEST_MAX_NUMBER = 15;
+
+	public static final double DESIRE_MAX = 100.0;
 }

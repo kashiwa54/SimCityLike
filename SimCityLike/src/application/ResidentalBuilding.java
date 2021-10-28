@@ -2,6 +2,8 @@ package application;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumMap;
+import java.util.EnumSet;
 import java.util.List;
 
 public abstract class ResidentalBuilding extends Building implements Habitable{
@@ -9,6 +11,14 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 	private int capacity;
 	private int freeCapacity;
 	private People[] resident = null;
+
+	private EnumSet<Desire> desireSet = EnumSet.noneOf(Desire.class);
+	private EnumMap<Desire,ArrayList<Consumable>> supplierListMap = new EnumMap<Desire,ArrayList<Consumable>>(Desire.class)	{{
+		for(Desire d : desireSet)	{
+			put(d,new ArrayList<Consumable>());
+		}
+	}};
+
 	public ResidentalBuilding(Map map,int x,int y,ResidentalBuildingEnum rbe)	{
 		super(map,x,y,rbe.getWidth(),rbe.getHeight());
 		this.capacity = rbe.getCapacity();
@@ -35,6 +45,8 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 			if(resident[i] == null)	{
 				resident[i] = p;
 				p.setHome(this);
+				desireSet.addAll(p.getDesireSet());
+				p.setSupplierListMap(supplierListMap);
 				calcFreeCapacity();
 				return true;
 			}
@@ -53,6 +65,7 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 					i++;
 				}
 				calcFreeCapacity();
+				recalcDesireSet();
 				return true;
 			}
 		}
@@ -81,6 +94,12 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 		}
 		this.freeCapacity = capacity - rCnt;
 	}
+	private void recalcDesireSet()	{
+		desireSet.clear();
+		for(People p : resident)	{
+			desireSet.addAll(p.getDesireSet());
+		}
+	}
 	@Override
 	public boolean place() {
 		residentalList.add(this);
@@ -92,5 +111,21 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 		for(People p : resident)	{
 			if(p != null) p.setHome(null);
 		}
+	}
+	@Override
+	public void setSupplierListMap(EnumMap<Desire,ArrayList<Consumable>> listMap)		{
+		this.supplierListMap = listMap;
+		for(People p : resident)	{
+			if(p == null) continue;
+			p.setSupplierListMap(listMap);
+		}
+	}
+	@Override
+	public EnumMap<Desire,ArrayList<Consumable>> getSupplierListMap()	{
+		return this.supplierListMap;
+	}
+	@Override
+	public EnumSet<Desire> getDesireSet(){
+		return desireSet;
 	}
 }

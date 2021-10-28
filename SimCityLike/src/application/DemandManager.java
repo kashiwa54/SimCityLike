@@ -15,7 +15,7 @@ public class DemandManager {
 
 	private int homelessNumber = 0;
 	private int population = 0;
-	private double shoppingDemandAverage = 0;
+	private double desireAverage = 0.0;
 
 	private List<ResidentalBuilding> residentalList = ResidentalBuilding.residentalList;
 	private List<CommercialBuilding> commercialList = CommercialBuilding.commercialList;
@@ -63,21 +63,21 @@ public class DemandManager {
 		freeCommercialSum = cSum;
 		freeIndustrialSum = iSum;
 	}
-	private void calcPeopleTally()	{
+	private void calcPeopleDesire()	{
 		population = pm.getPeopleList().size();
 		homelessNumber = pm.getHomelessList().size();
-		int shoppingSum = 0;
+		double desireSum = 0;
 		for(People p : pm.getPeopleList())	{
-			if (p != null) shoppingSum += p.getShoppingDemand();
+			if (p != null) desireSum += CommonConst.DESIRE_MAX - p.getDesireAverage();
 		}
 		if (population != 0)	{
-			shoppingDemandAverage = shoppingSum / population;
+			desireAverage = desireSum / population;
 		}else {
-			shoppingDemandAverage = 0;
+			desireAverage = 0;
 		}
 	}
 	private void calcDemand()	{
-		calcPeopleTally();
+		calcPeopleDesire();
 		if(population != 0)	{
 			residentalDemand = (int) (((double)homelessNumber / population) * CommonConst.RESIDENTAL_DEMAND_FACTOR * 100);
 			if(residentalDemand > 100) residentalDemand = 100;
@@ -85,7 +85,7 @@ public class DemandManager {
 			residentalDemand = 0;
 		}
 
-		commercialDemand = (int) (shoppingDemandAverage * CommonConst.COMMERCIAL_DEMAND_FACTOR);
+		commercialDemand = (int) (desireAverage * CommonConst.COMMERCIAL_DEMAND_FACTOR);
 		if(commercialDemand > 100) commercialDemand = 100;
 
 		int underStockShopSum = 0;
