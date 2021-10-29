@@ -45,7 +45,9 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 			if(resident[i] == null)	{
 				resident[i] = p;
 				p.setHome(this);
-				desireSet.addAll(p.getDesireSet());
+				if(desireSet.addAll(p.getDesireSet()))	{
+					recalcSupplier();
+				}
 				p.setSupplierListMap(supplierListMap);
 				calcFreeCapacity();
 				return true;
@@ -99,6 +101,10 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 		for(People p : resident)	{
 			desireSet.addAll(p.getDesireSet());
 		}
+	}
+
+	private void recalcSupplier()	{
+		setSupplierListMap(pm.calcCustomerList(this));
 	}
 	@Override
 	public boolean place() {

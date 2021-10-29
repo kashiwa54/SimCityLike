@@ -43,6 +43,12 @@ public class ProductManager {
 				}
 			}
 		}};
+
+		habitableDesireMap = new EnumMap<Desire,ArrayList<Habitable>>(Desire.class)	{{
+			for(Desire d : Desire.values())	{
+				put(d,new ArrayList<Habitable>());
+			}
+		}};
 	}
 
 	public void addBuildingList(Building b)	{
@@ -149,7 +155,7 @@ public class ProductManager {
 		}
 		return list;
 	}
-	private EnumMap<Desire,ArrayList<Consumable>> calcCustomerList(Habitable h)	{
+	public EnumMap<Desire,ArrayList<Consumable>> calcCustomerList(Habitable h)	{
 		EnumSet<Desire> set = h.getDesireSet();
 		EnumMap<Desire,ArrayList<Consumable>> listMap = new EnumMap<Desire,ArrayList<Consumable>>(Desire.class)	{{
 				for(Desire d : set)	{

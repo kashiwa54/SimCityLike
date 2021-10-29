@@ -29,6 +29,7 @@ public class Map {
 			}
 		}
 		proManager = new ProductManager(this);
+		TileObject.setProductManager(proManager);
 	}
 	public int getWidth()	{
 		return this.width;

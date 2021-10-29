@@ -121,6 +121,7 @@ public class People {
 		for(Desire d : desireMap.keySet())	{
 			decreaseDesire(d,d.getBaseDecrease() / 24);
 			if(desireMap.get(d) < DESIRE_MAX / 2)	{
+				shopping(d);
 			}
 		}
 	}
@@ -139,7 +140,7 @@ public class People {
 		for(int i = 0; i < CommonConst.CLIENT_REQUEST_MAX_NUMBER ;i++)	{
 			for(Products product : d.getProducts())	{
 				ArrayList<Consumable> cl = supplierListMap.get(d);
-				if(cl.size() <= 0)	continue;
+				if((cl == null)||(cl.size() <= 0))	continue;
 				int index = rnd.nextInt(cl.size());
 				int get = cl.get(index).consume(product, need);
 				if(get + getDesire(d) > CommonConst.DESIRE_MAX)	{

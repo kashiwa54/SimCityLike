@@ -12,6 +12,7 @@ public abstract class TileObject {
 	private Road nearRoad;
 	public PlacableEnum type = null;
 
+	protected static ProductManager pm;
 	public TileObject(Map map)	{
 		this(map,0,0,1,1);
 	}
@@ -24,6 +25,9 @@ public abstract class TileObject {
 		this.y = y;
 		this.width = width;
 		this.height = height;
+	}
+	public static void setProductManager(ProductManager proMng)	{
+		pm = proMng;
 	}
 	public Map getMap()	{
 		return this.fieldMap;
@@ -44,7 +48,6 @@ public abstract class TileObject {
 	public void setCanPass(boolean b)	{
 		this.canPass = b;
 	}
-
 
 	public int getX	()	{
 		return this.x;
