@@ -85,7 +85,7 @@ public class DemandManager {
 			residentalDemand = 0;
 		}
 
-		commercialDemand = (int) (desireAverage * CommonConst.COMMERCIAL_DEMAND_FACTOR);
+		commercialDemand = (int) ((desireAverage - CommonConst.DESIRE_MAX / 2) * CommonConst.COMMERCIAL_DEMAND_FACTOR);
 		if(commercialDemand > 100) commercialDemand = 100;
 
 		int underStockShopSum = 0;

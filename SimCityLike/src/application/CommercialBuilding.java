@@ -214,6 +214,7 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 		}
 	}
 	public boolean selectingImport(Products product,int amount)	{
+		if((clientList == null)||(clientList.size() <= 0)) return false;
 		@SuppressWarnings("unchecked")
 		ArrayList<Producable> clients = (ArrayList<Producable>) clientList.clone();
 		int len = clientList.size();

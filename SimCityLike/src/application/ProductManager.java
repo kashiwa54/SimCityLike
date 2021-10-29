@@ -94,16 +94,40 @@ public class ProductManager {
 	}
 
 	public void removeBuildingList(Building b)	{
+		if(b instanceof Habitable)	{
+			Habitable hab = (Habitable)b;
+			for(Desire d : hab.getDesireSet())	{
+				habitableDesireMap.get(d).remove(hab);
+
+				for(Consumable c : hab.getSupplierListMap().get(d))	{
+					for(People p : hab.getResident())	{
+						c.getCustomerList().remove(p);
+						p.getSupplierList(d).remove(c);
+					}
+				}
+				hab.getSupplierListMap().get(d).clear();
+			}
+		}
 		if(b instanceof Producable)	{
 			Producable pro = (Producable)b;
 			for(Products p : pro.getProductSet())	{
 				productListMap.get(p).remove(pro);
+
+				for(Consumable c : pro.getClientList())	{
+					c.getClientList().remove(pro);
+				}
+				pro.getClientList().clear();
 			}
 		}
 		if(b instanceof Consumable)	{
 			Consumable con = (Consumable)b;
 			for(Products p : con.getConsumeSet())	{
 				consumeListMap.get(p).remove(con);
+
+				for(Producable pro : con.getClientList())	{
+					pro.getClientList().remove(con);
+				}
+				con.getCustomerList().clear();
 			}
 		}
 	}
