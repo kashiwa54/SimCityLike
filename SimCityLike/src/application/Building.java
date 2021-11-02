@@ -2,6 +2,7 @@ package application;
 
 public abstract class Building extends TileObject{
 	private int years;
+	private int ruinPoint;
 	public Building() {
 		this(null);
 	}
@@ -22,6 +23,15 @@ public abstract class Building extends TileObject{
 
 	public int getYears()	{
 		return this.years;
+	}
+	public void setRuinPoint(int p)	{
+		this.ruinPoint = p;
+	}
+	public int getRuinPoint()	{
+		return ruinPoint;
+	}
+	public void addRuinPoint(int p)	{
+		this.ruinPoint += p;
 	}
 
 }

@@ -58,8 +58,11 @@ public class CommonConst {
 
 	public static final double PRODUCT_REQUEST_FACTOR = 1 / 2;
 	public static final int CLIENT_REQUEST_MAX_NUMBER = 15;
+	public static final int RECALC_NUMBER = 5;
 
 	public static final double DESIRE_MAX = 100.0;
 
 	public static final int BUILD_MAX_PAR_HOUR = 8;
+	public static final int BUILDING_CHECK_NUMBER = 10;
+	public static final int RUIN_POINT_MAX = 5;
 }

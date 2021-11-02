@@ -125,6 +125,7 @@ public class Map {
 				obj.setPosition(x,y);
 				obj.place();
 				addList(obj);
+				removeList(mapObj);
 				refreshAround(x,y);
 				changeFlg = true;
 				return obj;

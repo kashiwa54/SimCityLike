@@ -3,6 +3,7 @@ package application;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.EnumSet;
+import java.util.Random;
 
 public class ProductManager {
 	private static final int MAX_TRANSPORT_COST = CommonConst.PRODUCT_MAX_TRANSPORT_COST;
@@ -14,6 +15,7 @@ public class ProductManager {
 	private EnumMap<Products,ArrayList<Producable>> productListMap;
 	private EnumMap<Products,ArrayList<Consumable>> consumeListMap;
 	private EnumMap<Desire,ArrayList<Habitable>> habitableDesireMap;
+	private Random rnd = new Random();
 
 	public ProductManager(Map map) {
 		this.fieldMap = map;
@@ -201,5 +203,29 @@ public class ProductManager {
 		}
 
 		return listMap;
+	}
+
+	public void recalcList()	{
+		int loop = CommonConst.RECALC_NUMBER + (int)(producableList.size() * 0.05);
+		if(producableList.size() <= 1) return;
+		for(int i = 0; i < loop;i++)	{
+			int r = rnd.nextInt(producableList.size());
+			producableList.get(r).setClientList(calcClientList(producableList.get(r)));
+		}
+
+		loop = CommonConst.RECALC_NUMBER + (int)(consumableList.size() * 0.05);
+		if(consumableList.size() <= 1) return;
+		for(int i = 0; i < loop;i++)	{
+			int r = rnd.nextInt(consumableList.size());
+			consumableList.get(r).setClientList(calcClientList(consumableList.get(r)));
+		}
+
+		loop = CommonConst.RECALC_NUMBER + (int)(habitableList.size() * 0.05);
+		if(habitableList.size() <= 1) return;
+		for(int i = 0; i < loop;i++)	{
+			int r = rnd.nextInt(habitableList.size());
+			habitableList.get(r).setSupplierListMap(calcCustomerList(habitableList.get(r)));
+
+		}
 	}
 }

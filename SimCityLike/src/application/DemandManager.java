@@ -96,10 +96,11 @@ public class DemandManager {
 			}
 		}
 		if(commercialList.size() != 0)	{
-			industrialDemand = underStockShopSum / commercialList.size() * 2 * 100;
+			industrialDemand = (int)((double)underStockShopSum / commercialList.size() * 100);
 		}else {
 			industrialDemand = 0;
 		}
+
 	}
 	private void setDemandToChart(int rValue,int cValue,int iValue)	{
 		bc.getData().get(0).getData().get(0).setYValue(rValue);

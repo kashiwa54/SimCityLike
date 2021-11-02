@@ -1,6 +1,7 @@
 package application;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class BuildingManager {
@@ -102,7 +103,12 @@ public class BuildingManager {
 		int index = 0;
 
 		for(int i = 0;i < r;i++)	{
-			int buildingSite = rnd.nextInt(sumSize);
+			int buildingSite = -1;
+			if(sumSize != 1)	{
+				buildingSite = rnd.nextInt(sumSize);
+			}else {
+				buildingSite = 1;
+			}
 			int rate = rnd.nextInt(100);
 			if(buildingSite < rSize)	{
 				if(rate <= dm.getResidentalDemand())	{
@@ -118,7 +124,7 @@ public class BuildingManager {
 					cSize--;
 					sumSize--;
 				}
-			}else{
+			}else if(buildingSite < sumSize){
 				if(rate <= dm.getIndustrialDemand())	{
 					index = buildingSite - rSize - cSize;
 					build(iFreeArea.get(index));
@@ -129,4 +135,57 @@ public class BuildingManager {
 		}
 	}
 
+	public void randomCheck()	{
+		int loop = rnd.nextInt(CommonConst.BUILDING_CHECK_NUMBER);
+		List<ResidentalBuilding> rList = ResidentalBuilding.residentalList;
+		List<CommercialBuilding> cList = CommercialBuilding.commercialList;
+		List<IndustrialBuilding> iList = IndustrialBuilding.industrialList;
+
+		int rSize = rList.size();
+		int cSize = cList.size();
+		int iSize = iList.size();
+		int sumSize = rSize + cSize + iSize;
+
+		if(sumSize <= 1)	return;
+
+		for(int i = 0;i < loop; i++)	{
+			int r = rnd.nextInt(sumSize);
+			int index = -1;
+			if(r < rSize)	{
+				index = r;
+				check(rList.get(index));
+			}else if(r < rSize + cSize)	{
+				index = r - rSize;
+				check(cList.get(index));
+			}else {
+				index = r - rSize - cSize;
+				check(iList.get(index));
+			}
+		}
+	}
+
+	public void check(Building b)	{
+		if(b instanceof ResidentalBuilding)	{
+			ResidentalBuilding r = (ResidentalBuilding)b;
+			if(r.getResident().length == 0)	{
+				r.addRuinPoint(1);
+			}
+		}
+		if(b instanceof CommercialBuilding)	{
+			CommercialBuilding c = (CommercialBuilding)b;
+			if((c.getClientList().size() == 0)||(c.getCustomerList().size() == 0))	{
+				c.addRuinPoint(1);
+			}
+		}
+		if(b instanceof IndustrialBuilding)	{
+			IndustrialBuilding i = (IndustrialBuilding)b;
+			if(i.getClientList().size() == 0)	{
+				i.addRuinPoint(1);
+			}
+		}
+
+		if(b.getRuinPoint() >= CommonConst.RUIN_POINT_MAX)	{
+			fieldMap.remove(b.getX(), b.getY());
+		}
+	}
 }
