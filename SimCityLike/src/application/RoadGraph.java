@@ -24,10 +24,14 @@ public class RoadGraph {
 
 	public int getRouteCost(Road start,Road end)	{
 		Cache hit = accessCashe(start,end);
+		int result = Integer.MAX_VALUE;
 		if(hit != null)	return hit.cost;
 
 		LinkedList<GraphNode> path = calcPath(start,end);
-		int result = path.getLast().getCost();
+
+		if(path != null)	{
+			result = path.getLast().getCost();
+		}
 
 		addCache(start,end,result,path);
 
@@ -38,6 +42,10 @@ public class RoadGraph {
 		LinkedList<GraphNode> route = new LinkedList<GraphNode>();
 		PriorityQueue<GraphNode> queue = new PriorityQueue<GraphNode>();
 		GraphNode doneNode = null;
+
+		if((start == null)||(end == null))	{
+			return null;
+		}
 
 
 		addEdgeNode(start,end);
@@ -82,6 +90,9 @@ public class RoadGraph {
 		GraphNode[] newNodes = new GraphNode[4];
 		int index = 0;
 		boolean dupflg = false;
+		if((node == null)||(node.getRoad() == null))	{
+			return newNodes;
+		}
 		if(node.getRoad().getConnect().size() <= 1)	{
 			for(GraphNode n : node.getEdgeTo())	{
 				if(n != null) break;

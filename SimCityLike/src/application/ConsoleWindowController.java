@@ -181,6 +181,19 @@ public class ConsoleWindowController	{
 					builder.append("people bulk [number].\n");
 				}
 				break;
+			case "desire" :
+				builder.append("--------------------------------\n");
+				for(People p : pm.getPeopleList())	{
+					if(p != null)	{
+						builder.append(p.getName() + "\n");
+						for(Desire d : p.getDesireSet())	{
+							builder.append(d + " : " + p.getDesire(d) + "\n");
+						}
+
+					}
+				}
+				builder.append("--------------------------------\n");
+				break;
 			default :
 				builder.append("Available augments of people command are\n");
 				builder.append(" [list] [create [age]].\n");

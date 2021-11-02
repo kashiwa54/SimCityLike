@@ -96,7 +96,7 @@ public class DemandManager {
 			}
 		}
 		if(commercialList.size() != 0)	{
-			industrialDemand = underStockShopSum / commercialList.size() * 2;
+			industrialDemand = underStockShopSum / commercialList.size() * 2 * 100;
 		}else {
 			industrialDemand = 0;
 		}
