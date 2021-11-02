@@ -9,6 +9,7 @@ public class TimelineProcessingService extends ScheduledService<Boolean>{
 	private Map worldMap;
 	private PeopleManager pm;
 	private DemandManager dm;
+	private BuildingManager bm;
 	private ProductManager proMng;
 	private Boolean switchHour = false;
 	private Boolean switchNoon = false;
@@ -22,8 +23,9 @@ public class TimelineProcessingService extends ScheduledService<Boolean>{
 		this.pm = map.getPeopleManager();
 		this.proMng = map.getProductManager();
 	}
-	public void setDemandManager(DemandManager dm)	{
+	public void setManagers(DemandManager dm,BuildingManager bm)	{
 		this.dm = dm;
+		this.bm = bm;
 	}
 	@Override
 	protected Task<Boolean> createTask() {
@@ -76,6 +78,7 @@ public class TimelineProcessingService extends ScheduledService<Boolean>{
 				}
 				if(switchHour)	{
 					try	{
+						bm.randomBuild();
 						pm.decreaseDesireAll();
 						pm.migration(dm.getResidentalDemand());
 						pm.checkVacantHome();

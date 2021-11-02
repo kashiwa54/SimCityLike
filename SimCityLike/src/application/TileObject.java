@@ -29,6 +29,9 @@ public abstract class TileObject {
 	public static void setProductManager(ProductManager proMng)	{
 		pm = proMng;
 	}
+	public void setMap(Map map)	{
+		this.fieldMap = map;
+	}
 	public Map getMap()	{
 		return this.fieldMap;
 	}
@@ -91,6 +94,15 @@ public abstract class TileObject {
 	}
 	public void refresh()	{
 		checkNearRoad();
+	}
+
+	public static <T extends TileObject> T getObject(Class<T> obj)	{
+		try {
+			return obj.newInstance();
+		} catch (InstantiationException | IllegalAccessException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	public void checkNearRoad()	{
 		Road best = null;

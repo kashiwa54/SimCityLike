@@ -2,6 +2,9 @@ package application;
 
 
 public class RiceField extends IndustrialBuilding{
+	public RiceField()	{
+		this(null,0,0);
+	}
 	public RiceField(Map map,int x,int y) {
 		super(map,x,y, IndustrialBuildingEnum.RICEFIELD);
 	}

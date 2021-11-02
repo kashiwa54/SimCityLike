@@ -11,6 +11,7 @@ public class Map {
 
 	private PeopleManager pManager = null;
 	private ProductManager proManager = null;
+	private BuildingManager bManager = null;
 	private RoadGraph graph = null;
 
 	private ArrayList<Building> buildingList = new ArrayList<Building>();
@@ -183,6 +184,14 @@ public class Map {
 			return true;
 		}
 	}
+	public boolean bindBuildingManager(BuildingManager bm)	{
+		if(bm == null)	{
+			return false;
+		}else {
+			bManager = bm;
+			return true;
+		}
+	}
 
 	public RoadGraph createRoadGraph(Road road)	{
 		graph = new RoadGraph(road);
@@ -216,17 +225,23 @@ public class Map {
 		if(obj instanceof Workable)	{
 			workableList.add((Workable)obj);
 		}
+		if(obj instanceof Site)	{
+			bManager.addFreeArea((Site)obj);
+		}
 	}
 	private void removeList(TileObject obj)	{
 		if(obj instanceof Building)	{
-			buildingList.remove((Building)obj);
+			buildingList.remove(obj);
 			proManager.removeBuildingList((Building)obj);
 		}
 		if(obj instanceof Habitable)	{
-			habitableList.remove((Habitable)obj);
+			habitableList.remove(obj);
 		}
 		if(obj instanceof Workable)	{
-			workableList.remove((Workable)obj);
+			workableList.remove(obj);
+		}
+		if(obj instanceof Site)	{
+			bManager.removeAreaList((Site)obj);
 		}
 	}
 }

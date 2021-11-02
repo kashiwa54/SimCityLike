@@ -2,6 +2,9 @@ package application;
 
 
 public class Cottage extends ResidentalBuilding{
+	public Cottage()	{
+		this(null,0,0);
+	}
 	public Cottage(Map map,int x,int y) {
 		super(map,x,y, ResidentalBuildingEnum.COTTAGE);
 	}

@@ -28,8 +28,8 @@ public class CommonConst {
 	public static final double COMMERCIAL_DEMAND_FACTOR = 2.0;
 	public static final double INDUSTRIAL_DEMAND_FACTOR = 0.5;
 
-	public static final double MIGRATION_FACTOR = 5.0;
-	public static final int MIGRATION_EXTRA = 5;
+	public static final double MIGRATION_FACTOR = 4.0;
+	public static final int MIGRATION_EXTRA = 3;
 
 	public static final int NEAR_ROAD_DISTANCE = 3;
 
@@ -60,4 +60,6 @@ public class CommonConst {
 	public static final int CLIENT_REQUEST_MAX_NUMBER = 15;
 
 	public static final double DESIRE_MAX = 100.0;
+
+	public static final int BUILD_MAX_PAR_HOUR = 8;
 }

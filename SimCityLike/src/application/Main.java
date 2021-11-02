@@ -31,6 +31,7 @@ public class Main extends Application {
 	Time worldTime = new Time(CommonConst.DEFAULT_YEAR,CommonConst.DEFAULUT_SEASON,CommonConst.DEFAULT_WEEK,0,0);
 	PeopleManager pm = new PeopleManager(worldTime);
 	DemandManager dm = null;
+	BuildingManager bm = null;
 
 	static TimeFlow timeFlow = TimeFlow.LOW;
 
@@ -48,13 +49,15 @@ public class Main extends Application {
 			window.paintMainCanvas(gc,map);
 
 			dm = new DemandManager(window.getDemand(),pm);
-			mainProcess.setDemandManager(dm);
+			bm = new BuildingManager(map,dm);
+			map.bindBuildingManager(bm);
+			mainProcess.setManagers(dm,bm);
 
 			timeline.getKeyFrames().add(new KeyFrame(Duration.millis(CommonConst.DEFAULT_DURATION),new EventHandler<ActionEvent>()	{
-		    @Override
-		    public void handle(ActionEvent event) {
-		        window.repaint();
-		    }
+			    @Override
+			    public void handle(ActionEvent event) {
+			        window.repaint();
+			    }
 			}));
 			timeline.setCycleCount(Timeline.INDEFINITE);
 			timeline.play();

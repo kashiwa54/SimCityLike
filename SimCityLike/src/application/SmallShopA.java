@@ -2,6 +2,9 @@ package application;
 
 
 public class SmallShopA extends CommercialBuilding{
+	public SmallShopA()	{
+		this(null,0,0);
+	}
 	public SmallShopA(Map map,int x,int y) {
 		super(map,x,y, CommercialBuildingEnum.SMALLSHOP_A);
 	}

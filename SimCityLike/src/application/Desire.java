@@ -3,7 +3,7 @@ package application;
 import java.util.EnumSet;
 
 public enum Desire {
-	FOOD("食品","食",25,asSet(Products.AGRICULTURE,Products.FISHERY,Products.STOCK_RAISING,Products.FOOD_PROCESSING)),
+	FOOD("食品","食",100,asSet(Products.AGRICULTURE,Products.FISHERY,Products.STOCK_RAISING,Products.FOOD_PROCESSING)),
 	APPAREL("服飾","服",5,asSet(Products.APPAREL)),
 	FURNITURE("家具","家",1,asSet(Products.ELECTRONICS)),
 	AMUSEMENT("娯楽","楽",10,asSet());

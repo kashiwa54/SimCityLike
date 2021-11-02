@@ -2,7 +2,9 @@ package application;
 
 public abstract class Building extends TileObject{
 	private int years;
-
+	public Building() {
+		this(null);
+	}
 	public Building(Map map)	{
 		this(map,0,0);
 	}
@@ -14,7 +16,6 @@ public abstract class Building extends TileObject{
 		type = null;
 		setCanPass(false);
 	}
-
 	public void setYears(int y)	{
 		this.years = y;
 	}

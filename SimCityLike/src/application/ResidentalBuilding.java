@@ -18,7 +18,6 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 			put(d,new ArrayList<Consumable>());
 		}
 	}};
-
 	public ResidentalBuilding(Map map,int x,int y,ResidentalBuildingEnum rbe)	{
 		super(map,x,y,rbe.getWidth(),rbe.getHeight());
 		this.capacity = rbe.getCapacity();
