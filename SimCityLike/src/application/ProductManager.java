@@ -65,6 +65,7 @@ public class ProductManager {
 			for(Desire d : listMap.keySet())	{
 				for(Consumable con : listMap.get(d)) {
 					for(People p : hab.getResident())	{
+						if(p == null) continue;
 						if(!con.getCustomerList().contains(p)) con.getCustomerList().add(p);
 					}
 				}

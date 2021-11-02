@@ -132,6 +132,14 @@ public class PeopleManager {
 			}
 		}
 	}
+	public void remove(People p)	{
+		p.removeHome();
+		p.removeWork();
+		homelessList.remove(p);
+		joblessList.remove(p);
+		peopleList.remove(p);
+		System.out.println("remove");
+	}
 	public void migration(int residentalDemand)	{
 		double population = getPeopleList().size();
 		int increase = (int)((population / 100 * CommonConst.MIGRATION_FACTOR + rnd.nextInt(CommonConst.MIGRATION_EXTRA))
@@ -191,6 +199,29 @@ public class PeopleManager {
 	public void decreaseDesireAll()	{
 		for(People p : peopleList)	{
 			p.moreDesire();
+		}
+	}
+
+	public void randomCheck()	{
+		int loop = CommonConst.PEOPLE_RETIRE_NUMBER + (int)(peopleList.size() * 0.05);
+		for(int i = 0;i < loop;i++)	{
+			int r = rnd.nextInt(peopleList.size());
+			check(peopleList.get(r));
+		}
+
+	}
+	public void check(People p)	{
+		if(p.getDesireAverage() <= CommonConst.PEOPLE_RETIRE_FACTOR)	{
+			p.addRetirePoint(1);
+		}
+		if(p.getHome() == null)	{
+			p.addRetirePoint(1);
+		}
+		if(p.getWorkspace() == null)	{
+			p.addRetirePoint(1);
+		}
+		if(p.getRetirePoint() >= CommonConst.PEOPLE_RETIRE_MAX)	{
+			remove(p);
 		}
 	}
 	private void readNameFile()	{

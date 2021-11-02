@@ -37,6 +37,9 @@ public class CommonConst {
 	public static final int PEOPLE_INCREMENT_CAPACITY = 50;
 	public static final int PEOPLE_MAX_AGE = 80;
 	public static final int PEOPLE_MIN_AGE = 15;
+	public static final int PEOPLE_RETIRE_NUMBER = 10;
+	public static final int PEOPLE_RETIRE_MAX = 10;
+	public static final int PEOPLE_RETIRE_FACTOR = 15;
 	public static final int BUILDING_INISIAL_CAPACITY = 50;
 	public static final int MYOUJI_INISIAL_CAPACITY = 100;
 

@@ -50,8 +50,9 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 		}
 		info = info.concat("労働者数:" + workerNumber + "\n");
 		info = info.concat("求人数" + freeWorkspace + "\n");
-		info = info.concat("商品消費量" + consumption + "\n");
 		info = info.concat("商品量\n");
+		info = info.concat("仕入れ先:" + clientList.size() + "個\n");
+		info = info.concat("顧客:" + customerList.size() + "人\n");
 		for(Products p : consumeSet)	{
 			info = info.concat(p.japanese + " : " +stockMap.get(p) + " / " + productCapacity + "\n");
 		}

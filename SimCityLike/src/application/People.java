@@ -15,6 +15,7 @@ public class People {
 	private Workable workspace;
 	private int money;
 	private Time birthday;
+	private int retirePoint;
 	private Random rnd = new Random();
 	private EnumMap<Desire,Double> desireMap = new EnumMap<Desire,Double>(Desire.class)	{{
 		put(Desire.FOOD, 100.0);
@@ -30,6 +31,7 @@ public class People {
 		this.birthday = birthday.clone();
 		this.age = calcAge(world);
 		this.name = name;
+		this.retirePoint = 0;
 	}
 
 	public void setHome(Habitable r)	{
@@ -43,6 +45,9 @@ public class People {
 	}
 	public void setMoney(int money)	{
 		this.money = money;
+	}
+	public void setRetirePoint(int p)	{
+		this.retirePoint = p;
 	}
 	private int calcAge(Time now){
 
@@ -66,6 +71,12 @@ public class People {
 	}
 	public String getName()	{
 		return this.name;
+	}
+	public int getRetirePoint()	{
+		return this.retirePoint;
+	}
+	public void addRetirePoint(int add)	{
+		this.retirePoint += add;
 	}
 
 	public void setSupplierListMap(EnumMap<Desire,ArrayList<Consumable>> listMap)	{

@@ -96,6 +96,7 @@ public class TimelineProcessingService extends ScheduledService<Boolean>{
 				}
 				if(switchNoon)	{
 					bm.randomCheck();
+					pm.randomCheck();
 				}
 				if(switchDay)	{
 					proMng.stockingAll();

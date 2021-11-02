@@ -52,6 +52,7 @@ public abstract class IndustrialBuilding extends Building implements Workable,Pr
 		for(Products p : productSet)	{
 			info = info.concat(p.japanese + " : " +stockMap.get(p) + " / " + productCapacity + "\n");
 		}
+		info = info.concat("納入先:" + clientList.size() + "店舗\n");
 		return info;
 	}
 	public int getProductCapacity()	{

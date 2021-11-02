@@ -35,6 +35,11 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 		}
 		info = info.concat("住人数:" + residentNumber + "\n");
 		info = info.concat("住居空き" + freeCapacity + "\n");
+		int sup = 0;
+		for(Desire d : supplierListMap.keySet())	{
+			sup += supplierListMap.get(d).size();
+		}
+		info = info.concat("行きつけの店:" + sup + "店舗\n");
 		return info;
 	}
 
