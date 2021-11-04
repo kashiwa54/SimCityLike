@@ -40,7 +40,7 @@ public class Map {
 	}
 
 	public TileObject getTileObject(int x,int y)	{
-		if((x < 0)||(y < 0)||(x > getWidth())||(y > getHeight()))	{
+		if((x < 0)||(y < 0)||(x >= getWidth())||(y >= getHeight()))	{
 			return null;
 		}else {
 			return this.tile[x][y];
@@ -168,6 +168,10 @@ public class Map {
 		int bx = x + DISTANCE;
 		int by = y + DISTANCE;
 
+		if(tx < 0) tx = 0;
+		if(ty < 0) ty = 0;
+		if(bx >= width) bx = getWidth() - 1;
+		if(by >= height) by = getHeight() - 1;
 		for(int i = tx; i <= bx;i++)	{
 			for(int j = ty; j <= by;j++)	{
 				if(isInside(i,j))	{
