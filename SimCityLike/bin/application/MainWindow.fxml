@@ -95,6 +95,11 @@
                   <Button fx:id="highSpeed" onAction="#buttonHighSpeed" maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" text="高" />
                </children>
             </HBox>
+  		<Label fx:id="moneyLabel" maxHeight="32.0" maxWidth="256.0" minHeight="32.0" minWidth="256.0" prefHeight="32.0" prefWidth="256.0" alignment = "BOTTOM_RIGHT">
+  		   <font>
+              <Font size="20.0" />
+           </font>
+        </Label>
          </children></HBox>
    </children>
 </AnchorPane>

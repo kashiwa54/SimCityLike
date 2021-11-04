@@ -81,6 +81,8 @@ public class MainWindowController {
 	@FXML
 	Text weekText;
 	@FXML
+	Label moneyLabel;
+	@FXML
 	Button stop;
 	@FXML
 	Button lowSpeed;
@@ -93,6 +95,7 @@ public class MainWindowController {
 
 	ArrayList<FlowPane> tabList = new ArrayList<FlowPane>(5);
 	private Map map;
+	private int money = Main.playerMoney;
 	private GraphicsContext graphics;
 	private double canvasSizeRate = 100;
 
@@ -403,6 +406,8 @@ public class MainWindowController {
 			weekText.setFill(time.getWeek().getColor());
 	    	weekText.setText(" " + time.getWeek().getJp());
 		}
+
+		moneyLabel.setText(money + " yen");
 	}
 	public void setMouseType(PlacableEnum type,SpreadType spread)	{
 		this.mouseType = type;

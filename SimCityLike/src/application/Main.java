@@ -27,6 +27,7 @@ public class Main extends Application {
 
 	TimelineProcessingService mainProcess = null;
 
+	static int playerMoney = 100000000;
 	Map map = new Map(CommonConst.TILE_WIDTH,CommonConst.TILE_HEIGHT);
 	Time worldTime = new Time(CommonConst.DEFAULT_YEAR,CommonConst.DEFAULUT_SEASON,CommonConst.DEFAULT_WEEK,0,0);
 	PeopleManager pm = new PeopleManager(worldTime);
