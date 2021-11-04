@@ -25,7 +25,7 @@ public class CommonConst {
 	public static final double DEMAND_AXIS_MAX = 100.0;
 
 	public static final double RESIDENTAL_DEMAND_FACTOR = 2.0;
-	public static final double COMMERCIAL_DEMAND_FACTOR = 2.0;
+	public static final double COMMERCIAL_DEMAND_FACTOR =1.5;
 	public static final double INDUSTRIAL_DEMAND_FACTOR = 0.5;
 
 	public static final double MIGRATION_FACTOR = 4.0;

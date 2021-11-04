@@ -159,7 +159,12 @@ public class ProductManager {
 					TileObject cObj = (TileObject)c;
 					TileObject pObj = (TileObject)p;
 					if(fieldMap.getRouteCost(cObj.getNearRoad(),pObj.getNearRoad()) < MAX_TRANSPORT_COST)	{
-						if(!list.contains(p)) list.add(p);
+						if(list.contains(p)) continue;
+						list.add(p);
+						ArrayList<Consumable> plist = p.getClientList();
+						if((plist != null)&&(!plist.contains(c)))	{
+							plist.add(c);
+						}
 					}
 				}
 			}
@@ -175,7 +180,12 @@ public class ProductManager {
 					TileObject cObj = (TileObject)c;
 					TileObject pObj = (TileObject)p;
 					if(fieldMap.getRouteCost(cObj.getNearRoad(),pObj.getNearRoad()) < MAX_TRANSPORT_COST)	{
-						if(!list.contains(c)) list.add(c);
+						if(list.contains(c)) continue;
+						list.add(c);
+						ArrayList<Producable> clist = c.getClientList();
+						if((clist != null)&&(!clist.contains(p)))	{
+							clist.add(p);
+						}
 					}
 				}
 			}
@@ -196,7 +206,16 @@ public class ProductManager {
 						TileObject cObj = (TileObject)c;
 						TileObject hObj = (TileObject)h;
 						if(fieldMap.getRouteCost(cObj.getNearRoad(),hObj.getNearRoad()) < MAX_TRANSPORT_COST)	{
-							if(!listMap.get(d).contains(c)) listMap.get(d).add(c);
+							if(listMap.get(d).contains(c)) continue;
+							listMap.get(d).add(c);
+							ArrayList<People> clist = c.getCustomerList();
+							if(clist != null)	{
+								for(People p : h.getResident())	{
+									if((p != null)&&(!clist.contains(p)))	{
+										clist.add(p);
+									}
+								}
+							}
 						}
 					}
 				}
@@ -208,25 +227,26 @@ public class ProductManager {
 
 	public void recalcList()	{
 		int loop = CommonConst.RECALC_NUMBER + (int)(producableList.size() * 0.05);
-		if(producableList.size() <= 1) return;
-		for(int i = 0; i < loop;i++)	{
-			int r = rnd.nextInt(producableList.size());
-			producableList.get(r).setClientList(calcClientList(producableList.get(r)));
+		if(producableList.size() > 1)	{
+			for(int i = 0; i < loop;i++)	{
+				int r = rnd.nextInt(producableList.size());
+				producableList.get(r).setClientList(calcClientList(producableList.get(r)));
+			}
 		}
-
 		loop = CommonConst.RECALC_NUMBER + (int)(consumableList.size() * 0.05);
-		if(consumableList.size() <= 1) return;
-		for(int i = 0; i < loop;i++)	{
-			int r = rnd.nextInt(consumableList.size());
-			consumableList.get(r).setClientList(calcClientList(consumableList.get(r)));
+		if(consumableList.size() > 1)	{
+			for(int i = 0; i < loop;i++)	{
+				int r = rnd.nextInt(consumableList.size());
+				consumableList.get(r).setClientList(calcClientList(consumableList.get(r)));
+			}
 		}
-
 		loop = CommonConst.RECALC_NUMBER + (int)(habitableList.size() * 0.05);
-		if(habitableList.size() <= 1) return;
-		for(int i = 0; i < loop;i++)	{
-			int r = rnd.nextInt(habitableList.size());
-			habitableList.get(r).setSupplierListMap(calcCustomerList(habitableList.get(r)));
+		if(habitableList.size() > 1)	{
+			for(int i = 0; i < loop;i++)	{
+				int r = rnd.nextInt(habitableList.size());
+				habitableList.get(r).setSupplierListMap(calcCustomerList(habitableList.get(r)));
 
+			}
 		}
 	}
 }

@@ -27,6 +27,9 @@ public class PeopleManager {
 	private List<IndustrialBuilding> industrialList = IndustrialBuilding.industrialList;
 	private ArrayList<Workable> vacantWorkspaceList = null;
 
+	private double desireAverageCache = 0;
+	private Time desireTimeCache = null;
+
 	Random rnd = new Random();
 
 	public PeopleManager(Time worldTime)	{
@@ -84,6 +87,28 @@ public class PeopleManager {
 	public List<People> getJoblessList()	{
 		joblessList.trimToSize();
 		return joblessList;
+	}
+	public double getDesireAverage()	{
+		if((desireTimeCache == null)||(worldClock.getTime() - desireTimeCache.getTime() < 60))	{
+			double ave = 0;
+			int cnt = 0;
+			for(People p : peopleList)	{
+				if(p == null) continue;
+				ave += p.getDesireAverage();
+				cnt++;
+			}
+			if(cnt != 0)	{
+				ave /= cnt;
+			}else {
+				ave = CommonConst.DESIRE_MAX;
+			}
+			desireTimeCache = worldClock.clone();
+			desireAverageCache = ave;
+			return ave;
+		}else {
+			return desireAverageCache;
+		}
+
 	}
 	public void checkVacantHome()	{
 		vacantHomeList = new ArrayList<Habitable>(INISIAL_CAPACITY);
@@ -144,6 +169,7 @@ public class PeopleManager {
 		double population = getPeopleList().size();
 		int increase = (int)((population / 100 * CommonConst.MIGRATION_FACTOR + rnd.nextInt(CommonConst.MIGRATION_EXTRA))
 				 * ((double)(100 - residentalDemand) / 100));
+		increase = (int)(increase * (getDesireAverage() / 100));
 		for(int i = 0;i < increase;i++)	{
 			createPeople();
 		}
@@ -198,7 +224,7 @@ public class PeopleManager {
 
 	public void decreaseDesireAll()	{
 		for(People p : peopleList)	{
-			p.moreDesire();
+			if(p.getHome() != null)	p.moreDesire();
 		}
 	}
 
