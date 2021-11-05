@@ -3,7 +3,7 @@ package application;
 import java.lang.reflect.InvocationTargetException;
 import java.util.EnumSet;
 public enum CommercialBuildingEnum implements PlacableEnum{
-	SMALLSHOP_A(SmallShopA.class,"src/image/smallshopA1.png","個人商店A",1,1,100,2,50,100,
+	SMALLSHOP_A(SmallShopA.class,"src/image/smallshopA1.png","個人商店A",1,1,100,2,500,1000,
 			asSet(Products.AGRICULTURE,Products.FOOD_PROCESSING),1);
 	private Class<? extends TileObject> buildingClass;
 	private String imagePath;

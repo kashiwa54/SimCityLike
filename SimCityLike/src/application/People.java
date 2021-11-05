@@ -18,7 +18,7 @@ public class People {
 	private int retirePoint;
 	private Random rnd = new Random();
 	private EnumMap<Desire,Double> desireMap = new EnumMap<Desire,Double>(Desire.class)	{{
-		put(Desire.FOOD, 100.0);
+		put(Desire.FOOD, 25.0);
 	}};
 	private EnumMap<Desire,ArrayList<Consumable>> supplierListMap = new EnumMap<Desire,ArrayList<Consumable>>(Desire.class)	{{
 		for(Desire d : desireMap.keySet())	{
