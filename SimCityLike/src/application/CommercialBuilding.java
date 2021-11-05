@@ -12,7 +12,7 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 	private int workspace;
 	private int freeWorkspace;
 	private int productCapacity;
-	private int consumption;
+	private int maxConsumption;
 	private People[] worker = null;
 
 	private ArrayList<Producable> clientList = new ArrayList<Producable>();
@@ -26,7 +26,7 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 		super(map,x,y,cbe.getWidth(),cbe.getHeight());
 		this.workspace = cbe.getWorkspace();
 		this.productCapacity = cbe.getproductCapacity();
-		this.consumption = cbe.getConsumption();
+		this.maxConsumption = cbe.getConsumption();
 		this.consumeSet = cbe.getConsumeSet();
 		for(Products p : consumeSet)	{
 			stockMap.put(p, 0);
@@ -57,8 +57,8 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 	public int getStock(Products product)	{
 		return stockMap.get(product);
 	}
-	public int getConsumption()	{
-		return this.consumption;
+	public int getMaxConsumption()	{
+		return this.maxConsumption;
 	}
 	public int getProductCapacity()	{
 		return this.productCapacity;

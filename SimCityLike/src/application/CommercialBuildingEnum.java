@@ -3,7 +3,7 @@ package application;
 import java.lang.reflect.InvocationTargetException;
 import java.util.EnumSet;
 public enum CommercialBuildingEnum implements PlacableEnum{
-	SMALLSHOP_A(SmallShopA.class,"src/image/smallshopA1.png","個人商店A",1,1,100,2,50,5,5,
+	SMALLSHOP_A(SmallShopA.class,"src/image/smallshopA1.png","個人商店A",1,1,100,2,50,100,
 			asSet(Products.AGRICULTURE,Products.FOOD_PROCESSING),1);
 	private Class<? extends TileObject> buildingClass;
 	private String imagePath;
@@ -13,13 +13,12 @@ public enum CommercialBuildingEnum implements PlacableEnum{
 	private int cost;
 	private int workspace;
 	private int productCapacity;
-	private int consumption;
-	private int customerCapacity;
+	private int maxConsumption;
 	private EnumSet<Products> product;
 	private int level;
 
 	private CommercialBuildingEnum(Class<? extends TileObject> buildingClass,String imagePath,String displayName,
-			int width,int height,int cost,int workspace,int productCapacity,int consumption,int customerCapacity,
+			int width,int height,int cost,int workspace,int productCapacity,int maxConsumption,
 			EnumSet<Products> product,int level)	{
 		this.buildingClass = buildingClass;
 		this.imagePath = imagePath;
@@ -29,8 +28,7 @@ public enum CommercialBuildingEnum implements PlacableEnum{
 		this.cost = cost;
 		this.workspace = workspace;
 		this.productCapacity = productCapacity;
-		this.consumption = consumption;
-		this.customerCapacity = customerCapacity;
+		this.maxConsumption = maxConsumption;
 		this.product = product;
 		this.level = level;
 	}
@@ -61,10 +59,7 @@ public enum CommercialBuildingEnum implements PlacableEnum{
 		return productCapacity;
 	}
 	public int getConsumption()	{
-		return consumption;
-	}
-	public int getCustomerCapacity()	{
-		return customerCapacity;
+		return maxConsumption;
 	}
 	public EnumSet<Products> getConsumeSet()	{
 		return product;
