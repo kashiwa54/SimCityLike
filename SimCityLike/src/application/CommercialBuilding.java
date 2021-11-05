@@ -13,10 +13,7 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 	private int freeWorkspace;
 	private int productCapacity;
 	private int consumption;
-	private int customerCapacity;
-	private int freeCustomer;
 	private People[] worker = null;
-	private People[] customer = null;
 
 	private ArrayList<Producable> clientList = new ArrayList<Producable>();
 	private EnumSet<Products> consumeSet = EnumSet.noneOf(Products.class);
@@ -34,10 +31,8 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 		for(Products p : consumeSet)	{
 			stockMap.put(p, 0);
 		}
-		this.customerCapacity = cbe.getCustomerCapacity();
 		type = cbe;
 		worker = new People[workspace];
-		customer = new People[customerCapacity];
 		calcFreeWorkspace();
 	}
 	public String getInfo()	{
@@ -108,31 +103,6 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 		}
 		return false;
 	}
-	public boolean addCustomer(People p) {
-		for(int i = 0;i < customer.length;i++)	{
-			if(customer[i] == null)	{
-				customer[i] = p;
-				calcFreeCustomer();
-				return true;
-			}
-		}
-		return false;
-	}
-	public boolean removeCustomer(People p) {
-		for(int i = 0;i < customer.length; i++)	{
-			if (customer[i] == p)	{
-				customer[i] = null;
-				while(i < customer.length - 1)	{
-					customer[i] = customer[i + 1];
-					if(customer[i] == null) break;
-					i++;
-				}
-				calcFreeWorkspace();
-				return true;
-			}
-		}
-		return false;
-	}
 	public void removeWorkerAll()	{
 		for(People p : worker)	{
 			if(p != null) p.removeWork();
@@ -141,15 +111,9 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 	public People[] getWorker()	{
 		return worker;
 	}
-	public People[] getCustomer()	{
-		return customer;
-	}
 	@Override
 	public int getFreeWorkspace() {
 		return freeWorkspace;
-	}
-	public int getFreeCustomer()	{
-		return freeCustomer;
 	}
 	private void calcFreeWorkspace()	{
 		int rCnt = 0;
@@ -161,17 +125,6 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 			}
 		}
 		this.freeWorkspace = workspace - rCnt;
-	}
-	private void calcFreeCustomer()	{
-		int rCnt = 0;
-		for(People p : customer)	{
-			if(p != null)	{
-				rCnt++;
-			}else {
-				break;
-			}
-		}
-		this.freeCustomer = customerCapacity - rCnt;
 	}
 	@Override
 	public boolean place() {
