@@ -137,4 +137,5 @@ public abstract class TileObject {
 	abstract public TileObject copy();
 	abstract public TileObject copy(int x,int y);
 	abstract public String getInfo();
+	abstract public void maintenance();
 }

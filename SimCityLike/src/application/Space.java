@@ -32,5 +32,8 @@ public class Space extends TileObject implements Overwritable{
 	public String getInfo()	{
 		return "";
 	}
+	public void maintenance()	{
+
+	}
 
 }

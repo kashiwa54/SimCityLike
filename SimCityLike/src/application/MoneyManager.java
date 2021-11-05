@@ -3,15 +3,15 @@ package application;
 import java.util.LinkedList;
 
 public class MoneyManager {
-	private int playerMoney = Main.playerMoney;
-	private Time worldClock = null;
+	private static int playerMoney = Main.playerMoney;
+	private static Time worldClock = null;
 
-	private int dayIncome = 0;
-	private int dayExpenditure = 0;
-	private int seasonIncome = 0;
-	private int seasonExpenditure = 0;
-	private int yearIncome = 0;
-	private int yearExpenditure = 0;
+	private static int dayIncome = 0;
+	private static int dayExpenditure = 0;
+	private static int seasonIncome = 0;
+	private static int seasonExpenditure = 0;
+	private static int yearIncome = 0;
+	private static int yearExpenditure = 0;
 
 	private LinkedList<DayStat> statistics = new LinkedList<DayStat>();
 
@@ -19,14 +19,14 @@ public class MoneyManager {
 		this.worldClock = worldClock;
 	}
 
-	public void income(int income)	{
+	public static void income(int income)	{
 		playerMoney += income;
 		dayIncome += income;
 		seasonIncome += income;
 		yearIncome += income;
 	}
 
-	public void expenditure(int expenditure)	{
+	public static void expenditure(int expenditure)	{
 		playerMoney -= expenditure;
 		dayExpenditure -= expenditure;
 		seasonExpenditure -= expenditure;

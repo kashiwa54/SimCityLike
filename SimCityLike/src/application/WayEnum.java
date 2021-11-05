@@ -5,12 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum WayEnum implements PlacableEnum{
-	ROAD60(Road60.class,"src/image/road60set.png","道路(60km制限)",50,2);
+	ROAD60(Road60.class,"src/image/road60set.png","道路(60km制限)",50,10,2);
 
 	private Class<? extends TileObject> wayClass;
 	private String imageSetPath;
 	private String displayName;
 	private int cost;
+	private int maintenanceCost;
 	private int level;
 
 	private static final Map<Class<? extends TileObject>,WayEnum> classToEnum = new HashMap<Class<? extends TileObject>,WayEnum>()	{
@@ -24,11 +25,12 @@ public enum WayEnum implements PlacableEnum{
 		for(WayEnum e : WayEnum.values()) put(e.getObjectClass(),e);
 	}};
 
-	private WayEnum(Class<? extends TileObject> siteClass,String imageSetPath,String displayName,int cost,int level)	{
+	private WayEnum(Class<? extends TileObject> siteClass,String imageSetPath,String displayName,int cost,int maintenanceCost,int level)	{
 		this.wayClass = siteClass;
 		this.imageSetPath = imageSetPath;
 		this.displayName = displayName;
 		this.cost = cost;
+		this.maintenanceCost = maintenanceCost;
 		this.level = level;
 	}
 
@@ -41,6 +43,9 @@ public enum WayEnum implements PlacableEnum{
 	}
 	public int getCost()	{
 		return this.cost;
+	}
+	public int getMaintenanceCost()	{
+		return this.maintenanceCost;
 	}
 	public int getLevel()	{
 		return this.level;

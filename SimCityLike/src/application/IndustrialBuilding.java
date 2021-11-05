@@ -14,6 +14,7 @@ public abstract class IndustrialBuilding extends Building implements Workable,Pr
 	private int production;
 	private int customerCapacity;
 	private int freeCustomer;
+	private int money;
 
 	private ArrayList<Consumable> clientList = new ArrayList<Consumable>();
 	private EnumSet<Products> productSet = EnumSet.noneOf(Products.class);
@@ -36,6 +37,8 @@ public abstract class IndustrialBuilding extends Building implements Workable,Pr
 		calcFreeWorkspace();
 		calcFreeCustomer();
 
+		money = 100000;
+
 	}
 	public String getInfo()	{
 		String info = "職場容量:" + workspace + "\n";
@@ -47,6 +50,7 @@ public abstract class IndustrialBuilding extends Building implements Workable,Pr
 		}
 		info = info.concat("労働者数:" + workerNumber + "\n");
 		info = info.concat("求人数" + freeWorkspace + "\n");
+		info = info.concat("資金:" + money + "\n");
 		info = info.concat("生産量" + production + "\n");
 		info = info.concat("商品量\n");
 		for(Products p : productSet)	{
@@ -63,6 +67,15 @@ public abstract class IndustrialBuilding extends Building implements Workable,Pr
 	}
 	public int getStock(Products p)	{
 		return this.stockMap.get(p);
+	}
+	public int getMoney()	{
+		return money;
+	}
+	public void setMoney(int money)	{
+		this.money = money;
+	}
+	public void addMoney(int add)	{
+		this.money += add;
 	}
 	@Override
 	public boolean addWorker(People p) {
@@ -207,12 +220,17 @@ public abstract class IndustrialBuilding extends Building implements Workable,Pr
 			stock -= amount;
 		}
 		stockMap.put(product, stock);
-		send(packet);
+		if(send(packet))	{
+			money += product.price * amount;
+		}
 		return true;
 
 	}
 	@Override
 	public boolean send(ProductPacket packet) {
 		return packet.getReceiver().receivePacket(packet);
+	}
+	public void maintenance()	{
+		money -= getType().getMaintenanceCost();
 	}
 }

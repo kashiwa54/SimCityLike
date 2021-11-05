@@ -2,7 +2,7 @@ package application;
 
 import java.lang.reflect.InvocationTargetException;
 public enum ResidentalBuildingEnum implements PlacableEnum{
-	COTTAGE(Cottage.class,"src/image/cottage.png","小さな小屋",1,1,100,5,1);
+	COTTAGE(Cottage.class,"src/image/cottage.png","小さな小屋",1,1,100,5,1000,1);
 	private Class<? extends TileObject> buildingClass;
 	private String imagePath;
 	private String displayName;
@@ -10,9 +10,11 @@ public enum ResidentalBuildingEnum implements PlacableEnum{
 	private int height;
 	private int cost;
 	private int capacity;
+	private int maintenanceCost;
 	private int level;
 
-	private ResidentalBuildingEnum(Class<? extends TileObject> buildingClass,String imagePath,String displayName,int width,int height,int cost,int capacity,int level)	{
+	private ResidentalBuildingEnum(Class<? extends TileObject> buildingClass,String imagePath,String displayName,int width,int height,int cost,
+			int capacity,int maintenanceCost,int level)	{
 		this.buildingClass = buildingClass;
 		this.imagePath = imagePath;
 		this.displayName = displayName;
@@ -20,6 +22,7 @@ public enum ResidentalBuildingEnum implements PlacableEnum{
 		this.height = height;
 		this.cost = cost;
 		this.capacity = capacity;
+		this.maintenanceCost = maintenanceCost;
 		this.level = level;
 	}
 	public Class<? extends TileObject> getObjectClass()	{
@@ -44,6 +47,9 @@ public enum ResidentalBuildingEnum implements PlacableEnum{
 	}
 	public int getCapacity()	{
 		return capacity;
+	}
+	public int getMaintenanceCost()	{
+		return maintenanceCost;
 	}
 	public int getLevel()	{
 		return level;

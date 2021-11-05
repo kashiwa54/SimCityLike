@@ -138,4 +138,12 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 	public EnumSet<Desire> getDesireSet(){
 		return desireSet;
 	}
+	public void maintenance()	{
+		int num = capacity - freeCapacity;
+		int cost = getType().getMaintenanceCost();
+		int rent = cost / num;
+		for(People p : resident)	{
+			if(p != null) p.setMoney(p.getMoney() - rent);
+		}
+	}
 }

@@ -32,6 +32,7 @@ public class People {
 		this.age = calcAge(world);
 		this.name = name;
 		this.retirePoint = 0;
+		this.money = 10000;
 	}
 
 	public void setHome(Habitable r)	{
@@ -146,12 +147,16 @@ public class People {
 	}
 	public boolean shopping(Desire d)	{
 		if(!getDesireSet().contains(d)) return false;
+		if(money <= 0)	return false;
 
 		int need = (int)(CommonConst.DESIRE_MAX - getDesire(d));
 		for(int i = 0; i < CommonConst.CLIENT_REQUEST_MAX_NUMBER ;i++)	{
 			for(Products product : d.getProducts())	{
 				ArrayList<Consumable> cl = supplierListMap.get(d);
 				if((cl == null)||(cl.size() <= 0))	continue;
+				if(money < product.price * need)	{
+					need = money / product.price;
+				}
 				int index = rnd.nextInt(cl.size());
 				int get = cl.get(index).consume(product, need);
 				if(get + getDesire(d) > CommonConst.DESIRE_MAX)	{

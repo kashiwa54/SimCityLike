@@ -21,6 +21,9 @@ public enum OtherTileEnum implements PlacableEnum{
 	public String getDisplayName()	{
 		return this.displayName;
 	}
+	public int getMaintenanceCost()	{
+		return 0;
+	}
 	@Override
 	public Class<? extends TileObject> getObjectClass() {
 		return otherClass;

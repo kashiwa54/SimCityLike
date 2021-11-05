@@ -15,6 +15,7 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 	private final int maxConsumption;
 	private int todayStock;
 	private People[] worker = null;
+	private int money;
 
 	private ArrayList<Producable> clientList = new ArrayList<Producable>();
 	private EnumSet<Products> consumeSet = EnumSet.noneOf(Products.class);
@@ -35,6 +36,8 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 		type = cbe;
 		worker = new People[workspace];
 		calcFreeWorkspace();
+
+		money = 100000;
 	}
 	public String getInfo()	{
 		String info = "職場容量:" + workspace + "\n";
@@ -46,6 +49,7 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 		}
 		info = info.concat("労働者数:" + workerNumber + "\n");
 		info = info.concat("求人数" + freeWorkspace + "\n");
+		info = info.concat("資金:" + money + "\n");
 		info = info.concat("商品量\n");
 		info = info.concat("仕入れ先:" + clientList.size() + "個\n");
 		info = info.concat("顧客:" + customerList.size() + "人\n");
@@ -127,6 +131,15 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 		}
 		this.freeWorkspace = workspace - rCnt;
 	}
+	public int getMoney()	{
+		return money;
+	}
+	public void setMoney(int money)	{
+		this.money = money;
+	}
+	public void addMoney(int add)	{
+		this.money += add;
+	}
 	@Override
 	public boolean place() {
 		commercialList.add(this);
@@ -163,12 +176,14 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 				selectingImport(product,productCapacity / 2);
 			}
 			todayStock -= amount;
+			money += product.price * amount;
 			return amount;
 		}else	{
 			int tmp = s;
 			stockMap.put(product, 0);
 			selectingImport(product,productCapacity);
 			todayStock -= tmp;
+			money += product.price * tmp;
 			return tmp;
 		}
 	}
@@ -204,6 +219,8 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 		stock += packet.getAmount();
 		if(stock > productCapacity)	stock = productCapacity;
 		stockMap.put(p,stock);
+
+		money -= (int)(p.price * packet.getAmount() * CommonConst.PRODUCT_DISCOUNT_RATE);
 		return true;
 
 	}
@@ -215,5 +232,8 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 	}
 	public void resetTodayStock()	{
 		todayStock = maxConsumption;
+	}
+	public void maintenance()	{
+		money -= getType().getMaintenanceCost();
 	}
 }

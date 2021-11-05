@@ -9,4 +9,7 @@ public abstract class Site extends TileObject implements Overwritable{
 	public String getInfo()	{
 		return "";
 	}
+	public void maintenance()	{
+
+	}
 }

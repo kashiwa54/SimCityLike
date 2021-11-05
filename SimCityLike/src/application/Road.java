@@ -41,4 +41,7 @@ public abstract class Road extends Way implements Upgradable{
 		}
 		return this;
 	}
+	public void maintenance()	{
+		MoneyManager.expenditure(getType().getMaintenanceCost());
+	}
 }
