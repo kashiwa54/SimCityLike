@@ -249,4 +249,9 @@ public class ProductManager {
 			}
 		}
 	}
+	public void resetTodayStock()	{
+		for(Consumable c : consumableList)	{
+			c.resetTodayStock();
+		}
+	}
 }

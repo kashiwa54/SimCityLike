@@ -101,6 +101,7 @@ public class TimelineProcessingService extends ScheduledService<Boolean>{
 				}
 				if(switchDay)	{
 					proMng.stockingAll();
+					proMng.resetTodayStock();
 				}
 				return true;
 			}

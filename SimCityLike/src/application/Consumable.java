@@ -15,4 +15,5 @@ public interface Consumable {
 	public ArrayList<Producable> getClientList();
 	public void setCustomerList(ArrayList<People> list);
 	public ArrayList<People> getCustomerList();
+	public void resetTodayStock();
 }

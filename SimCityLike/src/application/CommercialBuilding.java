@@ -9,10 +9,11 @@ import java.util.Random;
 
 public abstract class CommercialBuilding extends Building implements Workable,Consumable{
 	public static List<CommercialBuilding> commercialList = Collections.synchronizedList(new ArrayList<CommercialBuilding>(CommonConst.BUILDING_INISIAL_CAPACITY));
-	private int workspace;
+	private final int workspace;
 	private int freeWorkspace;
-	private int productCapacity;
-	private int maxConsumption;
+	private final int productCapacity;
+	private final int maxConsumption;
+	private int todayStock;
 	private People[] worker = null;
 
 	private ArrayList<Producable> clientList = new ArrayList<Producable>();
@@ -154,16 +155,20 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 	public int consume(Products product,int amount)	{
 		Integer stock = stockMap.get(product);
 		if(stock == null)	return 0;
-		if(stock >= amount)	{
-			stockMap.put(product, stock -= amount);
+		int s = stock.intValue();
+		if(s > todayStock) s = todayStock;
+		if(s >= amount)	{
+			stockMap.put(product, s -= amount);
 			if(stockMap.get(product) <= productCapacity / 2)	{
 				selectingImport(product,productCapacity / 2);
 			}
+			todayStock -= amount;
 			return amount;
 		}else	{
-			int tmp = stock;
+			int tmp = s;
 			stockMap.put(product, 0);
 			selectingImport(product,productCapacity);
+			todayStock -= tmp;
 			return tmp;
 		}
 	}
@@ -207,5 +212,8 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 	}
 	public ArrayList<People> getCustomerList(){
 		return customerList;
+	}
+	public void resetTodayStock()	{
+		todayStock = maxConsumption;
 	}
 }

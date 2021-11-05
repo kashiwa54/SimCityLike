@@ -16,6 +16,10 @@ public class BuildingManager {
 	private ArrayList<Commercial> cFreeArea = new ArrayList<Commercial>();
 	private ArrayList<Industrial> iFreeArea = new ArrayList<Industrial>();
 
+	private List<ResidentalBuilding> residentals = ResidentalBuilding.residentalList;
+	private List<CommercialBuilding> commercials = CommercialBuilding.commercialList;
+	private List<IndustrialBuilding> industrials = IndustrialBuilding.industrialList;
+
 	Random rnd = new Random();
 	public BuildingManager(Map map,DemandManager dm)	{
 		this.fieldMap = map;
