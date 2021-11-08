@@ -174,7 +174,7 @@ public abstract class IndustrialBuilding extends Building implements Workable,Pr
 	@Override
 	public boolean place() {
 		industrialList.add(this);
-		return false;
+		return true;
 	}
 	@Override
 	public void remove() {
@@ -231,6 +231,9 @@ public abstract class IndustrialBuilding extends Building implements Workable,Pr
 		return packet.getReceiver().receivePacket(packet);
 	}
 	public void maintenance()	{
+		int tax = (int)(money * CommonConst.INDUSTRIAL_TAX_RATE);
+		money -= tax;
+		MoneyManager.income(tax);
 		money -= getType().getMaintenanceCost();
 	}
 }

@@ -1,6 +1,12 @@
 package application;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public abstract class Road extends Way implements Upgradable{
+	public static List<Road> roadList = Collections.synchronizedList(new ArrayList<Road>(CommonConst.WAY_INISIAL_CAPACITY));
+
 	public Road(Map map)	{
 		this(map,0,0);
 	}
@@ -40,6 +46,16 @@ public abstract class Road extends Way implements Upgradable{
 			}
 		}
 		return this;
+	}
+	@Override
+	public boolean place() {
+		roadList.add(this);
+		return true;
+	}
+	@Override
+	public void remove()	{
+		super.remove();
+		roadList.remove(this);
 	}
 	public void maintenance()	{
 		MoneyManager.expenditure(getType().getMaintenanceCost());

@@ -33,6 +33,7 @@ public class Main extends Application {
 	PeopleManager pm = new PeopleManager(worldTime);
 	DemandManager dm = null;
 	BuildingManager bm = null;
+	MoneyManager mm = new MoneyManager(worldTime);
 
 	static TimeFlow timeFlow = TimeFlow.LOW;
 
@@ -52,7 +53,7 @@ public class Main extends Application {
 			dm = new DemandManager(window.getDemand(),pm);
 			bm = new BuildingManager(map,dm);
 			map.bindBuildingManager(bm);
-			mainProcess.setManagers(dm,bm);
+			mainProcess.setManagers(dm,bm,mm);
 
 			timeline.getKeyFrames().add(new KeyFrame(Duration.millis(CommonConst.DEFAULT_DURATION),new EventHandler<ActionEvent>()	{
 			    @Override

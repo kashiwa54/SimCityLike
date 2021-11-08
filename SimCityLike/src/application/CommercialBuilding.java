@@ -143,7 +143,7 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 	@Override
 	public boolean place() {
 		commercialList.add(this);
-		return false;
+		return true;
 	}
 	@Override
 	public void remove() {
@@ -234,6 +234,9 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 		todayStock = maxConsumption;
 	}
 	public void maintenance()	{
+		int tax = (int)(money * CommonConst.COMMERCIAL_TAX_RATE);
+		money -= tax;
+		MoneyManager.income(tax);
 		money -= getType().getMaintenanceCost();
 	}
 }

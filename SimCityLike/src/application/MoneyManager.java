@@ -1,10 +1,11 @@
 package application;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class MoneyManager {
-	private static int playerMoney = Main.playerMoney;
 	private static Time worldClock = null;
+	private static List<List<? extends TileObject>> listSet = TileObject.getListSet();
 
 	private static int dayIncome = 0;
 	private static int dayExpenditure = 0;
@@ -20,17 +21,25 @@ public class MoneyManager {
 	}
 
 	public static void income(int income)	{
-		playerMoney += income;
+		Main.playerMoney += income;
 		dayIncome += income;
 		seasonIncome += income;
 		yearIncome += income;
 	}
 
 	public static void expenditure(int expenditure)	{
-		playerMoney -= expenditure;
+		Main.playerMoney -= expenditure;
 		dayExpenditure -= expenditure;
 		seasonExpenditure -= expenditure;
 		yearExpenditure -= expenditure;
+	}
+
+	public void maintenanceAll()	{
+		for(List<? extends TileObject> list : listSet)	{
+			for(TileObject o : list)	{
+				o.maintenance();
+			}
+		}
 	}
 
 	public void resetDayStat()		{

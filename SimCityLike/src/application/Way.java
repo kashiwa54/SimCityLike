@@ -4,6 +4,7 @@ import java.util.EnumMap;
 import java.util.EnumSet;
 
 public abstract class Way extends TileObject{
+
 	public static final int DEFAULT_SPEED = 60;
 	private int maxSpeed;
 	private EnumMap<Direction,Way> connectMap = new EnumMap<Direction,Way>(Direction.class);
@@ -121,6 +122,7 @@ public abstract class Way extends TileObject{
 		removeWay(d);
 		removeConnect(d);
 	}
+	@Override
 	public void remove()	{
 		for(Direction d : this.connectSet)	{
 			disconnect(d);

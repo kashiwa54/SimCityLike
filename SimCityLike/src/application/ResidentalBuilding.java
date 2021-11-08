@@ -113,7 +113,7 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 	@Override
 	public boolean place() {
 		residentalList.add(this);
-		return false;
+		return true;
 	}
 	@Override
 	public void remove() {
@@ -141,9 +141,13 @@ public abstract class ResidentalBuilding extends Building implements Habitable{
 	public void maintenance()	{
 		int num = capacity - freeCapacity;
 		int cost = getType().getMaintenanceCost();
-		int rent = cost / num;
-		for(People p : resident)	{
-			if(p != null) p.setMoney(p.getMoney() - rent);
+		if(num != 0)	{
+			int rent = cost / num;
+			for(People p : resident)	{
+				if(p != null) p.setMoney(p.getMoney() - rent);
+			}
 		}
+		MoneyManager.income((int)(cost * CommonConst.RESIDENTAL_TAX_RATE));
+
 	}
 }

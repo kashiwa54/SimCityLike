@@ -1,5 +1,8 @@
 package application;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class TileObject {
 	private static final int DISTANCE = CommonConst.NEAR_ROAD_DISTANCE;
 	private Map fieldMap;
@@ -11,6 +14,13 @@ public abstract class TileObject {
 	private boolean canPass;
 	private Road nearRoad;
 	public PlacableEnum type = null;
+
+	private static List<List<? extends TileObject>> objectListSet = new ArrayList<List<? extends TileObject>>()	{{
+		add(ResidentalBuilding.residentalList);
+		add(CommercialBuilding.commercialList);
+		add(IndustrialBuilding.industrialList);
+		add(Road.roadList);
+	}};
 
 	protected static ProductManager pm;
 	public TileObject(Map map)	{
@@ -66,6 +76,9 @@ public abstract class TileObject {
 	public int getHeight()	{
 		return this.height;
 	}
+	public static List<List<? extends TileObject>> getListSet()	{
+		return objectListSet;
+	}
 
 	public PlacableEnum getType()	{
 		return type;
@@ -95,6 +108,7 @@ public abstract class TileObject {
 	public void refresh()	{
 		checkNearRoad();
 	}
+
 
 	public static <T extends TileObject> T getObject(Class<T> obj)	{
 		try {
@@ -132,6 +146,7 @@ public abstract class TileObject {
 		}
 		return best;
 	}
+
 	abstract public boolean place();
 	abstract public void remove();
 	abstract public TileObject copy();

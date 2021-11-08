@@ -41,6 +41,7 @@ public class CommonConst {
 	public static final int PEOPLE_RETIRE_MAX = 10;
 	public static final int PEOPLE_RETIRE_FACTOR = 15;
 	public static final int BUILDING_INISIAL_CAPACITY = 50;
+	public static final int WAY_INISIAL_CAPACITY = 50;
 	public static final int MYOUJI_INISIAL_CAPACITY = 100;
 
 	public static final int DEFAULT_YEAR = 2020;
@@ -59,14 +60,18 @@ public class CommonConst {
 
 	public static final int PRODUCT_MAX_TRANSPORT_COST = 24;
 
-	public static final double PRODUCT_REQUEST_FACTOR = 1 / 2;
+	public static final double PRODUCT_REQUEST_FACTOR = 1.0 / 2.0;
 	public static final int CLIENT_REQUEST_MAX_NUMBER = 15;
 	public static final int RECALC_NUMBER = 5;
-	public static final double PRODUCT_DISCOUNT_RATE = 2 / 3;
+	public static final double PRODUCT_DISCOUNT_RATE = 2.0 / 3.0;
 
 	public static final double DESIRE_MAX = 100.0;
 
 	public static final int BUILD_MAX_PAR_HOUR = 8;
 	public static final int BUILDING_CHECK_NUMBER = 10;
 	public static final int RUIN_POINT_MAX = 5;
+
+	public static final double RESIDENTAL_TAX_RATE = 1.0 / 3.0;
+	public static final double COMMERCIAL_TAX_RATE = 1.0 / 4.0;
+	public static final double INDUSTRIAL_TAX_RATE = 1.0 / 4.0;
 }

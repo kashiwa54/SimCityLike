@@ -95,7 +95,6 @@ public class MainWindowController {
 
 	ArrayList<FlowPane> tabList = new ArrayList<FlowPane>(5);
 	private Map map;
-	private int money = Main.playerMoney;
 	private GraphicsContext graphics;
 	private double canvasSizeRate = 100;
 
@@ -407,7 +406,7 @@ public class MainWindowController {
 	    	weekText.setText(" " + time.getWeek().getJp());
 		}
 
-		moneyLabel.setText(money + " yen");
+		moneyLabel.setText(Main.playerMoney + " yen");
 	}
 	public void setMouseType(PlacableEnum type,SpreadType spread)	{
 		this.mouseType = type;

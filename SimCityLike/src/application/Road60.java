@@ -9,12 +9,6 @@ public class Road60 extends Road{
 		super(map,x,y,MAX_SPEED);
 		type = WayEnum.ROAD60;
 	}
-
-	@Override
-	public boolean place() {
-		// TODO 自動生成されたメソッド・スタブ
-		return false;
-	}
 	@Override
 	public TileObject copy() {
 		return new Road60(this.getMap(),this.getX(),this.getY());

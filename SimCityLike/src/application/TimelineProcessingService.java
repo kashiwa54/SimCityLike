@@ -11,6 +11,7 @@ public class TimelineProcessingService extends ScheduledService<Boolean>{
 	private DemandManager dm;
 	private BuildingManager bm;
 	private ProductManager proMng;
+	private MoneyManager mm;
 	private Boolean switchHour = false;
 	private Boolean switchNoon = false;
 	private Boolean switchDay = false;
@@ -23,9 +24,10 @@ public class TimelineProcessingService extends ScheduledService<Boolean>{
 		this.pm = map.getPeopleManager();
 		this.proMng = map.getProductManager();
 	}
-	public void setManagers(DemandManager dm,BuildingManager bm)	{
+	public void setManagers(DemandManager dm,BuildingManager bm,MoneyManager mm)	{
 		this.dm = dm;
 		this.bm = bm;
+		this.mm = mm;
 	}
 	@Override
 	protected Task<Boolean> createTask() {
@@ -103,6 +105,8 @@ public class TimelineProcessingService extends ScheduledService<Boolean>{
 				if(switchDay)	{
 					proMng.stockingAll();
 					proMng.resetTodayStock();
+					mm.maintenanceAll();
+					mm.resetDayStat();
 				}
 				return true;
 			}
