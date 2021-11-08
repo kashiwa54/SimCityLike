@@ -3,7 +3,7 @@ package application;
 import java.lang.reflect.InvocationTargetException;
 import java.util.EnumSet;
 public enum IndustrialBuildingEnum implements PlacableEnum{
-	RICEFIELD(RiceField.class,"src/image/ricefield.png","水田",1,1,100,10,5000,500,5,asSet(Products.AGRICULTURE),5000,1);
+	RICEFIELD(RiceField.class,"src/image/ricefield.png","水田",1,1,100,10,5000,500,5,asSet(Products.AGRICULTURE),1000,2000,1);
 	private Class<? extends TileObject> buildingClass;
 	private String imagePath;
 	private String displayName;
@@ -15,12 +15,13 @@ public enum IndustrialBuildingEnum implements PlacableEnum{
 	private int production;
 	private int customerCapacity;
 	private EnumSet<Products> product;
+	private int salary;
 	private int maintenanceCost;
 	private int level;
 
 	private IndustrialBuildingEnum(Class<? extends TileObject> buildingClass,String imagePath,String displayName,
 			int width,int height,int cost,int workspace,int productCapacity,int production,int customerCapacity,
-			EnumSet<Products> product,int maintenanceCost,int level)	{
+			EnumSet<Products> product,int salary,int maintenanceCost,int level)	{
 		this.buildingClass = buildingClass;
 		this.imagePath = imagePath;
 		this.displayName = displayName;
@@ -32,6 +33,7 @@ public enum IndustrialBuildingEnum implements PlacableEnum{
 		this.production = production;
 		this.customerCapacity = customerCapacity;
 		this.product = product;
+		this.salary = salary;
 		this.maintenanceCost = maintenanceCost;
 		this.level = level;
 	}
@@ -69,6 +71,9 @@ public enum IndustrialBuildingEnum implements PlacableEnum{
 	}
 	public EnumSet<Products> getProductSet()	{
 		return product;
+	}
+	public int getSalary()	{
+		return salary;
 	}
 	public int getMaintenanceCost()	{
 		return maintenanceCost;

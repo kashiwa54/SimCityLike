@@ -1,15 +1,15 @@
 package application;
 
 public enum Products {
-	AGRICULTURE("農業","農",5),
-	FISHERY("漁業","漁",5),
-	FORESTORY("林業","林",10),
-	STOCK_RAISING("畜産業","畜",8),
-	FOOD_PROCESSING("食品加工","食",8),
-	APPAREL("服飾","服",20),
-	CHEMICAL("化学","化",20),
-	ELECTRONICS("電化製品","電",50),
-	METAL("金属","金",20);
+	AGRICULTURE("農業","農",30),
+	FISHERY("漁業","漁",30),
+	FORESTORY("林業","林",50),
+	STOCK_RAISING("畜産業","畜",40),
+	FOOD_PROCESSING("食品加工","食",40),
+	APPAREL("服飾","服",100),
+	CHEMICAL("化学","化",100),
+	ELECTRONICS("電化製品","電",250),
+	METAL("金属","金",100);
 
 	String japanese;
 	String jp;

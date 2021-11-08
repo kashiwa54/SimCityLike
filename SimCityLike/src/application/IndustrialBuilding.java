@@ -1,5 +1,6 @@
 package application;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumMap;
@@ -12,35 +13,33 @@ public abstract class IndustrialBuilding extends Building implements Workable,Pr
 	private int freeWorkspace;
 	private int productCapacity;
 	private int production;
-	private int customerCapacity;
-	private int freeCustomer;
 	private int money;
+	private int salary;
+	private double efficiency;
 
 	private ArrayList<Consumable> clientList = new ArrayList<Consumable>();
 	private EnumSet<Products> productSet = EnumSet.noneOf(Products.class);
 	private EnumMap<Products,Integer> stockMap = new EnumMap<Products,Integer>(Products.class);
 	private People[] worker = null;
-	private CommercialBuilding[] customer;
 	public IndustrialBuilding(Map map,int x,int y,IndustrialBuildingEnum ibe)	{
 		super(map,x,y,ibe.getWidth(),ibe.getHeight());
 		this.workspace = ibe.getWorkspace();
 		type = ibe;
 		this.productCapacity = ibe.getproductCapacity();
 		this.production = ibe.getProduction();
-		this.customerCapacity = ibe.getCustomerCapacity();
 		this.productSet = ibe.getProductSet();
+		this.salary = ibe.getSalary();
 		for(Products p : productSet)	{
 			stockMap.put(p, 0);
 		}
 		worker = new People[workspace];
-		customer = new CommercialBuilding[customerCapacity];
 		calcFreeWorkspace();
-		calcFreeCustomer();
 
 		money = 100000;
 
 	}
 	public String getInfo()	{
+		NumberFormat per = NumberFormat.getPercentInstance();
 		String info = "職場容量:" + workspace + "\n";
 		int workerNumber = 0;
 		for(People p : worker)	{
@@ -49,9 +48,10 @@ public abstract class IndustrialBuilding extends Building implements Workable,Pr
 			}
 		}
 		info = info.concat("労働者数:" + workerNumber + "\n");
-		info = info.concat("求人数" + freeWorkspace + "\n");
+		info = info.concat("求人数:" + freeWorkspace + "\n");
 		info = info.concat("資金:" + money + "\n");
-		info = info.concat("生産量" + production + "\n");
+		info = info.concat("生産量:" + (int)(production * efficiency) + "\n");
+		info = info.concat("生産効率:" + per.format(efficiency) + "\n");
 		info = info.concat("商品量\n");
 		for(Products p : productSet)	{
 			info = info.concat(p.japanese + " : " +stockMap.get(p) + " / " + productCapacity + "\n");
@@ -128,48 +128,7 @@ public abstract class IndustrialBuilding extends Building implements Workable,Pr
 			}
 		}
 		this.freeWorkspace = workspace - rCnt;
-	}
-	public boolean addCustomer(CommercialBuilding c) {
-		for(int i = 0;i < customer.length;i++)	{
-			if(customer[i] == null)	{
-				customer[i] = c;
-				calcFreeWorkspace();
-				return true;
-			}
-		}
-		return false;
-	}
-	public boolean removeCustomer(CommercialBuilding c) {
-		for(int i = 0;i < customer.length; i++)	{
-			if (customer[i] == c)	{
-				customer[i] = null;
-				while((i < customer.length - 1))	{
-					customer[i] = customer[i + 1];
-					if(customer[i] == null) break;
-					i++;
-				}
-				calcFreeCustomer();
-				return true;
-			}
-		}
-		return false;
-	}
-	public CommercialBuilding[] getCustomer()	{
-		return customer;
-	}
-	public int getFreeCustomer() {
-		return freeCustomer;
-	}
-	private void calcFreeCustomer()	{
-		int cCnt = 0;
-		for(CommercialBuilding c : customer)	{
-			if(c != null)	{
-				cCnt++;
-			}else {
-				break;
-			}
-		}
-		this.freeWorkspace = workspace - cCnt;
+		calcEfficiency();
 	}
 	@Override
 	public boolean place() {
@@ -200,7 +159,7 @@ public abstract class IndustrialBuilding extends Building implements Workable,Pr
 		int stock = stockMap.get(product);
 		if(stock >= productCapacity) return;
 
-		stock += production;
+		stock += production * efficiency;
 		if(stock > productCapacity) stock = productCapacity;
 
 		stockMap.put(product, stock);
@@ -234,6 +193,16 @@ public abstract class IndustrialBuilding extends Building implements Workable,Pr
 		int tax = (int)(money * CommonConst.INDUSTRIAL_TAX_RATE);
 		money -= tax;
 		MoneyManager.income(tax);
+		for(People w : worker)	{
+			if(w != null)	{
+				w.setMoney(w.getMoney() + salary);
+				money -= salary;
+			}
+		}
 		money -= getType().getMaintenanceCost();
+	}
+	private void calcEfficiency()	{
+		int workerNum = workspace - freeWorkspace;
+		efficiency = (50.0 / Math.log1p(workspace) * Math.log1p(workerNum) + 50.0)/100;
 	}
 }

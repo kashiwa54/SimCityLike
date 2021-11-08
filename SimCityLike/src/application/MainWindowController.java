@@ -3,6 +3,7 @@ package application;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.LinkedList;
@@ -50,6 +51,8 @@ public class MainWindowController {
 
 	private static final double SHEAR_X = Math.tan(-1 * Math.PI * SHEAR_ANGLE / 180);
 	private static final double ANGLE = SHEAR_ANGLE / 2;
+
+	private final NumberFormat cur = NumberFormat.getCurrencyInstance();
 
 	@FXML
 	AnchorPane root;
@@ -406,7 +409,7 @@ public class MainWindowController {
 	    	weekText.setText(" " + time.getWeek().getJp());
 		}
 
-		moneyLabel.setText(Main.playerMoney + " yen");
+		moneyLabel.setText(cur.format(Main.playerMoney));
 	}
 	public void setMouseType(PlacableEnum type,SpreadType spread)	{
 		this.mouseType = type;

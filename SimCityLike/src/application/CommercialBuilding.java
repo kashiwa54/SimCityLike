@@ -16,6 +16,7 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 	private int todayStock;
 	private People[] worker = null;
 	private int money;
+	private int salary;
 
 	private ArrayList<Producable> clientList = new ArrayList<Producable>();
 	private EnumSet<Products> consumeSet = EnumSet.noneOf(Products.class);
@@ -30,6 +31,7 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 		this.productCapacity = cbe.getproductCapacity();
 		this.maxConsumption = cbe.getConsumption();
 		this.consumeSet = cbe.getConsumeSet();
+		this.salary = cbe.getSalary();
 		for(Products p : consumeSet)	{
 			stockMap.put(p, 0);
 		}
@@ -237,6 +239,12 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 		int tax = (int)(money * CommonConst.COMMERCIAL_TAX_RATE);
 		money -= tax;
 		MoneyManager.income(tax);
+		for(People w : worker)	{
+			if(w != null)	{
+				w.setMoney(w.getMoney() + salary);
+				money -= salary;
+			}
+		}
 		money -= getType().getMaintenanceCost();
 	}
 }
