@@ -86,6 +86,8 @@ public class MainWindowController {
 	@FXML
 	Label moneyLabel;
 	@FXML
+	Label populationLabel;
+	@FXML
 	Button stop;
 	@FXML
 	Button lowSpeed;
@@ -133,6 +135,7 @@ public class MainWindowController {
 	private EnumMap<WayEnum,EnumMap<DirectionForImage,Image>> wayMap = new EnumMap<WayEnum,EnumMap<DirectionForImage,Image>>(WayEnum.class);
 
 	private Time time = null;
+	private PeopleManager pm = null;
 
 	private int residentalDemand = 0;
 	private int commercialDemand = 0;
@@ -211,7 +214,7 @@ public class MainWindowController {
     	tabList.add(specialTab);
     	root.getChildren().add(specialTab);
 
-    	demand = creatDemand();
+    	demand = createDemand();
     	root.getChildren().add(demand);
 
     	System.out.println("Main window initialized.");
@@ -243,7 +246,7 @@ public class MainWindowController {
 			});
     	}
 	}
-	public DemandBarChart<String,Number> creatDemand()	{
+	public DemandBarChart<String,Number> createDemand()	{
 		DemandBarChart<String,Number> demand;
     	CategoryAxis xAxis = new CategoryAxis();
     	NumberAxis yAxis = new NumberAxis(0,CommonConst.DEMAND_AXIS_MAX,20);
@@ -279,6 +282,9 @@ public class MainWindowController {
 	}
 	public void setMap(Map map)		{
 		this.map = map;
+	}
+	public void setManager(PeopleManager pm)	{
+		this.pm = pm;
 	}
 	public GraphicsContext getGraphicsContext()	{
 		return this.graphics;
@@ -410,6 +416,7 @@ public class MainWindowController {
 		}
 
 		moneyLabel.setText(cur.format(Main.playerMoney));
+		populationLabel.setText("人口:" + pm.getPeopleList().size() + "人");
 	}
 	public void setMouseType(PlacableEnum type,SpreadType spread)	{
 		this.mouseType = type;

@@ -52,6 +52,7 @@ public class Main extends Application {
 
 			dm = new DemandManager(window.getDemand(),pm);
 			bm = new BuildingManager(map,dm);
+			window.setManager(pm);
 			map.bindBuildingManager(bm);
 			mainProcess.setManagers(dm,bm,mm);
 

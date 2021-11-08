@@ -107,11 +107,9 @@ public class BuildingManager {
 		int index = 0;
 
 		for(int i = 0;i < r;i++)	{
-			int buildingSite = -1;
+			int buildingSite = 0;
 			if(sumSize != 1)	{
 				buildingSite = rnd.nextInt(sumSize);
-			}else {
-				buildingSite = 1;
 			}
 			int rate = rnd.nextInt(100);
 			if(buildingSite < rSize)	{
@@ -150,10 +148,13 @@ public class BuildingManager {
 		int iSize = iList.size();
 		int sumSize = rSize + cSize + iSize;
 
-		if(sumSize <= 1)	return;
+		if(sumSize == 0)	return;
 
 		for(int i = 0;i < loop; i++)	{
-			int r = rnd.nextInt(sumSize);
+			int r = 0;
+			if(sumSize != 1)	{
+				r = rnd.nextInt(sumSize);
+			}
 			int index = -1;
 			if(r < rSize)	{
 				index = r;
