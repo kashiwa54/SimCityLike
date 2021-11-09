@@ -23,7 +23,9 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -88,13 +90,14 @@ public class MainWindowController {
 	@FXML
 	Label populationLabel;
 	@FXML
-	Button stop;
+	RadioButton pause;
 	@FXML
-	Button lowSpeed;
+	RadioButton lowSpeed;
 	@FXML
-	Button midSpeed;
+	RadioButton midSpeed;
 	@FXML
-	Button highSpeed;
+	RadioButton highSpeed;
+	ToggleGroup timeFlowButtons = new ToggleGroup();
 
 	DemandBarChart<String,Number> demand;
 
@@ -216,6 +219,8 @@ public class MainWindowController {
 
     	demand = createDemand();
     	root.getChildren().add(demand);
+
+    	lowSpeed.requestFocus();
 
     	System.out.println("Main window initialized.");
     }
@@ -479,6 +484,7 @@ public class MainWindowController {
 	public void buttonHighSpeed(ActionEvent ae)	{
 		Main.setTimeFlow(TimeFlow.HIGH);
 	}
+
 	@FXML
 	public void mouseMove(MouseEvent me)	{
 		mouseX = me.getSceneX();

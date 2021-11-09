@@ -89,10 +89,10 @@
             </Label>
             <HBox maxHeight="32.0" maxWidth="128.0" minHeight="32.0" minWidth="128.0" prefHeight="32.0" prefWidth="128.0">
                <children>
-                  <Button fx:id="pause" onAction="#buttonPause" maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" text="停" />
-                  <Button fx:id="lowSpeed" onAction="#buttonLowSpeed" maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" text="低" />
-                  <Button fx:id="midSpeed" onAction="#buttonMidSpeed" maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" text="中" />
-                  <Button fx:id="highSpeed" onAction="#buttonHighSpeed" maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" text="高" />
+                  <RadioButton fx:id="pause" styleClass="time" onAction="#buttonPause" maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0"  style="-fx-background-image: url(&quot;image/pause.png&quot;);" />
+                  <RadioButton fx:id="lowSpeed" styleClass="time" onAction="#buttonLowSpeed" maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" style="-fx-background-image: url(&quot;image/slow.png&quot;);" />
+                  <RadioButton fx:id="midSpeed" styleClass="time" onAction="#buttonMidSpeed" maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" style="-fx-background-image: url(&quot;image/mid.png&quot;);" />
+                  <RadioButton fx:id="highSpeed" styleClass="time" onAction="#buttonHighSpeed" maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" style="-fx-background-image: url(&quot;image/fast.png&quot;);"/>
                </children>
             </HBox>
   		<Label fx:id="moneyLabel" maxHeight="32.0" maxWidth="256.0" minHeight="32.0" minWidth="256.0" prefHeight="32.0" prefWidth="256.0" alignment = "BOTTOM_RIGHT">

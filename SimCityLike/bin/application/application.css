@@ -75,12 +75,12 @@
 .delete .text	{
 	-fx-effect:null;
 }
-.delete:focusd	{
+.delete:focused	{
 	-fx-color:#FFDDDD;
 	-fx-text-fill:#FF4433;
 	-fx-background-color:#ED9C28, #FFFFFF;
 }
-.delete:focusd .text	{
+.delete:focused .text	{
 	-fx-effect:null;
 }
 .delete:hover	{
@@ -102,4 +102,14 @@
 }
 .series2.chart-bar	{
 	-fx-background-color: gold;
+}
+.time	{
+	-fx-background-position: left top;
+}
+.time:focused	{
+	-fx-background-position: left -32px;
+}
+.time:hover	{
+	-fx-opacity: 0.5;
+	-fx-background-position: left -32px;
 }
