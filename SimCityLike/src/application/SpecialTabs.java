@@ -3,7 +3,8 @@ package application;
 public enum SpecialTabs implements TabableEnum{
 	COTTAGE(ResidentalBuildingEnum.COTTAGE,SpreadType.DOT,"小屋","image/cottage.png",ResidentalBuildingEnum.COTTAGE.getCost()),
 	SMALLSHOP_A(CommercialBuildingEnum.SMALLSHOP_A,SpreadType.DOT,"個人商店","image/smallshopA1.png",CommercialBuildingEnum.SMALLSHOP_A.getCost()),
-	RICEFIELD(IndustrialBuildingEnum.RICEFIELD,SpreadType.DOT,"水田","image/ricefield.png",IndustrialBuildingEnum.RICEFIELD.getCost());
+	RICEFIELD(IndustrialBuildingEnum.RICEFIELD,SpreadType.DOT,"水田","image/ricefield.png",IndustrialBuildingEnum.RICEFIELD.getCost()),
+	FOOD_PROCESSING_A(IndustrialBuildingEnum.FOOD_PROCESSING_A,SpreadType.DOT,"食品工場A","image/foodProcessingA.png",IndustrialBuildingEnum.FOOD_PROCESSING_A.getCost());
 
 
 	private PlacableEnum type;

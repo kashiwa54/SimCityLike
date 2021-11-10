@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum WayEnum implements PlacableEnum{
-	ROAD60(Road60.class,"src/image/road60set.png","道路(60km制限)",50,10,2);
+	ROAD60(Road60.class,"src/image/road60set.png","道路(60km制限)",50,10,2,1);
 
 	private Class<? extends TileObject> wayClass;
 	private String imageSetPath;
@@ -13,6 +13,7 @@ public enum WayEnum implements PlacableEnum{
 	private int cost;
 	private int maintenanceCost;
 	private int level;
+	private int graphicSize;
 
 	private static final Map<Class<? extends TileObject>,WayEnum> classToEnum = new HashMap<Class<? extends TileObject>,WayEnum>()	{
 
@@ -25,13 +26,15 @@ public enum WayEnum implements PlacableEnum{
 		for(WayEnum e : WayEnum.values()) put(e.getObjectClass(),e);
 	}};
 
-	private WayEnum(Class<? extends TileObject> siteClass,String imageSetPath,String displayName,int cost,int maintenanceCost,int level)	{
+	private WayEnum(Class<? extends TileObject> siteClass,String imageSetPath,String displayName,int cost,int maintenanceCost,
+			int level,int graphicSize)	{
 		this.wayClass = siteClass;
 		this.imageSetPath = imageSetPath;
 		this.displayName = displayName;
 		this.cost = cost;
 		this.maintenanceCost = maintenanceCost;
 		this.level = level;
+		this.graphicSize = graphicSize;
 	}
 
 	public String getImageSetPath()	{
@@ -49,6 +52,9 @@ public enum WayEnum implements PlacableEnum{
 	}
 	public int getLevel()	{
 		return this.level;
+	}
+	public int getGraphicSize()	{
+		return this.graphicSize;
 	}
 
 	@Override

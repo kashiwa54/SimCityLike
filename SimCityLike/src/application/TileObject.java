@@ -12,6 +12,7 @@ public abstract class TileObject {
 	private int height;
 	private boolean isOnMap;
 	private boolean canPass;
+	private boolean isDraw;
 	private Road nearRoad;
 	public PlacableEnum type = null;
 
@@ -61,6 +62,9 @@ public abstract class TileObject {
 	public void setCanPass(boolean b)	{
 		this.canPass = b;
 	}
+	public void setIsDraw(boolean b)	{
+		this.isDraw = b;
+	}
 
 	public int getX	()	{
 		return this.x;
@@ -85,6 +89,9 @@ public abstract class TileObject {
 	}
 	public boolean isOnMap()	{
 		return this.isOnMap;
+	}
+	public boolean isDraw()	{
+		return this.isDraw;
 	}
 	public boolean getCanPass()	{
 		return this.canPass;

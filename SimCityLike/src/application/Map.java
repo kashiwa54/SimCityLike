@@ -95,45 +95,64 @@ public class Map {
 			if (mapObj instanceof Upgradable)	{
 				tile[x][y] = ((Upgradable) mapObj).upgrade(obj);
 				if(tile[x][y].equals(obj))	{
-					obj.setOnMap(true);
-					obj.place();
-					addList(obj);
+					putMap(obj,x,y);
 					removeList(mapObj);
-					refreshAround(x,y);
-					changeFlg = true;
 					return obj;
 				}else {
 					return mapObj;
 				}
 			}
-			if (mapObj instanceof Overwritable)	{
-				if(isInside(x + obj.getWidth() - 1,y + obj.getHeight() - 1))	{
-					for(int i = 0;i < obj.getHeight();i++)	{
-						for(int j = 0;j < obj.getWidth();j++)	{
-							if(isInside(x + j,y + i)) {
-								tile[x + j][y + i] = obj;
-								obj.setOnMap(true);
-								//System.out.println("place in " + (x + j) + "," + (y + i));
-							}else {
-								System.out.println((x + j) + "," + (y + i) + " is out of map");
-							}
-						}
+			boolean canOnMap = true;
+			for(int i = 0;i < obj.getWidth();i++)	{
+				for(int j = 0; j< obj.getHeight();j++)	{
+					if(!((tile[x + i][y + j] instanceof Overwritable)&&(isInside(x + i,y + j))))	{
+						canOnMap = false;
+						break;
 					}
-				}else {
-					return mapObj;
 				}
-				obj.setPosition(x,y);
-				obj.place();
-				addList(obj);
-				removeList(mapObj);
-				refreshAround(x,y);
-				changeFlg = true;
-				return obj;
 			}
-			return mapObj;
+//			if (mapObj instanceof Overwritable)	{
+//				if(isInside(x + obj.getWidth() - 1,y + obj.getHeight() - 1))	{
+//					for(int i = 0;i < obj.getHeight();i++)	{
+//						for(int j = 0;j < obj.getWidth();j++)	{
+//							if(isInside(x + j,y + i)) {
+//								tile[x + j][y + i] = obj;
+//								obj.setOnMap(true);
+//								//System.out.println("place in " + (x + j) + "," + (y + i));
+//							}else {
+//								System.out.println((x + j) + "," + (y + i) + " is out of map");
+//							}
+//						}
+//					}
+//				}else {
+//					return mapObj;
+//				}
+//				return obj;
+//			}
+			if(canOnMap)	{
+				putMap(obj,x,y);
+				removeList(mapObj);
+				return obj;
+			}else {
+				return mapObj;
+			}
 		}else {
 			return null;
 		}
+	}
+
+	private void putMap(TileObject obj,int x, int y)	{
+		for(int i = 0;i < obj.getWidth();i++)	{
+			for(int j = 0; j< obj.getHeight();j++)	{
+				tile[x + i][y + j] = obj;
+			}
+		}
+		obj.setOnMap(true);
+		obj.setPosition(x,y);
+		obj.place();
+		addList(obj);
+		refreshAround(x,y);
+		changeFlg = true;
 	}
 
 	synchronized public void remove(int x,int y)	{

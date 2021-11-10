@@ -24,6 +24,9 @@ public enum OtherTileEnum implements PlacableEnum{
 	public int getMaintenanceCost()	{
 		return 0;
 	}
+	public int getGraphicSize()	{
+		return 0;
+	}
 	@Override
 	public Class<? extends TileObject> getObjectClass() {
 		return otherClass;

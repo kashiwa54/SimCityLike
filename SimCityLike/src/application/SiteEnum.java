@@ -29,6 +29,9 @@ public enum SiteEnum implements PlacableEnum{
 	public int getCost()	{
 		return cost;
 	}
+	public int getGraphicSize()		{
+		return 0;
+	}
 	@Override
 	public String getDisplayName()	{
 		return this.displayName;

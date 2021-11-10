@@ -49,7 +49,8 @@ public class MainWindowController {
 	private static final int TILE_BORDER_WIDTH = 1;
 	private static final int CURSOR_WIDTH = 2;
 
-	private static final double IMAGE_OFFSET_Y = -CommonConst.TILESET_SIZE + (CommonConst.TILESET_SIZE * Math.tan(Math.PI * SHEAR_ANGLE / (180 * 2)));
+	private static final double TILESET_SIZE = CommonConst.TILESET_SIZE;
+	private static final double IMAGE_OFFSET_Y =(CommonConst.TILESET_SIZE * Math.tan(Math.PI * SHEAR_ANGLE / (180 * 2)));
 
 	private static final double SHEAR_X = Math.tan(-1 * Math.PI * SHEAR_ANGLE / 180);
 	private static final double ANGLE = SHEAR_ANGLE / 2;
@@ -329,6 +330,7 @@ public class MainWindowController {
 		for(int i = 0;i < map.getWidth();i++)	{
 			for(int j = 0;j < map.getHeight();j++)	{
 				PlacableEnum type = map.getTileObject(i, j).type;
+				if((i != map.getTileObject(i, j).getX())||(j != map.getTileObject(i, j).getY())) break;
 				if(type instanceof SiteEnum)	{
 					gc.setFill(((SiteEnum) type).getColor());
 					gc.fillRect(i * CommonConst.TILE_SIZE,j * CommonConst.TILE_SIZE,CommonConst.TILE_SIZE,CommonConst.TILE_SIZE);
@@ -337,15 +339,17 @@ public class MainWindowController {
 					tmpP = affine.transform(i * CommonConst.TILE_SIZE,j * CommonConst.TILE_SIZE);
 					imgAff.appendScale(zoomX,zoomY,tmpP.getX(),tmpP.getY());
 					gc.setTransform(imgAff);
+					double xoffset = tmpP.getX() - (TILESET_SIZE / 2) * map.getTileObject(i, j).getWidth();
+					double yoffset = tmpP.getY() +(IMAGE_OFFSET_Y  - TILESET_SIZE) *  map.getTileObject(i, j).getHeight();
 					if(type instanceof WayEnum)	{
 						Way way = (Way)map.getTileObject(i, j);
-						gc.drawImage(wayMap.get(type).get(way.getConnectState()),tmpP.getX() - (CommonConst.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
+						gc.drawImage(wayMap.get(type).get(way.getConnectState()),xoffset,yoffset);
 					}else if(type instanceof ResidentalBuildingEnum)	{
-						gc.drawImage(residentalMap.get(type),tmpP.getX() - (CommonConst.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
+						gc.drawImage(residentalMap.get(type),xoffset, yoffset);
 					}else if(type instanceof CommercialBuildingEnum)	{
-						gc.drawImage(commercialMap.get(type),tmpP.getX() - (CommonConst.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
+						gc.drawImage(commercialMap.get(type),xoffset,yoffset);
 					}else if(type instanceof IndustrialBuildingEnum)	{
-						gc.drawImage(industrialMap.get(type),tmpP.getX() - (CommonConst.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
+						gc.drawImage(industrialMap.get(type),xoffset,yoffset);
 					}
 					gc.setTransform(affine);
 				}
@@ -361,15 +365,17 @@ public class MainWindowController {
 				gc.setTransform(imgAff);
 
 				gc.setGlobalAlpha(0.3);
+				double xoffset = tmpP.getX() - (TILESET_SIZE / 2) * mouseType.getGraphicSize();
+				double yoffset = tmpP.getY() + (IMAGE_OFFSET_Y - TILESET_SIZE) * mouseType.getGraphicSize();
 
 				if(mouseType instanceof ResidentalBuildingEnum)	{
-					gc.drawImage(residentalMap.get(mouseType),tmpP.getX() - (CommonConst.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
+					gc.drawImage(residentalMap.get(mouseType),xoffset,yoffset);
 				}
 				if(mouseType instanceof CommercialBuildingEnum)	{
-					gc.drawImage(commercialMap.get(mouseType),tmpP.getX() - (CommonConst.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
+					gc.drawImage(commercialMap.get(mouseType),xoffset,yoffset);
 				}
 				if(mouseType instanceof IndustrialBuildingEnum)	{
-					gc.drawImage(industrialMap.get(mouseType),tmpP.getX() - (CommonConst.TILESET_SIZE / 2),tmpP.getY() + IMAGE_OFFSET_Y);
+					gc.drawImage(industrialMap.get(mouseType),xoffset,yoffset);
 				}
 			gc.setGlobalAlpha(1.0);
 
