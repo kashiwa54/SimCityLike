@@ -220,7 +220,11 @@ public class MainWindowController {
     	demand = createDemand();
     	root.getChildren().add(demand);
 
-    	lowSpeed.requestFocus();
+		pause.setToggleGroup(timeFlowButtons);
+		lowSpeed.setToggleGroup(timeFlowButtons);
+		midSpeed.setToggleGroup(timeFlowButtons);
+		highSpeed.setToggleGroup(timeFlowButtons);
+		timeFlowButtons.selectToggle(lowSpeed);
 
     	System.out.println("Main window initialized.");
     }
