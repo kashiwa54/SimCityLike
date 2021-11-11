@@ -270,7 +270,7 @@ public class MainWindowController {
 		affine.appendTranslation(moveX, moveY);
 		gc.setTransform(affine);
 
-		gc.setFill(Color.KHAKI);
+		gc.setFill(Color.color(0.8,1,0.6));
 		gc.fillRect(0,0, map.getWidth() * CommonConst.TILE_SIZE, map.getHeight() * CommonConst.TILE_SIZE);
 
 		gc.setStroke(Color.BLACK);
