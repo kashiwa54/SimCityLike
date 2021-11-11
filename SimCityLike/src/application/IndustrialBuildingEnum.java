@@ -3,8 +3,8 @@ package application;
 import java.lang.reflect.InvocationTargetException;
 import java.util.EnumSet;
 public enum IndustrialBuildingEnum implements PlacableEnum{
-	RICEFIELD(RiceField.class,"src/image/ricefield.png","水田",1,1,100,10,5000,500,5,asSet(Products.AGRICULTURE),1000,2000,1,1),
-	FOOD_PROCESSING_A(FoodProcessingA.class,"src/image/foodProcessingA.png","食品加工工場A",2,2,500,30,20000,2000,5,
+	RICEFIELD(RiceField.class,"src/image/ricefield.png","水田",1,1,100,5,5000,250,5,asSet(Products.AGRICULTURE),1000,2000,1,1),
+	FOOD_PROCESSING_A(FoodProcessingA.class,"src/image/foodProcessingA.png","食品加工工場A",2,2,500,20,10000,1000,5,
 			asSet(Products.FOOD_PROCESSING),1500,5000,2,2);
 	private Class<? extends TileObject> buildingClass;
 	private String imagePath;
