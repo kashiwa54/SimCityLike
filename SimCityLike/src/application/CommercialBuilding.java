@@ -189,6 +189,18 @@ public abstract class CommercialBuilding extends Building implements Workable,Co
 			return tmp;
 		}
 	}
+	public int canConsume(Products product,int amount)	{
+		Integer stock = stockMap.get(product);
+		if(stock == null)	return 0;
+		int s = stock.intValue();
+		if(s > todayStock) s = todayStock;
+		if(s >= amount)	{
+			return amount;
+		}else	{
+			int tmp = s;
+			return tmp;
+		}
+	}
 	public boolean selectingImport(Products product,int amount)	{
 		if((clientList == null)||(clientList.size() <= 0)) return false;
 		@SuppressWarnings("unchecked")

@@ -28,7 +28,7 @@ public class CommonConst {
 	public static final double COMMERCIAL_DEMAND_FACTOR =1.5;
 	public static final double INDUSTRIAL_DEMAND_FACTOR = 0.5;
 
-	public static final double MIGRATION_FACTOR = 4.0;
+	public static final double MIGRATION_FACTOR = 1.0;
 	public static final int MIGRATION_EXTRA = 3;
 
 	public static final int NEAR_ROAD_DISTANCE = 3;
@@ -63,7 +63,7 @@ public class CommonConst {
 	public static final double PRODUCT_REQUEST_FACTOR = 1.0 / 2.0;
 	public static final int CLIENT_REQUEST_MAX_NUMBER = 15;
 	public static final int RECALC_NUMBER = 5;
-	public static final double PRODUCT_DISCOUNT_RATE = 2.0 / 3.0;
+	public static final double PRODUCT_DISCOUNT_RATE = 1.0 / 3.0;
 
 	public static final double DESIRE_MAX = 100.0;
 

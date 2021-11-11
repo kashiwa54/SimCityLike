@@ -8,6 +8,7 @@ public interface Consumable {
 	public int getProductCapacity();
 	public int getStock(Products p);
 	public int consume(Products product,int amount);
+	public int canConsume(Products product,int amount);
 	public boolean selectingImport(Products product,int amount);
 	public boolean request(Producable to,Products product,int amount);
 	public boolean receivePacket(ProductPacket packet);

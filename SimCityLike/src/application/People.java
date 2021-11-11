@@ -151,21 +151,33 @@ public class People {
 
 		int need = (int)(CommonConst.DESIRE_MAX - getDesire(d));
 		for(int i = 0; i < CommonConst.CLIENT_REQUEST_MAX_NUMBER ;i++)	{
+			ArrayList<Consumable> cl = supplierListMap.get(d);
+			if((cl == null)||(cl.size() <= 0))	continue;
+			int index = rnd.nextInt(cl.size());
+			int getMax = -1;
+			Products maxProduct = null;
 			for(Products product : d.getProducts())	{
-				ArrayList<Consumable> cl = supplierListMap.get(d);
-				if((cl == null)||(cl.size() <= 0))	continue;
 				if(money < product.price * need)	{
 					need = money / product.price;
 				}
-				int index = rnd.nextInt(cl.size());
-				int get = cl.get(index).consume(product, need);
-				if(get + getDesire(d) > CommonConst.DESIRE_MAX)	{
-					setDesire(d, CommonConst.DESIRE_MAX);
-				}else {
-					setDesire(d, getDesire(d) + get);
+				int get = cl.get(index).canConsume(product, need);
+				if(get > getMax)	{
+					getMax = get;
+					maxProduct = product;
+				}else if(get == getMax)	{
+					if(rnd.nextBoolean())	{
+						maxProduct = product;
+					}
 				}
-				return true;
 			}
+			if(getMax == 0)	continue;
+			cl.get(index).consume(maxProduct, need);
+			if(getMax + getDesire(d) > CommonConst.DESIRE_MAX)	{
+				setDesire(d, CommonConst.DESIRE_MAX);
+			}else {
+				setDesire(d, getDesire(d) + getMax);
+			}
+			return true;
 		}
 		return false;
 	}
