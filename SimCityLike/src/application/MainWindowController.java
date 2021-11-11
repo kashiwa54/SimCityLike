@@ -330,7 +330,7 @@ public class MainWindowController {
 		for(int i = 0;i < map.getWidth();i++)	{
 			for(int j = 0;j < map.getHeight();j++)	{
 				PlacableEnum type = map.getTileObject(i, j).type;
-				if((i != map.getTileObject(i, j).getX())||(j != map.getTileObject(i, j).getY())) break;
+				if((i != map.getTileObject(i, j).getX())||(j != map.getTileObject(i, j).getY())) continue;
 				if(type instanceof SiteEnum)	{
 					gc.setFill(((SiteEnum) type).getColor());
 					gc.fillRect(i * CommonConst.TILE_SIZE,j * CommonConst.TILE_SIZE,CommonConst.TILE_SIZE,CommonConst.TILE_SIZE);
