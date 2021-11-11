@@ -104,8 +104,9 @@ public class ProductManager {
 
 				for(Consumable c : hab.getSupplierListMap().get(d))	{
 					for(People p : hab.getResident())	{
-						c.getCustomerList().remove(p);
-						p.getSupplierList(d).remove(c);
+						if(p != null)	{
+							c.getCustomerList().remove(p);
+						}
 					}
 				}
 				hab.getSupplierListMap().get(d).clear();

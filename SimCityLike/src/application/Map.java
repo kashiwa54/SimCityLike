@@ -265,7 +265,7 @@ public class Map {
 			workableList.remove(obj);
 		}
 		if(obj instanceof Site)	{
-			bManager.removeAreaList((Site)obj);
+			bManager.removeSite((Site)obj);
 		}
 	}
 }

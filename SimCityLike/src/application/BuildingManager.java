@@ -86,6 +86,18 @@ public class BuildingManager {
 				IndustrialBuildingEnum ibeArray[] = IndustrialBuildingEnum.values();
 				obj = TileObject.getObject(ibeArray[buildingID].getObjectClass());
 			}
+			if((obj.getWidth() > 1)||(obj.getHeight() > 1))	{
+				boolean isSameSite = true;
+				for(int i = 0;i < obj.getWidth();i++)	{
+					for(int j = 0;j < obj.getHeight();j++)	{
+						if(site.getClass() != fieldMap.getTileObject(site.getX() + i, site.getY() + j).getClass())	{
+							isSameSite = false;
+							break;
+						}
+					}
+				}
+				if(!isSameSite) return false;
+			}
 			obj.setMap(fieldMap);
 			fieldMap.place(obj, site.getX(), site.getY());
 			return true;
@@ -115,23 +127,26 @@ public class BuildingManager {
 			if(buildingSite < rSize)	{
 				if(rate <= dm.getResidentalDemand())	{
 					index = buildingSite;
-					build(rFreeArea.get(index));
-					rSize--;
-					sumSize--;
+					if(build(rFreeArea.get(index)))	{
+						rSize--;
+						sumSize--;
+					}
 				}
 			}else if(buildingSite < rSize + cSize)	{
 				if(rate <= dm.getCommercialDemand())	{
 					index = buildingSite - rSize;
-					build(cFreeArea.get(index));
-					cSize--;
-					sumSize--;
+					if(build(cFreeArea.get(index)))	{
+						cSize--;
+						sumSize--;
+					}
 				}
 			}else if(buildingSite < sumSize){
 				if(rate <= dm.getIndustrialDemand())	{
 					index = buildingSite - rSize - cSize;
-					build(iFreeArea.get(index));
-					iSize--;
-					sumSize--;
+					if(build(iFreeArea.get(index)))	{
+						iSize--;
+						sumSize--;
+					}
 				}
 			}
 		}
@@ -192,5 +207,10 @@ public class BuildingManager {
 		if(b.getRuinPoint() >= CommonConst.RUIN_POINT_MAX)	{
 			fieldMap.remove(b.getX(), b.getY());
 		}
+	}
+
+	public void removeSite(Site site)	{
+		removeFreeArea(site);
+		removeAreaList(site);
 	}
 }

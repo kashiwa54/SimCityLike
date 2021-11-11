@@ -16,6 +16,4 @@ public class RiceField extends IndustrialBuilding{
 	public TileObject copy(int x, int y) {
 		return new RiceField(this.getMap(),x,y);
 	}
-
-
 }
