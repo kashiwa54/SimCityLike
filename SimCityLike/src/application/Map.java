@@ -2,6 +2,7 @@ package application;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Random;
 
 public class Map {
 	private static final int DISTANCE = CommonConst.NEAR_ROAD_DISTANCE;
@@ -20,6 +21,8 @@ public class Map {
 
 	private boolean changeFlg = false;
 
+	private Random rnd = new Random();
+
 	public Map(int x,int y)	{
 		this.width = x;
 		this.height = y;
@@ -31,6 +34,8 @@ public class Map {
 		}
 		proManager = new ProductManager(this);
 		TileObject.setProductManager(proManager);
+
+		placeWoods();
 	}
 	public int getWidth()	{
 		return this.width;
@@ -259,13 +264,32 @@ public class Map {
 			proManager.removeBuildingList((Building)obj);
 		}
 		if(obj instanceof Habitable)	{
-			habitableList.remove(obj);
+			habitableList.remove((Habitable)obj);
 		}
 		if(obj instanceof Workable)	{
-			workableList.remove(obj);
+			workableList.remove((Workable)obj);
 		}
 		if(obj instanceof Site)	{
 			bManager.removeSite((Site)obj);
+		}
+	}
+
+	private void placeWoods()	{
+		int woodNumber = (int)(getWidth() * getHeight() * CommonConst.WOOD_NUMBER_FACTOR);
+		WoodEnum woodTypes[] = WoodEnum.values();
+		for(int i = 0;i < woodNumber;i++)	{
+			int woodID = rnd.nextInt(woodTypes.length);
+			int x = rnd.nextInt(getWidth());
+			int y = rnd.nextInt(getHeight());
+			TileObject obj = TileObject.getObject(woodTypes[woodID].getObjectClass());
+			obj.setMap(this);
+			if(isSpace(x,y))	{
+				place(obj,x,y);
+			}else {
+				i--;
+				continue;
+			}
+
 		}
 	}
 }

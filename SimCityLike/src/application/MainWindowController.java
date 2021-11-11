@@ -137,6 +137,8 @@ public class MainWindowController {
 	private EnumMap<CommercialBuildingEnum,Image> commercialMap = new EnumMap<CommercialBuildingEnum,Image>(CommercialBuildingEnum.class);
 	private EnumMap<IndustrialBuildingEnum,Image> industrialMap = new EnumMap<IndustrialBuildingEnum,Image>(IndustrialBuildingEnum.class);
 	private EnumMap<WayEnum,EnumMap<DirectionForImage,Image>> wayMap = new EnumMap<WayEnum,EnumMap<DirectionForImage,Image>>(WayEnum.class);
+	private EnumMap<WoodEnum,Image> woodMap = new EnumMap<WoodEnum,Image>(WoodEnum.class);
+
 
 	private Time time = null;
 	private PeopleManager pm = null;
@@ -158,53 +160,7 @@ public class MainWindowController {
     	graphics = canvas.getGraphicsContext2D();
     	canvas.setFocusTraversable(true);
 
-    	for(ResidentalBuildingEnum type : ResidentalBuildingEnum.values())	{
-			File imageFile = null;
-			try {
-				imageFile = new File(type.getImagePath());
-				residentalMap.put(type,new Image(imageFile.toURI().toString()));
-			} catch (IllegalArgumentException e) {
-				checkFileError(e,imageFile);
-			}
-    	}
-    	for(CommercialBuildingEnum type : CommercialBuildingEnum.values())	{
-			File imageFile = null;
-			try {
-				imageFile = new File(type.getImagePath());
-				commercialMap.put(type,new Image(imageFile.toURI().toString()));
-			} catch (IllegalArgumentException e) {
-				checkFileError(e,imageFile);
-			}
-    	}
-    	for(IndustrialBuildingEnum type : IndustrialBuildingEnum.values())	{
-			File imageFile = null;
-			try {
-				imageFile = new File(type.getImagePath());
-				industrialMap.put(type,new Image(imageFile.toURI().toString()));
-			} catch (IllegalArgumentException e) {
-				checkFileError(e,imageFile);
-			}
-    	}
-    	for(WayEnum type : WayEnum.values())	{
-    		BufferedImage imageSet = null;
-			File imageSetFile = null;
-			try {
-				imageSetFile = new File(type.getImageSetPath());
-				imageSet = ImageIO.read(imageSetFile);
-
-	    		EnumMap<DirectionForImage,Image> imageSetMap = new EnumMap<DirectionForImage,Image>(DirectionForImage.class);
-
-	    		int tileX = imageSet.getWidth()/CommonConst.TILESET_SIZE;
-	    		int cnt = 0;
-	    		for(DirectionForImage d : DirectionForImage.values())	{
-	    			imageSetMap.put(d,SwingFXUtils.toFXImage(imageSet.getSubimage(cnt%tileX * CommonConst.TILESET_SIZE, cnt/tileX * CommonConst.TILESET_SIZE, CommonConst.TILESET_SIZE, CommonConst.TILESET_SIZE), null));
-	    			cnt++;
-	    		}
-	    		wayMap.put(type,imageSetMap);
-			} catch (IOException e) {
-				checkFileError(e,imageSetFile);
-			}
-    	}
+    	readImageFile();
 
     	creatTab(areaTab,AreaTabEnum.values());
     	tabList.add(areaTab);
@@ -350,6 +306,8 @@ public class MainWindowController {
 						gc.drawImage(commercialMap.get(type),xoffset,yoffset);
 					}else if(type instanceof IndustrialBuildingEnum)	{
 						gc.drawImage(industrialMap.get(type),xoffset,yoffset);
+					}else if(type instanceof WoodEnum)	{
+						gc.drawImage(woodMap.get(type),xoffset,yoffset);
 					}
 					gc.setTransform(affine);
 				}
@@ -710,8 +668,66 @@ public class MainWindowController {
 		paintMainCanvas(graphics,map);
 		updateLabels();
 	}
+	private void readImageFile()	{
+    	for(ResidentalBuildingEnum type : ResidentalBuildingEnum.values())	{
+			File imageFile = null;
+			try {
+				imageFile = new File(type.getImagePath());
+				residentalMap.put(type,new Image(imageFile.toURI().toString()));
+			} catch (IllegalArgumentException e) {
+				checkFileError(e,imageFile);
+			}
+    	}
+    	for(CommercialBuildingEnum type : CommercialBuildingEnum.values())	{
+			File imageFile = null;
+			try {
+				imageFile = new File(type.getImagePath());
+				commercialMap.put(type,new Image(imageFile.toURI().toString()));
+			} catch (IllegalArgumentException e) {
+				checkFileError(e,imageFile);
+			}
+    	}
+    	for(IndustrialBuildingEnum type : IndustrialBuildingEnum.values())	{
+			File imageFile = null;
+			try {
+				imageFile = new File(type.getImagePath());
+				industrialMap.put(type,new Image(imageFile.toURI().toString()));
+			} catch (IllegalArgumentException e) {
+				checkFileError(e,imageFile);
+			}
+    	}
+    	for(WayEnum type : WayEnum.values())	{
+    		BufferedImage imageSet = null;
+			File imageSetFile = null;
+			try {
+				imageSetFile = new File(type.getImageSetPath());
+				imageSet = ImageIO.read(imageSetFile);
 
-	public void checkFileError(Exception e,File file)	{
+	    		EnumMap<DirectionForImage,Image> imageSetMap = new EnumMap<DirectionForImage,Image>(DirectionForImage.class);
+
+	    		int tileX = imageSet.getWidth()/CommonConst.TILESET_SIZE;
+	    		int cnt = 0;
+	    		for(DirectionForImage d : DirectionForImage.values())	{
+	    			imageSetMap.put(d,SwingFXUtils.toFXImage(imageSet.getSubimage(cnt%tileX * CommonConst.TILESET_SIZE, cnt/tileX * CommonConst.TILESET_SIZE, CommonConst.TILESET_SIZE, CommonConst.TILESET_SIZE), null));
+	    			cnt++;
+	    		}
+	    		wayMap.put(type,imageSetMap);
+			} catch (IOException e) {
+				checkFileError(e,imageSetFile);
+			}
+    	}
+    	for(WoodEnum type : WoodEnum.values())	{
+			File imageFile = null;
+			try {
+				imageFile = new File(type.getImagePath());
+				woodMap.put(type,new Image(imageFile.toURI().toString()));
+			} catch (IllegalArgumentException e) {
+				checkFileError(e,imageFile);
+			}
+    	}
+	}
+
+	private void checkFileError(Exception e,File file)	{
 		if(file.exists())	{
 			if(file.isFile())	{
 				if(file.canRead())	{
