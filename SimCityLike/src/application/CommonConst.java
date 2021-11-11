@@ -8,7 +8,7 @@ public class CommonConst {
 	public static final int TILESET_SIZE = 64;
 	public static final int SHEAR_ANGLE = 45;
 	public static final int TILE_SIZE = 64;
-	public static final double WOOD_NUMBER_FACTOR = 0.2;
+	public static final double WOOD_NUMBER_FACTOR = 0.1;
 	public static final int CONSOLE_WIDTH = 640;
 	public static final int CONSOLE_HEIGHT = 480;
 	public static final int WINDOW_MAX_WIDTH = (int) Main.SYSTEM_WINDOW.getMaxX();
