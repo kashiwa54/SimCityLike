@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum WayEnum implements PlacableEnum{
-	ROAD60(Road60.class,"src/image/road60set.png","道路(60km制限)",50,10,2,1);
+	ROAD60(Road60.class,"image/road60set.png","道路(60km制限)",50,10,2,1);
 
 	private Class<? extends TileObject> wayClass;
 	private String imageSetPath;

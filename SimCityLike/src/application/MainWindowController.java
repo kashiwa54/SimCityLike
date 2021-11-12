@@ -1,7 +1,6 @@
 package application;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -669,39 +668,38 @@ public class MainWindowController {
 		updateLabels();
 	}
 	private void readImageFile()	{
+		ClassLoader cl = getClass().getClassLoader();
     	for(ResidentalBuildingEnum type : ResidentalBuildingEnum.values())	{
-			File imageFile = null;
+			Image image = null;
 			try {
-				imageFile = new File(type.getImagePath());
-				residentalMap.put(type,new Image(imageFile.toURI().toString()));
+				image = new Image(cl.getResourceAsStream(type.getImagePath()));
 			} catch (IllegalArgumentException e) {
-				checkFileError(e,imageFile);
+				e.printStackTrace();
 			}
+			residentalMap.put(type,image);
     	}
     	for(CommercialBuildingEnum type : CommercialBuildingEnum.values())	{
-			File imageFile = null;
+			Image image = null;
 			try {
-				imageFile = new File(type.getImagePath());
-				commercialMap.put(type,new Image(imageFile.toURI().toString()));
+				image = new Image(cl.getResourceAsStream(type.getImagePath()));
 			} catch (IllegalArgumentException e) {
-				checkFileError(e,imageFile);
+				e.printStackTrace();
 			}
+			commercialMap.put(type,image);
     	}
     	for(IndustrialBuildingEnum type : IndustrialBuildingEnum.values())	{
-			File imageFile = null;
+			Image image = null;
 			try {
-				imageFile = new File(type.getImagePath());
-				industrialMap.put(type,new Image(imageFile.toURI().toString()));
+				image = new Image(cl.getResourceAsStream(type.getImagePath()));
 			} catch (IllegalArgumentException e) {
-				checkFileError(e,imageFile);
+				e.printStackTrace();
 			}
+			industrialMap.put(type,image);
     	}
     	for(WayEnum type : WayEnum.values())	{
     		BufferedImage imageSet = null;
-			File imageSetFile = null;
 			try {
-				imageSetFile = new File(type.getImageSetPath());
-				imageSet = ImageIO.read(imageSetFile);
+				imageSet = ImageIO.read(cl.getResourceAsStream(type.getImageSetPath()));;
 
 	    		EnumMap<DirectionForImage,Image> imageSetMap = new EnumMap<DirectionForImage,Image>(DirectionForImage.class);
 
@@ -713,36 +711,36 @@ public class MainWindowController {
 	    		}
 	    		wayMap.put(type,imageSetMap);
 			} catch (IOException e) {
-				checkFileError(e,imageSetFile);
+				e.printStackTrace();
 			}
     	}
     	for(WoodEnum type : WoodEnum.values())	{
-			File imageFile = null;
+			Image image = null;
 			try {
-				imageFile = new File(type.getImagePath());
-				woodMap.put(type,new Image(imageFile.toURI().toString()));
+				image = new Image(cl.getResourceAsStream(type.getImagePath()));
 			} catch (IllegalArgumentException e) {
-				checkFileError(e,imageFile);
+				e.printStackTrace();
 			}
+			woodMap.put(type,image);
     	}
 	}
 
-	private void checkFileError(Exception e,File file)	{
-		if(file.exists())	{
-			if(file.isFile())	{
-				if(file.canRead())	{
-					System.out.println(file.getAbsolutePath() + " is not image file or other reason.");
-				}else {
-					System.out.println(file.getAbsolutePath() + " can't read.");
-				}
-			}else {
-				System.out.println(file.getAbsolutePath() + " is not a file.");
-			}
-		}else {
-			System.out.println(file.getAbsolutePath() + " is not found.");
-		}
-		e.printStackTrace();
-	}
+//	private void checkFileError(Exception e,File file)	{
+//		if(file.exists())	{
+//			if(file.isFile())	{
+//				if(file.canRead())	{
+//					System.out.println(file.getAbsolutePath() + " is not image file or other reason.");
+//				}else {
+//					System.out.println(file.getAbsolutePath() + " can't read.");
+//				}
+//			}else {
+//				System.out.println(file.getAbsolutePath() + " is not a file.");
+//			}
+//		}else {
+//			System.out.println(file.getAbsolutePath() + " is not found.");
+//		}
+//		e.printStackTrace();
+//	}
 
 
 }

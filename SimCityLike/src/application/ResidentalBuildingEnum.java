@@ -2,8 +2,8 @@ package application;
 
 import java.lang.reflect.InvocationTargetException;
 public enum ResidentalBuildingEnum implements PlacableEnum{
-	COTTAGE(Cottage.class,"src/image/cottage.png","小さな小屋",1,1,100,5,1000,1,1),
-	OLD_2STORIES(Old2Stories.class,"src/image/2storyhouse.png","２階建ての家",1,1,200,12,2000,2,1);
+	COTTAGE(Cottage.class,"image/cottage.png","小さな小屋",1,1,100,5,1000,1,1),
+	OLD_2STORIES(Old2Stories.class,"image/2storyhouse.png","２階建ての家",1,1,200,12,2000,2,1);
 	private Class<? extends TileObject> buildingClass;
 	private String imagePath;
 	private String displayName;

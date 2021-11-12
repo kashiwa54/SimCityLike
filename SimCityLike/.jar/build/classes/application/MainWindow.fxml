@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import application.CommonConst?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+
+<AnchorPane fx:id="root" onKeyPressed="#keyPressed" onMouseMoved="#mouseMove" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainWindowController">
+   <children>
+      <ScrollPane fx:id="pane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="960.0" prefWidth="1280.0" vbarPolicy="NEVER" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <content>
+            <StackPane fx:id="stackpane">
+               <children>
+      					<Canvas fx:id="canvas" onMouseDragged="#dragging" onMouseReleased="#mouseRelease" onScroll="#zoom">
+						<width><CommonConst fx:constant="WINDOW_MAX_WIDTH" /></width>
+						<height><CommonConst fx:constant="WINDOW_MAX_HEIGHT" /></height>
+					</Canvas>
+               </children>
+            </StackPane>
+         </content>
+      </ScrollPane>
+      <HBox fx:id="mainTab" prefHeight="64.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="0.0">
+         <children>
+          <Button fx:id="residentalB" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#buttonArea" prefHeight="64.0" prefWidth="64.0" style="-fx-background-image: url(&quot;image/area_icon.png&quot;);" text="エリア" textAlignment="CENTER" />
+            <Button fx:id="commercialB" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#buttonRoad" prefHeight="64.0" prefWidth="64.0" style="-fx-background-image: url(&quot;image/road_icon.png&quot;);" text="道路" textAlignment="CENTER" />
+            <Button fx:id="industrialB1" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#buttonSpecial" prefHeight="64.0" prefWidth="64.0" text="特殊" textAlignment="CENTER" />
+            <Button fx:id="removeB" alignment="BOTTOM_RIGHT" layoutX="306.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonRemove" prefHeight="64.0" prefWidth="64.0" text="取り壊し" textAlignment="RIGHT" wrapText="true">
+               <HBox.margin>
+                  <Insets left="64.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="cancelB" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#buttonCancel" prefHeight="64.0" prefWidth="64.0" text="中止" textAlignment="CENTER">
+               <HBox.margin>
+                  <Insets left="64.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="infoB" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#buttonInfo" prefHeight="64.0" prefWidth="64.0" text="情報" textAlignment="CENTER" />
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets left="16.0" right="16.0" />
+         </padding>
+      </HBox>
+      <HBox fx:id="statusBar" maxHeight="32.0" minHeight="32.0" prefHeight="32.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Label fx:id="timeLabel" maxHeight="32.0" maxWidth="256.0" minHeight="32.0" minWidth="256.0" prefHeight="32.0" prefWidth="256.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <graphic>
+                  <TextFlow fx:id="timeFlow" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Text fx:id="yearText" strokeType="OUTSIDE" strokeWidth="0.0" text="Year">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="seasonText" strokeType="OUTSIDE" strokeWidth="0.0" text="Season">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="timeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Time">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="weekText" strokeType="OUTSIDE" strokeWidth="0.0" text="Week">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </TextFlow>
+               </graphic>
+            </Label>
+            <HBox maxHeight="32.0" maxWidth="128.0" minHeight="32.0" minWidth="128.0" prefHeight="32.0" prefWidth="128.0">
+               <children>
+                  <RadioButton fx:id="pause" styleClass="time" onAction="#buttonPause" maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0"  style="-fx-background-image: url(&quot;image/pause.png&quot;);" />
+                  <RadioButton fx:id="lowSpeed" styleClass="time" onAction="#buttonLowSpeed" maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" style="-fx-background-image: url(&quot;image/slow.png&quot;);" />
+                  <RadioButton fx:id="midSpeed" styleClass="time" onAction="#buttonMidSpeed" maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" style="-fx-background-image: url(&quot;image/mid.png&quot;);" />
+                  <RadioButton fx:id="highSpeed" styleClass="time" onAction="#buttonHighSpeed" maxHeight="32.0" maxWidth="32.0" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" style="-fx-background-image: url(&quot;image/fast.png&quot;);"/>
+               </children>
+            </HBox>
+  		<Label fx:id="moneyLabel" maxHeight="32.0" maxWidth="256.0" minHeight="32.0" minWidth="256.0" prefHeight="32.0" prefWidth="256.0" alignment = "BOTTOM_RIGHT">
+  		   <font>
+              <Font size="20.0" />
+           </font>
+        </Label>
+          		<Label fx:id="populationLabel" maxHeight="32.0" maxWidth="256.0" minHeight="32.0" minWidth="256.0" prefHeight="32.0" prefWidth="256.0" alignment = "BOTTOM_RIGHT">
+  		   <font>
+              <Font size="20.0" />
+           </font>
+        </Label>
+         </children></HBox>
+   </children>
+</AnchorPane>

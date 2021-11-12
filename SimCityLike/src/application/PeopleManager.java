@@ -3,6 +3,7 @@ package application;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -253,7 +254,12 @@ public class PeopleManager {
 	private void readNameFile()	{
 		BufferedReader myouji = null;
 		try {
-			myouji = new BufferedReader(new FileReader(CommonConst.MYOUJI_FILE_NAME));
+			try {
+				myouji = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(CommonConst.MYOUJI_FILE_NAME)));
+			} catch (Exception e1) {
+				myouji = new BufferedReader(new FileReader("src/applicaton/" + CommonConst.MYOUJI_FILE_NAME));
+				e1.printStackTrace();
+			}
 			String buffer = null;
 			while((buffer = myouji.readLine()) != null)	{
 				myoujiList.add(buffer);

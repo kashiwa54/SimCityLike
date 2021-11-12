@@ -4,13 +4,13 @@ import java.lang.reflect.InvocationTargetException;
 
 
 public enum WoodEnum implements PlacableEnum{
-	WOOD_A("木","src/image/woodA.png",WoodA.class,1),
-	WOOD_B("木","src/image/woodB.png",WoodB.class,1),
-	WOOD_C("木","src/image/woodC.png",WoodC.class,1),
-	WOODS_A("林","src/image/woodsA.png",WoodsA.class,1),
-	WOODS_B("林","src/image/woodsB.png",WoodsB.class,1),
-	WOODS_C("林","src/image/woodsC.png",WoodsB.class,1),
-	WOODS_ABC("林","src/image/woodsABC.png",WoodsABC.class,1);
+	WOOD_A("木","image/woodA.png",WoodA.class,1),
+	WOOD_B("木","image/woodB.png",WoodB.class,1),
+	WOOD_C("木","image/woodC.png",WoodC.class,1),
+	WOODS_A("林","image/woodsA.png",WoodsA.class,1),
+	WOODS_B("林","image/woodsB.png",WoodsB.class,1),
+	WOODS_C("林","image/woodsC.png",WoodsB.class,1),
+	WOODS_ABC("林","image/woodsABC.png",WoodsABC.class,1);
 
 	private String displayName;
 	private String imagePath;
